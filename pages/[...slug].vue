@@ -1,5 +1,5 @@
 <template>
 
-    CATCH ALL
+    404
 
 </template>
