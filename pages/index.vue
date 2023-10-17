@@ -7,12 +7,10 @@ import ky from 'ky'
 const categoryStore = useCategoryStore()
 const { categories } = storeToRefs(categoryStore)
 
-useFetch<Category[]>('https://api.losos.ayarayarovich.tech/api/categories', {key: 'categories'}).then((res) => categories.value = res.data.value)
-
-// useAsyncData<Category[]>('categories', () => ky.get('https://api.losos.ayarayarovich.tech/api/categories').json()).then(data => {
-//     categories.value = data.data.value
-// })
-
+useFetch<Category[]>('https://api.losos.ayarayarovich.tech/api/categories', {key: 'categories'}).then((res) => {
+    console.log('FETCHED CATEGORIES')
+    categories.value = res.data.value
+})
 
 </script>
 
