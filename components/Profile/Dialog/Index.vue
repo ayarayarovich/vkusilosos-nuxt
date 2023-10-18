@@ -45,7 +45,7 @@ import { ProfileDialogAuthView } from '#build/components';
                                     <ProfileDialogPasswordRecoveryView v-else-if="view === 'recovery'"/>
                                 </Transition>
 
-                                <div class="absolute top-2 text-black opacity-50 text-center text-sm w-full">Свайпай влево, чтобы закрыть</div>
+                                <div class="absolute top-2 text-black opacity-50 text-center text-sm w-full md:hidden">Свайпай влево, чтобы закрыть</div>
                             </div>
                         </HeadlessDialogPanel>
                     </HeadlessTransitionChild>
