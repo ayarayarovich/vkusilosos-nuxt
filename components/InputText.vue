@@ -1,7 +1,7 @@
 <template>
   <div class="group relative">
     <label
-      class="absolute top-1/2 group-focus-within:left-4 group-focus-within:-translate-y-6 group-focus-within:text-sm group-focus-within:font-light transition-all max-w-full leading-none break-words text-[#777675]"
+      class="absolute pointer-events-none top-1/2 group-focus-within:left-4 group-focus-within:-translate-y-6 group-focus-within:text-sm group-focus-within:font-light transition-all max-w-full leading-none break-words text-[#777675]"
       :class="{
         'left-4 -translate-y-1/2 font-base text-base': props.modelValue.length === 0,
         'left-4 -translate-y-6 text-sm font-light': props.modelValue.length > 0,
