@@ -57,7 +57,7 @@ useFetch<Category[]>('https://api.losos.ayarayarovich.tech/api/categories', {key
         </div>
 
         <div v-if="categories">
-            <DishCategory
+            <Category
                 v-for="(category, index) in categories"
                 :immediate="index < 3"
                 :key="category.id"

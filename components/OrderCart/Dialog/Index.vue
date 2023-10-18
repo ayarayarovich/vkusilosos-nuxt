@@ -39,8 +39,8 @@
                         <HeadlessDialogPanel class="absolute bg-white right-0 h-full w-full max-w-xl shadow-xl transition-all">
                             <div ref="dialogPanelEl" class="h-full w-full">
                                 <Transition name="fade" mode="out-in">
-                                    <OrderCartDialogCart v-if="stage == 'cart'"  @procced-to-payment="stage = 'payment'"/>
-                                    <OrderCartDialogPayment v-else-if="stage == 'payment'" @back-to-cart="stage = 'cart'"/>
+                                    <OrderCartDialogCartView v-if="stage == 'cart'"  @procced-to-payment="stage = 'payment'"/>
+                                    <OrderCartDialogPaymentView v-else-if="stage == 'payment'" @back-to-cart="stage = 'cart'"/>
                                 </Transition>
                             </div>
                         </HeadlessDialogPanel>

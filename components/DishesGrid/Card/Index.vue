@@ -36,7 +36,7 @@
         >
       </div>
     </div>
-    <DishCardDialog
+    <DishesGridCardDialog
       :dish="props.dish"
       :show="showDialog"
       @close="showDialog = false"

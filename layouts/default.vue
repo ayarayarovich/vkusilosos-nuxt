@@ -18,23 +18,14 @@
         <div class="flex items-center justify-end gap-2">
           <OrderCart />
           <BonusCoins />
+          <Profile/>
         </div>
       </div>
 
       <!-- desktop -->
       <div class="container mx-auto hidden px-4 lg:flex lg:items-center">
         <div class="flex flex-1 items-center justify-start gap-4">
-          <RouterLink
-            class="relative group inline-block h-8 aspect-square"
-            to="/profile"
-          >
-            <IconUserDark
-              class="absolute h-full transition-opacity opacity-100 group-hover:opacity-0"
-            />
-            <IconUserColor
-              class="absolute h-full transition-opacity opacity-0 group-hover:opacity-100"
-            />
-          </RouterLink>
+          <Profile />
           <MyLocation />
         </div>
 

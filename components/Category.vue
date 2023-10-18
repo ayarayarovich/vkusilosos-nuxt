@@ -70,8 +70,6 @@ const { data, status } = await useAsyncData<{ dishes: Dish[] }>(
       }
     );
 
-    console.log("FETCHED DISH CATEGORY " + props.category.id, response);
-
     return response;
   }
 );
