@@ -4,7 +4,7 @@
       Пожалуйста, авторизуйтесь
     </strong>
     <div class="h-px mx-4 mb-8 bg-gray"></div>
-    <div class="mx-4 mb-8">
+    <div class="mx-8 mb-8">
       <div class="rounded-xl bg-current bg-gray p-1.5 text-sm">
         <div class="relative">
           <div
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="grow mx-4">
+    <div class="grow mx-8">
       <Transition name="fade" mode="out-in">
         <ProfileDialogAuthViewSignIn v-if="action === 'signin'" />
         <ProfileDialogAuthViewSignUp v-else-if="action === 'signup'" />
