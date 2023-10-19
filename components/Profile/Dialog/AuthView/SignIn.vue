@@ -25,7 +25,7 @@
       >
 
       <div class="flex justify-between items-center">
-        <button class="text-orange-200">Вход по QR-коду</button>
+        <ProfileDialogAuthViewQRCode/>
         <button class="text-orange-200" @click="changeView('recovery')">Забыли пароль?</button>
       </div>
     </div>
