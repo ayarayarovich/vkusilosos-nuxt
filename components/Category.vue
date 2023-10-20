@@ -37,10 +37,9 @@
 </template>
 
 <script setup lang="ts">
-import type { Category, Dish } from "~/interfaces/dishes";
 import { computed, ref } from "vue";
+import type { Category, Dish } from "~/interfaces/dishes";
 import { useCategoryStore } from "~/store/category";
-import ky from "ky";
 
 const props = defineProps<{
   category: Category;
@@ -54,7 +53,6 @@ const categoryStore = useCategoryStore();
 const { data, status } = await useAsyncData<{ dishes: Dish[] }>(
   `dish-category-${props.category.id}`,
   async () => {
-
     const response = await $fetch<{ dishes: Dish[] }>(
       "https://api.losos.ayarayarovich.tech/api/dish",
       {
@@ -67,11 +65,11 @@ const { data, status } = await useAsyncData<{ dishes: Dish[] }>(
           category_id: props.category.id,
           have: false,
         },
-      }
+      },
     );
 
     return response;
-  }
+  },
 );
 
 // useIntersectionObserver(fetchObserver, ([{ isIntersecting }]) => {
@@ -90,7 +88,7 @@ useIntersectionObserver(
   },
   {
     rootMargin: "-30% 0px -50% 0px",
-  }
+  },
 );
 
 const dishes = computed(() => data.value?.dishes);

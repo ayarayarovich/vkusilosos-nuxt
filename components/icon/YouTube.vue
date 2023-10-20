@@ -1,6 +1,3 @@
 <template>
-    <img
-        src="~/assets/icon/icon-youtube.svg"
-        alt=""
-    />
+  <img src="~/assets/icon/icon-youtube.svg" alt="" />
 </template>

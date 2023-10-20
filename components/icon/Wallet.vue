@@ -1,6 +1,3 @@
 <template>
-    <img
-        src="~/assets/icon/icon-wallet.svg"
-        alt=""
-    />
+  <img src="~/assets/icon/icon-wallet.svg" alt="" />
 </template>

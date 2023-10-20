@@ -1,3 +1,3 @@
 <template>
-    <img src="~/assets/icon/icon-mail.svg" />
+  <img src="~/assets/icon/icon-mail.svg" />
 </template>

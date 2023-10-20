@@ -1,10 +1,6 @@
 <template>
-  <div class="pl-4 shrink-0" ref="element">
-    <button
-      @click="onClick"
-      
-      class="rounded-full accent-gradient-bg"
-    >
+  <div ref="element" class="pl-4 shrink-0">
+    <button class="rounded-full accent-gradient-bg" @click="onClick">
       <div
         class="border-transparent rounded-full border-2 bg-clip-padding px-8 py-2 transition-colors"
         :class="
@@ -20,10 +16,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Category } from "~/interfaces/dishes";
-import { useCategoryStore } from "~/store/category";
 import { storeToRefs } from "pinia";
 import { onMounted, ref, watch } from "vue";
+import type { Category } from "~/interfaces/dishes";
+import { useCategoryStore } from "~/store/category";
 
 const props = defineProps<{
   category: Category;
@@ -43,7 +39,8 @@ const onClick = () => {
       target.getBoundingClientRect().top +
         document.documentElement.scrollTop -
         header.getBoundingClientRect().height -
-        parentBounding.height.value - 32
+        parentBounding.height.value -
+        32,
     ),
     behavior: "smooth",
   });
@@ -57,10 +54,10 @@ onMounted(() => {
 });
 
 watch([currentCategoryID], () => {
-  if (currentCategoryID.value == props.category.id) {
+  if (currentCategoryID.value === props.category.id) {
     parent.value!.scrollTo({
       behavior: "smooth",
-      left: elementsLeft.value
+      left: elementsLeft.value,
     });
   }
 });

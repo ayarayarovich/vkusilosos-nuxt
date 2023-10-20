@@ -1,126 +1,133 @@
 <template>
-    <div
-        ref="container"
-        class="sm relative isolate h-[12rem] overflow-hidden rounded-3xl shadow-lg lg:h-[22.5rem]"
-    >
-        <Transition
-            name="fade"
-            mode="in-out"
-        >
-            <div
-                :key="activeSlideIndex"
-                :class="`
+  <div
+    ref="container"
+    class="sm relative isolate h-[12rem] overflow-hidden rounded-3xl shadow-lg lg:h-[22.5rem]"
+  >
+    <Transition name="fade" mode="in-out">
+      <div
+        :key="activeSlideIndex"
+        :class="`
                     absolute inset-0 flex items-center justify-center text-4xl transition-opacity
                 `"
-            >
-                <RouterLink
-                    class="block h-full w-full"
-                    :to="slides[activeSlideIndex].link"
-                >
-                    <img
-                        class="h-full w-full object-cover"
-                        :src="slides[activeSlideIndex].imgSrc"
-                        alt=""
-                    />
-                </RouterLink>
-            </div>
-        </Transition>
+      >
+        <RouterLink
+          class="block h-full w-full"
+          :to="slides[activeSlideIndex].link"
+        >
+          <img
+            class="h-full w-full object-cover"
+            :src="slides[activeSlideIndex].imgSrc"
+            alt=""
+          />
+        </RouterLink>
+      </div>
+    </Transition>
 
-        <div class="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-            <BannerSliderButton
-                v-for="(_, index) in slides"
-                @click="activeSlideIndex = index"
-                :key="index"
-                :active="activeSlideIndex == index"
-            />
-        </div>
+    <div class="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+      <BannerSliderButton
+        v-for="(slide, index) in slides"
+        :key="index"
+        :active="activeSlideIndex == index"
+        @click="activeSlideIndex = index"
+      />
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, toRefs } from 'vue'
-import { onKeyDown, onKeyUp } from '@vueuse/core'
-import _ from 'lodash'
+import { ref, computed, watch, toRefs } from "vue";
+import { onKeyDown, onKeyUp } from "@vueuse/core";
+import _ from "lodash";
 
 const props = defineProps<{
-    autoplay?: boolean
-    autoplayDelay: number
-}>()
-const { autoplay, autoplayDelay } = toRefs(props)
+  autoplay?: boolean;
+  autoplayDelay: number;
+}>();
+const { autoplay, autoplayDelay } = toRefs(props);
 
-const container = ref(null)
+const container = ref(null);
 const slides = ref([
-    {
-        imgSrc: '/banner-1.png',
-        link: '/promo/banner1',
-    },
-    {
-        imgSrc: '/banner-2.png',
-        link: '/promo/banner2',
-    },
-])
-const slidesCount = computed(() => slides.value.length)
-const activeSlideIndex = ref(0)
+  {
+    imgSrc: "/banner-1.png",
+    link: "/promo/banner1",
+  },
+  {
+    imgSrc: "/banner-2.png",
+    link: "/promo/banner2",
+  },
+]);
+const slidesCount = computed(() => slides.value.length);
+const activeSlideIndex = ref(0);
 
 const nextSlide = () => {
-    activeSlideIndex.value = (activeSlideIndex.value + 1) % slidesCount.value
-}
+  activeSlideIndex.value = (activeSlideIndex.value + 1) % slidesCount.value;
+};
 const prevSlide = () => {
-    if (activeSlideIndex.value == 0) activeSlideIndex.value = slidesCount.value - 1
-    else activeSlideIndex.value -= 1
-}
+  if (activeSlideIndex.value === 0)
+    activeSlideIndex.value = slidesCount.value - 1;
+  else activeSlideIndex.value -= 1;
+};
 
 const { resume, pause } = useIntervalFn(nextSlide, autoplayDelay, {
-    immediate: false,
-})
-const userInteractsWithSlider = ref(false)
+  immediate: false,
+});
+const userInteractsWithSlider = ref(false);
 watch([userInteractsWithSlider], () => {
-    if (userInteractsWithSlider.value) pause()
-    else resume()
-})
+  if (userInteractsWithSlider.value) pause();
+  else resume();
+});
 
-const isMouseInside = useMouseInside(container)
+const isMouseInside = useMouseInside(container);
 onKeyStroke(
-    'ArrowRight',
-    _.throttle(() => {
-        if (isMouseInside.value) {
-            nextSlide()
-        }
-    }, 300)
-)
+  "ArrowRight",
+  _.throttle(() => {
+    if (isMouseInside.value) {
+      nextSlide();
+    }
+  }, 300),
+);
 onKeyStroke(
-    'ArrowLeft',
-    _.throttle(() => {
-        if (isMouseInside.value) {
-            prevSlide()
-        }
-    }, 300)
-)
+  "ArrowLeft",
+  _.throttle(() => {
+    if (isMouseInside.value) {
+      prevSlide();
+    }
+  }, 300),
+);
 
-onKeyDown(['ArrowLeft', 'ArrowRight'], () => (userInteractsWithSlider.value = true))
-onKeyUp(['ArrowLeft', 'ArrowRight'], () => (userInteractsWithSlider.value = false))
+onKeyDown(
+  ["ArrowLeft", "ArrowRight"],
+  () => (userInteractsWithSlider.value = true),
+);
+onKeyUp(
+  ["ArrowLeft", "ArrowRight"],
+  () => (userInteractsWithSlider.value = false),
+);
 
-const debouncedStoppedInteracting = _.debounce(() => (userInteractsWithSlider.value = false), 1000)
+const debouncedStoppedInteracting = _.debounce(
+  () => (userInteractsWithSlider.value = false),
+  1000,
+);
 useSwipe(container, {
-    onSwipeStart() {
-        userInteractsWithSlider.value = true
-    },
-    onSwipeEnd(_, direction) {
-        if (['right', 'left'].includes(direction)) {
-            if (direction == 'right') prevSlide()
-            if (direction == 'left') nextSlide()
-            debouncedStoppedInteracting()
-        }
-    },
-})
+  onSwipeStart() {
+    userInteractsWithSlider.value = true;
+  },
+  onSwipeEnd(_, direction) {
+    if (["right", "left"].includes(direction)) {
+      if (direction === "right") prevSlide();
+      if (direction === "left") nextSlide();
+      debouncedStoppedInteracting();
+    }
+  },
+});
 
 watch(
-    [autoplay],
-    () => {
-        if (autoplay.value) resume()
-    },
-    { immediate: true }
-)
+  [autoplay],
+  () => {
+    if (autoplay.value) resume();
+  },
+  { immediate: true },
+);
 </script>
 
 <!-- <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">

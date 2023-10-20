@@ -1,4 +1,3 @@
-
 <template>
   <div class="flex min-h-screen flex-col text-black">
     <header
@@ -11,14 +10,14 @@
       >
         <div class="flex shrink grow-0 justify-center">
           <RouterLink to="/">
-            <img src="/main-logo.svg" class="h-8"/>
+            <img src="/main-logo.svg" class="h-8" />
           </RouterLink>
         </div>
 
         <div class="flex items-center justify-end gap-2">
           <OrderCart />
           <BonusCoins />
-          <Profile/>
+          <Profile />
         </div>
       </div>
 

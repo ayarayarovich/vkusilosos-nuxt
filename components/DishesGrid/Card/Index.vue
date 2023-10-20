@@ -1,7 +1,7 @@
 <template>
   <div
     class="row-span-1 flex cursor-pointer flex-col items-center rounded-xl p-4 shadow-main transition-all hover:-translate-y-2 hover:shadow-elevated lg:p-7"
-    :class="props.big_card ? 'col-span-2' : 'col-span-1'"
+    :class="dish.big ? 'col-span-2' : 'col-span-1'"
     @click="showDialog = true"
   >
     <img
@@ -13,14 +13,22 @@
     <h2 class="mb-auto mt-4 text-center text-sm">{{ props.dish.name }}</h2>
     <div
       class="mt-8 flex justify-between self-stretch"
-      :class="props.big_card ? 'flex-row items-center gap-8' : 'flex-col items-stretch gap-4'"
+      :class="
+        dish.big
+          ? 'flex-row items-center gap-8'
+          : 'flex-col items-stretch gap-4'
+      "
     >
       <div class="flex shrink-0 items-center gap-4 text-black">
-        <span class="!leading-none text-sm font-medium lg:text-lg">{{ props.dish.newPrice }} &#8381;</span>
+        <span class="!leading-none text-sm font-medium lg:text-lg">
+          {{ props.dish.newPrice }} &#8381;
+        </span>
         <span class="w-px h-4 bg-black"></span>
-        <span class="!leading-none text-xs font-base lg:text-md">{{ props.dish.weight }} гр</span>
+        <span class="!leading-none text-xs font-base lg:text-md">
+          {{ props.dish.weight }} гр
+        </span>
       </div>
-      <div class="h-9 lg:h-10 w-full" :class="props.big_card ? 'max-w-[16rem]' : ''">
+      <div class="h-9 lg:h-10 w-full" :class="dish.big ? 'max-w-[16rem]' : ''">
         <DishAdder
           v-if="cartStore.dishesCount[props.dish.id]"
           class="h-full w-full"
@@ -30,10 +38,11 @@
         />
         <SimpleButton
           v-else
-          @click="cartStore.addDish(props.dish)"
           class="h-full w-full rounded-xl text-[0.7rem] font-medium uppercase text-white lg:text-sm"
-          >В корзину</SimpleButton
+          @click="cartStore.addDish(props.dish)"
         >
+          В корзину
+        </SimpleButton>
       </div>
     </div>
     <DishesGridCardDialog
@@ -46,11 +55,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useImage } from "@vueuse/core";
 import type { Dish } from "~/interfaces/dishes";
 import { useCartStore } from "~/store/cart";
-import { useImage } from "@vueuse/core";
 
-const props = defineProps<{ dish: Dish; big_card?: boolean }>();
+const props = defineProps<{ dish: Dish }>();
 
 const cartStore = useCartStore();
 

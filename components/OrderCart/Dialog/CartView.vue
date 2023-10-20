@@ -104,10 +104,9 @@
           <img
             src="/upset-sushi.svg"
             class="h-32 lg:h-40 absolute bottom-0 translate-y-1/2 max-w-none transition-opacity"
-            :class="isCupReady ? 'opacity-100' : 'opacity-0'"
+            :class="isSushiReady ? 'opacity-100' : 'opacity-0'"
             alt=""
           />
-
         </div>
       </div>
     </Transition>
@@ -120,10 +119,10 @@
 </template>
 
 <script setup lang="ts">
-import { useCartStore } from "~/store/cart";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useImage } from "@vueuse/core";
+import { useCartStore } from "~/store/cart";
 
 const emit = defineEmits(["proccedToPayment"]);
 
@@ -131,10 +130,10 @@ const cartStore = useCartStore();
 const { itemsCount, totalCost, dishes, dishesCount } = storeToRefs(cartStore);
 
 const pluralizedItemsInCartCountWord = computed(() => {
-  if (itemsCount.value == 1) return "товар";
-  if (itemsCount.value == 2) return "товара";
-  if (itemsCount.value == 3) return "товара";
-  if (itemsCount.value == 4) return "товара";
+  if (itemsCount.value === 1) return "товар";
+  if (itemsCount.value === 2) return "товара";
+  if (itemsCount.value === 3) return "товара";
+  if (itemsCount.value === 4) return "товара";
   return "товаров";
 });
 

@@ -3,7 +3,8 @@
     <label
       class="absolute pointer-events-none top-1/2 group-focus-within:left-4 group-focus-within:-translate-y-6 group-focus-within:text-sm group-focus-within:font-light transition-all max-w-full leading-none break-words text-[#777675]"
       :class="{
-        'left-4 -translate-y-1/2 font-base text-base': props.modelValue.length === 0,
+        'left-4 -translate-y-1/2 font-base text-base':
+          props.modelValue.length === 0,
         'left-4 -translate-y-6 text-sm font-light': props.modelValue.length > 0,
       }"
     >
@@ -20,10 +21,10 @@
       :class="{
         '!border-red': props.errorMessage,
         'pr-16': props.type === 'password',
-        'pr-4': props.type === 'text'
+        'pr-4': props.type === 'text',
       }"
       :value="modelValue"
-      @input="$emit('update:modelValue', ($event as any).target.value)"
+      @input="onInput($event as InputEvent)"
     />
     <button
       v-if="props.type === 'password'"
@@ -52,9 +53,13 @@ const props = defineProps<{
 
 const _type = ref<"text" | "password">(props.type);
 const toggleInputType = () => {
-  if (_type.value == "text") _type.value = "password";
-  else if (_type.value == "password") _type.value = "text";
+  if (_type.value === "text") _type.value = "password";
+  else if (_type.value === "password") _type.value = "text";
 };
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "onInput", "onKeyDown"]);
+
+const onInput = (e: InputEvent) => {
+  emit("update:modelValue", (e as any).target.value);
+};
 </script>

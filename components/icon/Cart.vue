@@ -1,6 +1,3 @@
 <template>
-    <img
-        src="~/assets/icon/icon-cart.svg"
-        alt=""
-    />
+  <img src="~/assets/icon/icon-cart.svg" alt="" />
 </template>

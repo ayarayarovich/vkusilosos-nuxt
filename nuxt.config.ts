@@ -10,18 +10,16 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      siteUrl: 'losos.ayarayarovich.tech',
-      siteName: 'Вкус И Лосось',
-      siteDescription: 'Доставка японской кухни',
-      language: 'ru',
-    }
+      siteUrl: "losos.ayarayarovich.tech",
+      siteName: "Вкус И Лосось",
+      siteDescription: "Доставка японской кухни",
+      language: "ru",
+    },
   },
   routeRules: {
-    '/': { swr: 600 }
+    "/": { swr: 600 },
   },
-  css: [
-    '~/assets/main.css'
-  ],
+  css: ["~/assets/main.css"],
   // extends: [
   //   'nuxt-seo-kit'
   // ],

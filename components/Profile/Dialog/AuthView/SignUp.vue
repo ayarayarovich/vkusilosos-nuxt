@@ -6,11 +6,11 @@
           Напишите свой номер телефона, чтобы получить код по СМС для входа
         </p>
         <InputText
+          v-model="phone"
           label="Телефон (пока без маски)"
           class="mb-4"
           name="email"
           type="text"
-          v-model="login"
           :is-error="true"
           :error-message="error"
         />
@@ -36,14 +36,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const login = ref("");
-const password = ref("");
+const phone = ref("");
 
-const { view, changeView } = inject<any>("view");
-
-const error = computed(() => {
-  if (login.value.includes("pidor")) {
-    return "Охуел?";
-  }
-});
+const error = ref<string>();
 </script>

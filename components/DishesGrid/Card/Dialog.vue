@@ -3,8 +3,8 @@
     <HeadlessDialog
       as="div"
       :initial-focus="addToCartButton"
-      @close="emit('close')"
       class="relative z-50"
+      @close="emit('close')"
     >
       <HeadlessTransitionChild
         as="template"
@@ -48,9 +48,11 @@
 
                 <div class="flex grow flex-col items-stretch justify-between">
                   <div class="text-left">
-                    <HeadlessDialogTitle as="h1" class="mb-2 text-2xl font-medium">{{
-                      props.dish.name
-                    }}</HeadlessDialogTitle>
+                    <HeadlessDialogTitle
+                      as="h1"
+                      class="mb-2 text-2xl font-medium"
+                      >{{ props.dish.name }}</HeadlessDialogTitle
+                    >
                     <p class="mb-2 text-sm">{{ props.dish.description }}</p>
                     <p class="mb-8 text-sm lg:mb-24">
                       {{ props.dish.weight }} гр
@@ -65,8 +67,8 @@
                     />
                     <SimpleButton
                       ref="addToCartButton"
-                      @click="cartStore.addDish(props.dish)"
                       class="h-9 grow rounded-lg text-[0.7rem] font-medium uppercase text-white lg:h-10 lg:text-sm"
+                      @click="cartStore.addDish(props.dish)"
                       >В корзину за {{ dish.newPrice }} &#8381;</SimpleButton
                     >
                   </div>

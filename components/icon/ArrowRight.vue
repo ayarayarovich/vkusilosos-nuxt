@@ -1,5 +1,3 @@
 <template>
-    <img
-        src="~/assets/icon/icon-arrow-right.svg"
-    />
+  <img src="~/assets/icon/icon-arrow-right.svg" />
 </template>

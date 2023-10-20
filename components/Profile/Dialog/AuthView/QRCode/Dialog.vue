@@ -1,6 +1,6 @@
 <template>
   <HeadlessTransitionRoot appear :show="show" as="template">
-    <HeadlessDialog as="div" @close="emit('close')" class="relative z-50">
+    <HeadlessDialog as="div" class="relative z-50" @close="emit('close')">
       <HeadlessTransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -28,16 +28,20 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <HeadlessDialogPanel
-              class="rounded-2xl shadow-xl transition-all"
-            >
+            <HeadlessDialogPanel class="rounded-2xl shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
                 class="flex w-full transform flex-col items-start overflow-hidden rounded-2xl bg-white p-4"
               >
-              <div class="h-56 aspect-square flex items-center justify-center">
-                  <img class="h-full aspect-square" src="~/assets/sample-qr-code.png" alt=""/>
-              </div>
+                <div
+                  class="h-56 aspect-square flex items-center justify-center"
+                >
+                  <img
+                    class="h-full aspect-square"
+                    src="~/assets/sample-qr-code.png"
+                    alt=""
+                  />
+                </div>
               </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
@@ -48,7 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { useImage } from "@vueuse/core";
 import { ref, toRefs } from "vue";
 
 const props = defineProps<{
@@ -60,5 +63,4 @@ const emit = defineEmits(["close"]);
 const dialogPanelEl = ref<HTMLElement>();
 
 const { top, bottom, right, left } = useElementBounding(dialogPanelEl);
-
 </script>

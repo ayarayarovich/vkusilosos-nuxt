@@ -12,4 +12,3 @@
     </SimpleButton>
   </div>
 </template>
-

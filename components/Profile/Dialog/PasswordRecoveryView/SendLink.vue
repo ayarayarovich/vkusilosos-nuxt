@@ -6,16 +6,19 @@
         ссылку для восстановления пароля
       </p>
       <InputText
+        v-model="email"
         label="Электронная почта"
         class="mb-4"
         name="email"
         type="text"
-        v-model="email"
         :error-message="error"
       />
     </div>
 
-    <SimpleButton class="py-5 px-8 mb-2 w-full uppercase font-bold" @click="sendLink">
+    <SimpleButton
+      class="py-5 px-8 mb-2 w-full uppercase font-bold"
+      @click="sendLink"
+    >
       Отправить
     </SimpleButton>
   </div>
@@ -27,17 +30,15 @@ import { ref } from "vue";
 const email = ref("");
 const error = ref<string>();
 
-const emit = defineEmits(['next-stage'])
+const emit = defineEmits(["next-stage"]);
 
 const sendLink = () => {
-    const emailIsValid = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value)
-    if (emailIsValid) {
-        emit('next-stage')
-        error.value = undefined
-    }
-    else {
-        error.value = 'Некорректный адрес почты'
-    }
-}
-
+  const emailIsValid = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value);
+  if (emailIsValid) {
+    emit("next-stage");
+    error.value = undefined;
+  } else {
+    error.value = "Некорректный адрес почты";
+  }
+};
 </script>
