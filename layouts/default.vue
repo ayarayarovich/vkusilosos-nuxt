@@ -17,14 +17,15 @@
         <div class="flex items-center justify-end gap-2">
           <OrderCart />
           <BonusCoins />
-          <Profile />
+          <Auth />
         </div>
       </div>
 
       <!-- desktop -->
       <div class="container mx-auto hidden px-4 lg:flex lg:items-center">
         <div class="flex flex-1 items-center justify-start gap-4">
-          <Profile />
+          <Profile v-if="isAuthenticated" />
+          <Auth v-else />
           <MyLocation />
         </div>
 
@@ -143,3 +144,11 @@
     </footer>
   </div>
 </template>
+
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useUserStore } from "~/store/user";
+
+const userStore = useUserStore();
+const { isAuthenticated } = storeToRefs(userStore);
+</script>

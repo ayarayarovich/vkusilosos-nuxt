@@ -25,7 +25,7 @@
       >
 
       <div class="flex justify-between items-center">
-        <ProfileDialogAuthViewQRCode />
+        <AuthDialogAuthViewQRCode />
         <button class="text-orange-200" @click="changeView('recovery')">
           Забыли пароль?
         </button>

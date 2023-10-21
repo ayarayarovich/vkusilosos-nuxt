@@ -8,6 +8,9 @@ export default defineNuxtConfig({
     "nuxt-headlessui",
     "@vueuse/motion/nuxt",
   ],
+  appConfig: {
+    baseAPIURL: "https://api.losos.ayarayarovich.tech",
+  },
   runtimeConfig: {
     public: {
       siteUrl: "losos.ayarayarovich.tech",

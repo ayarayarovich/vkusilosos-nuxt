@@ -1,4 +1,3 @@
-import { ProfileDialogAuthView } from '#build/components';
 <template>
   <HeadlessTransitionRoot appear :show="show" as="template">
     <HeadlessDialog as="div" class="relative z-50" @close="emit('close')">
@@ -28,21 +27,50 @@ import { ProfileDialogAuthView } from '#build/components';
             leave-to="opacity-0 -translate-x-full"
           >
             <HeadlessDialogPanel
-              class="absolute bg-white left-0 h-full w-full max-w-md shadow-xl transition-all"
+              class="absolute bg-white left-0 h-full w-full max-w-4xl shadow-xl transition-all"
             >
               <div ref="dialogPanelEl" class="h-full w-full relative">
-                <Transition name="fade" mode="out-in">
-                  <ProfileDialogAuthView v-if="view === 'auth'" />
-                  <ProfileDialogPasswordRecoveryView
-                    v-else-if="view === 'recovery'"
-                  />
-                </Transition>
-
-                <div
-                  class="absolute top-2 text-black opacity-50 text-center text-sm w-full md:hidden"
-                >
-                  Свайпай влево, чтобы закрыть
-                </div>
+                <HeadlessTabGroup vertical>
+                  <div class="flex h-full w-full">
+                    <HeadlessTabList
+                      class="flex flex-col items-stretch bg-gray"
+                    >
+                      <div class="flex items-center mt-10 mb-4 mx-6 gap-2">
+                        <IconUserDark class="h-8" />
+                        <span class="font-medium text-xl"
+                          >+7 (864) 974 - 83 - 44</span
+                        >
+                      </div>
+                      <div class="h-px bg-[#252321] opacity-10 mx-4 mb-8"></div>
+                      <ProfileDialogTab>История заказов</ProfileDialogTab>
+                      <ProfileDialogTab>Данные</ProfileDialogTab>
+                      <ProfileDialogTab>Адреса</ProfileDialogTab>
+                      <ProfileDialogTab>Бонусная система</ProfileDialogTab>
+                      <div
+                        class="h-px bg-[#252321] opacity-10 mx-4 mt-auto"
+                      ></div>
+                      <button
+                        class="my-4 py-4 px-6 text-start transition-colors hover:bg-white"
+                      >
+                        Выйти <IconExit class="h-6 inline-block" />
+                      </button>
+                    </HeadlessTabList>
+                    <HeadlessTabPanels class="grow bg-whitegray">
+                      <HeadlessTabPanel class="h-full">
+                        <ProfileDialogOrdersHistory />
+                      </HeadlessTabPanel>
+                      <HeadlessTabPanel class="h-full">
+                        <ProfileDialogInfo />
+                      </HeadlessTabPanel>
+                      <HeadlessTabPanel class="h-full">
+                        <ProfileDialogAddresses />
+                      </HeadlessTabPanel>
+                      <HeadlessTabPanel class="h-full">
+                        <ProfileDialogBonuses />
+                      </HeadlessTabPanel>
+                    </HeadlessTabPanels>
+                  </div>
+                </HeadlessTabGroup>
               </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
@@ -67,9 +95,9 @@ const { top, bottom, width } = useElementBounding(dialogPanelEl, {
   windowScroll: false,
 });
 
-type ProfileDialogViewType = "auth" | "recovery";
-const view = ref<ProfileDialogViewType>("auth");
-const changeView = (newView: ProfileDialogViewType) => {
+type AuthDialogViewType = "auth" | "recovery";
+const view = ref<AuthDialogViewType>("auth");
+const changeView = (newView: AuthDialogViewType) => {
   view.value = newView;
 };
 

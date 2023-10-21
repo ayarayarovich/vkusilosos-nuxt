@@ -1,4 +1,3 @@
-import { ProfileDialogPasswordRecoveryViewSendLink } from '#build/components';
 <template>
   <div class="relative bg-[#fdfdfd] h-full flex flex-col items-stretch">
     <div>
@@ -10,11 +9,11 @@ import { ProfileDialogPasswordRecoveryViewSendLink } from '#build/components';
 
     <div class="grow mx-8">
       <Transition name="fade" mode="out-in">
-        <ProfileDialogPasswordRecoveryViewSendLink
+        <AuthDialogPasswordRecoveryViewSendLink
           v-if="stage === 'send-link'"
           @next-stage="stage = 'resend-link'"
         />
-        <ProfileDialogPasswordRecoveryViewResendLink
+        <AuthDialogPasswordRecoveryViewResendLink
           v-else-if="stage === 'resend-link'"
         />
       </Transition>

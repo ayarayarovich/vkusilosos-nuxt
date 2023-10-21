@@ -32,8 +32,8 @@
 
     <div class="grow mx-8">
       <Transition name="fade" mode="out-in">
-        <ProfileDialogAuthViewSignIn v-if="action === 'signin'" />
-        <ProfileDialogAuthViewSignUp v-else-if="action === 'signup'" />
+        <AuthDialogAuthViewSignIn v-if="action === 'signin'" />
+        <AuthDialogAuthViewSignUp v-else-if="action === 'signup'" />
       </Transition>
     </div>
   </div>
