@@ -22,38 +22,46 @@
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
-            enter-from="opacity-0 scale-95"
-            enter-to="opacity-100 scale-100"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
             leave="duration-200 ease-in"
-            leave-from="opacity-100 scale-100"
-            leave-to="opacity-0 scale-95"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
           >
             <HeadlessDialogPanel
-              class="w-full max-w-md rounded-2xl shadow-xl transition-all"
+              class="w-full max-w-sm rounded-2xl shadow-xl transition-all"
             >
               <div
                 ref="dialogPanelEl"
-                class="flex w-full transform flex-col items-start overflow-hidden rounded-2xl bg-white p-6"
+                class="flex flex-col w-full transform items-stretch justify-between overflow-hidden gap-4 rounded-2xl p-8 bg-whitegray"
               >
-                <HeadlessDialogTitle
-                  as="h3"
-                  class="text-lg font-medium leading-6 text-black"
-                >
-                  Укажите адрес
-                </HeadlessDialogTitle>
-                <div class="mt-2">
-                  <p class="text-sm text-black">Типо указали адрес ...</p>
-                </div>
+                <h1 class="text-center font-medium w-full text-lg mb-2">
+                  Напишите нам
+                </h1>
 
-                <div class="mt-4 self-end">
-                  <button
-                    type="button"
-                    class="border-transparent flex justify-center rounded-md border bg-gradient-to-t from-orange-200 to-orange-400 px-4 py-2 text-sm font-medium text-white transition-colors hover:to-orange-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-200 focus-visible:ring-offset-2"
-                    @click="selectAddress"
-                  >
-                    Готово
-                  </button>
-                </div>
+                <InputText v-model="name" label="Имя" name="name" type="text" />
+                <InputText
+                  v-model="email"
+                  label="Электронная почта"
+                  name="email"
+                  type="text"
+                />
+                <InputText
+                  v-model="phone"
+                  label="Телефон"
+                  name="phone"
+                  type="text"
+                />
+                <InputText
+                  v-model="comment"
+                  label="Коментарий"
+                  name="comment"
+                  type="text"
+                />
+
+                <SimpleButton class="w-full py-4 px-4">
+                  Отправить
+                </SimpleButton>
               </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
@@ -65,7 +73,6 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from "vue";
-import { useLocationStore } from "~/store/location";
 
 const props = defineProps<{
   show?: boolean;
@@ -73,13 +80,12 @@ const props = defineProps<{
 const { show } = toRefs(props);
 const emit = defineEmits(["close"]);
 
-const locationStore = useLocationStore();
 const dialogPanelEl = ref<HTMLElement>();
 
 const { top, bottom, right, left } = useElementBounding(dialogPanelEl);
 
-const selectAddress = () => {
-  locationStore.determineUsersLocation();
-  emit("close");
-};
+const name = ref("");
+const email = ref("");
+const phone = ref("");
+const comment = ref("");
 </script>

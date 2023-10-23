@@ -17,17 +17,22 @@
     </label>
     <input
       :type="_type"
+      :disabled="locked"
       class="w-full outline-none focus:border-orange-200 transition-all bg-white border-2 border-transparent rounded-xl pl-4 py-8 pb-4 leading-none text-black shadow-main"
       :class="{
         '!border-red': props.errorMessage,
-        'pr-16': props.type === 'password',
+        'pr-16': props.type === 'password' || !!locked,
         'pr-4': props.type === 'text',
       }"
       :value="modelValue"
       @input="onInput($event as InputEvent)"
     />
+    <IconLock
+      v-if="!!locked"
+      class="absolute top-1/2 -translate-y-1/2 right-4 h-6"
+    />
     <button
-      v-if="props.type === 'password'"
+      v-else-if="props.type === 'password'"
       class="absolute top-1/2 -translate-y-1/2 right-4"
       @click.prevent="toggleInputType"
     >
@@ -47,6 +52,7 @@ const props = defineProps<{
   modelValue: string;
   label: string;
   name: string;
+  locked?: boolean;
   errorMessage?: string;
   type: "text" | "password";
 }>();

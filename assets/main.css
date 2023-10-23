@@ -49,3 +49,7 @@
   --default: theme(colors.white);
   background-color: var(--current-bg-color, var(--default));
 }
+
+body {
+  @apply bg-whitegray;
+}

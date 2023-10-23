@@ -42,7 +42,7 @@
       </div>
     </header>
 
-    <div class="flex-1">
+    <div class="flex-1 basis-0">
       <RouterView />
     </div>
 
@@ -80,8 +80,8 @@
             <RouterLink to="/promo">АКЦИИ</RouterLink>
             <RouterLink to="/delivery">УСЛОВИЯ ДОСТАВКИ</RouterLink>
             <RouterLink to="/payment">СПОСОБ ОПЛАТЫ</RouterLink>
-            <RouterLink to="/feedback">ОСТАВИТЬ ОТЗЫВ</RouterLink>
-            <RouterLink to="/message-us">НАПИШИТЕ НАМ</RouterLink>
+            <LeaveFeedback />
+            <WriteUs />
             <RouterLink to="/profile">ЛИЧНЫЙ КАБИНЕТ</RouterLink>
           </div>
         </div>
@@ -101,8 +101,8 @@
           <div
             class="mr-auto flex flex-col gap-2 text-sm font-normal uppercase"
           >
-            <RouterLink to="/feedback">ОСТАВИТЬ ОТЗЫВ</RouterLink>
-            <RouterLink to="/message-us">НАПИШИТЕ НАМ</RouterLink>
+            <LeaveFeedback />
+            <WriteUs />
             <RouterLink to="/profile">ЛИЧНЫЙ КАБИНЕТ</RouterLink>
           </div>
           <div class="flex flex-col gap-2 text-sm font-normal">

@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    "/": { swr: 600 },
+    "/": { swr: 60 },
   },
   css: ["~/assets/main.css"],
   // extends: [
