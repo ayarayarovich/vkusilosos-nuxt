@@ -60,7 +60,7 @@
                   </div>
                   <div class="flex gap-4">
                     <DishAdder
-                      class="h-9 w-20 text-black lg:h-10 lg:w-32"
+                      class="h-9 w-24 text-black lg:h-10 lg:w-32"
                       :value="cartStore.dishesCount[props.dish.id]"
                       @increment="cartStore.addDish(props.dish)"
                       @decrement="cartStore.removeOne(props.dish.id)"

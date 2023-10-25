@@ -17,7 +17,8 @@
         <div class="flex items-center justify-end gap-2">
           <OrderCart />
           <BonusCoins />
-          <Auth />
+          <Test v-if="isAuthenticated" />
+          <Auth v-else />
         </div>
       </div>
 

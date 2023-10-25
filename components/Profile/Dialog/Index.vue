@@ -51,6 +51,7 @@
                       ></div>
                       <button
                         class="my-4 py-4 px-6 text-start transition-colors hover:bg-white"
+                        @click="isAuthenticated = false"
                       >
                         Выйти <IconExit class="h-6 inline-block" />
                       </button>
@@ -81,13 +82,18 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { ref, toRefs } from "vue";
+import { useUserStore } from "~/store/user";
 
 const props = defineProps<{
   show?: boolean;
 }>();
 const { show } = toRefs(props);
 const emit = defineEmits(["close"]);
+
+const userStore = useUserStore();
+const { isAuthenticated } = storeToRefs(userStore);
 
 const dialogPanelEl = ref();
 const { top, bottom, width } = useElementBounding(dialogPanelEl, {

@@ -20,9 +20,12 @@
         :error-message="error"
       />
 
-      <SimpleButton class="py-5 px-8 mb-2 w-full uppercase font-bold"
-        >Войти</SimpleButton
+      <SimpleButton
+        class="py-5 px-8 mb-2 w-full uppercase font-bold"
+        @click="isAuthenticated = true"
       >
+        Войти
+      </SimpleButton>
 
       <div class="flex justify-between items-center">
         <AuthDialogAuthViewQRCode />
@@ -48,10 +51,15 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { ref } from "vue";
+import { useUserStore } from "~/store/user";
 
 const login = ref("");
 const password = ref("");
+
+const userStore = useUserStore();
+const { isAuthenticated } = storeToRefs(userStore);
 
 const { changeView } = inject<any>("view");
 

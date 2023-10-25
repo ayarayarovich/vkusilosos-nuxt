@@ -1,14 +1,18 @@
 <template>
   <div class="flex flex-col items-stretch h-full">
-    <div class="flex items-start flex-col mt-10 mx-8 mb-4">
-      <h2 class="block text-xl font-medium mb-2">Данные</h2>
-    </div>
+    <button
+      class="flex items-center mt-10 mx-8 mb-4 gap-2"
+      @click="emit('go-back')"
+    >
+      <IconArrowRight class="h-8 md:hidden invert rotate-180" />
+      <h2 class="block text-xl font-medium leading-none">Данные</h2>
+    </button>
 
     <div class="h-px bg-black opacity-10 mx-4 mb-4"></div>
 
     <div class="grow h-0 mb-4 mx-8 relative">
       <div class="h-full overflow-y-auto py-4 scrollbar-hide scroll-smooth">
-        <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <InputText
             v-model="phone"
             type="text"
@@ -93,6 +97,8 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(["go-back"]);
+
 const phone = ref("+7 (864) 974 - 83 - 44");
 const name = ref("Валентина");
 const email = ref("valentina97@gmail.com");

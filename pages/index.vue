@@ -39,7 +39,7 @@ useFetch<Category[]>("https://api.losos.ayarayarovich.tech/api/categories", {
       </div>
     </div>
 
-    <div class="relative lg:container lg:mx-auto my-4 lg:my-8">
+    <div class="relative md:container md:mx-auto my-4 md:my-8">
       <Stories />
     </div>
 
@@ -60,7 +60,7 @@ useFetch<Category[]>("https://api.losos.ayarayarovich.tech/api/categories", {
       />
     </div>
 
-    <div class="container mx-auto px-4 my-24">
+    <div class="hidden lg:block container mx-auto px-4 my-24">
       <div class="relative w-full rounded-xl px-24 py-24 bg-white shadow-main">
         <img
           class="absolute top-0 left-0 h-full rounded-xl w-full select-none pointer-events-none"

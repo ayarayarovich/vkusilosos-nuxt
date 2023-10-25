@@ -1,10 +1,12 @@
 <template>
   <div class="flex flex-col items-stretch h-full">
-    <div class="flex items-start flex-col mt-10 mx-8 mb-4">
-      <h2 class="block text-xl font-medium mb-2">
-        Адреса <input v-model="isEmpty" type="checkbox" />
-      </h2>
-    </div>
+    <button
+      class="flex items-center mt-10 mx-8 mb-4 gap-2"
+      @click="emit('go-back')"
+    >
+      <IconArrowRight class="h-8 md:hidden invert rotate-180" />
+      <h2 class="block text-xl font-medium leading-none">Адреса</h2>
+    </button>
 
     <div class="h-px bg-black opacity-10 mx-4 mb-4"></div>
 
@@ -42,7 +44,7 @@
                   <div class="opacity-50 text-sm">Москва</div>
                   <div>проспект Строителей 29, под 5, эт 2, кв 55</div>
                 </div>
-                <div class="flex h-6 items-center gap-4">
+                <div class="flex h-6 items-center shrink-0 gap-1 md:gap-4">
                   <button
                     class="focus:ring-2 ring-offset-2 transition-shadow ring-orange-200 rounded-lg p-1 outline-none"
                   >
@@ -77,5 +79,7 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(["go-back"]);
+
 const isEmpty = ref(false);
 </script>

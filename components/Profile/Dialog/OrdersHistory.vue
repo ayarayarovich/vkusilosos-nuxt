@@ -1,17 +1,20 @@
 <template>
   <div class="flex flex-col items-stretch h-full">
     <div class="flex items-start flex-col mt-10 mx-8 mb-4">
-      <h2 class="block text-xl font-medium mb-2">История заказов</h2>
-      <h3 class="block text-sm font-medium text-black opacity-50">
+      <button class="flex items-center gap-2" @click="emit('go-back')">
+        <IconArrowRight class="h-8 md:hidden invert rotate-180" />
+        <h2 class="block text-xl font-medium leading-none">История заказов</h2>
+      </button>
+      <h3 class="block ml-10 md:ml-0 text-sm font-medium text-black opacity-50">
         Последние 20 заказов за последние 90 дней
         <input v-model="isEmpty" type="checkbox" />
       </h3>
     </div>
 
-    <div class="h-px bg-black opacity-10 mx-4 mb-8"></div>
+    <div class="h-px bg-black opacity-10 mx-4"></div>
 
     <Transition name="fade" mode="out-in">
-      <div v-if="isEmpty" class="grow h-0 flex items-center justify-center">
+      <div v-if="isEmpty" class="grow h-0 p-8 flex items-center justify-center">
         <div>
           <img
             src="~/assets/samoe-vremya-zakazat.svg"
@@ -31,11 +34,14 @@
         </div>
       </div>
 
-      <div v-else class="grow h-0 flex flex-col items-stretch">
-        <div class="mb-12 mt-4 mx-8 bg-white shadow-main rounded-xl p-4">
+      <div
+        v-else
+        class="grow h-0 flex flex-col items-stretch text-xs md:text-base gap-8 md:gap-16 mt-8 md:mt-16"
+      >
+        <div class="mx-8 bg-white shadow-main rounded-xl p-4">
           <div class="flex items-center justify-between mb-4">
             <div>Активный заказ</div>
-            <div class="text-[#999700] mr-4">Готовится</div>
+            <div class="text-[#999700] md:mr-4">Готовится</div>
           </div>
           <div class="flex w-full">
             <div class="grow-[1] shrink-0 basis-0">222</div>
@@ -88,5 +94,6 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(["go-back"]);
 const isEmpty = ref(false);
 </script>
