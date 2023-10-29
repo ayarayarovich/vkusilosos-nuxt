@@ -3,10 +3,10 @@ name: deploy
 on:
   push:
     tags:
-      - "v*.*.*"
+      - 'v*.*.*'
   pull_request:
     tags:
-      - "v*.*.*"
+      - 'v*.*.*'
 
 jobs:
   docker:

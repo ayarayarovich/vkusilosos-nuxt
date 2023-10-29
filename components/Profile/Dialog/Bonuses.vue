@@ -13,5 +13,5 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["go-back"]);
+const emit = defineEmits(['go-back'])
 </script>

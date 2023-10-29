@@ -1,3 +1,6 @@
 <template>
-  <img src="~/assets/icon/icon-eye.svg" alt="" />
+  <img
+    src="~/assets/icon/icon-eye.svg"
+    alt=""
+  />
 </template>

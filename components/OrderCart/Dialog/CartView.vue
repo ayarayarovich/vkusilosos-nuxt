@@ -1,14 +1,17 @@
 <template>
   <div class="relative h-full w-full">
-    <Transition name="fade" mode="out-in">
+    <Transition
+      name="fade"
+      mode="out-in"
+    >
       <div
         v-if="itemsCount > 0"
         class="relative flex h-full w-full transform flex-col items-start overflow-hidden bg-white py-8"
       >
-        <strong class="px-4 text-2xl font-medium"
-          >{{ itemsCount }} {{ pluralizedItemsInCartCountWord }} на
-          {{ displayTotalCost }} &#8381;</strong
-        >
+        <strong class="px-4 text-2xl font-medium">
+          {{ itemsCount }} {{ pluralizedItemsInCartCountWord }} на <AnimatedNumber :number="totalCost" /> &#8381;
+        </strong>
+
         <p class="mt-2 px-4 opacity-50">Бесплатная доставка</p>
         <div class="relative my-4 flex w-full grow flex-col items-stretch py-4">
           <div
@@ -28,24 +31,18 @@
                 :src="dish.img"
                 alt=""
               />
-              <div
-                class="flex grow flex-col items-stretch justify-between self-stretch"
-              >
+              <div class="flex grow flex-col items-stretch justify-between self-stretch">
                 <div class="flex items-start justify-between">
                   <div>
                     <p class="text-black">{{ dish.name }}</p>
-                    <p class="text-sm text-black opacity-50">
-                      {{ dish.weight }} гр
-                    </p>
+                    <p class="text-sm text-black opacity-50">{{ dish.weight }} гр</p>
                   </div>
                   <button @click="cartStore.removeAll(dish.id)">
                     <IconClose class="h-6" />
                   </button>
                 </div>
                 <div class="flex items-end justify-between">
-                  <p class="mt-auto text-lg text-black">
-                    {{ dish.newPrice }} &#8381;
-                  </p>
+                  <p class="mt-auto text-lg text-black">{{ dish.newPrice }} &#8381;</p>
                   <div>
                     <DishAdder
                       class="h-8 w-28 md:w-32"
@@ -63,7 +60,7 @@
         <div class="w-full px-4 pt-8 font-medium shadow-main">
           <div class="flex items-center justify-between">
             <span>{{ itemsCount }} {{ pluralizedItemsInCartCountWord }}</span>
-            <span>{{ displayTotalCost }} &#8381;</span>
+            <span><AnimatedNumber :number="totalCost" /> &#8381;</span>
           </div>
 
           <div class="flex items-center justify-between">
@@ -81,17 +78,20 @@
         </div>
       </div>
 
-      <div v-else class="h-full flex items-center justify-center">
+      <div
+        v-else
+        class="h-full flex items-center justify-center"
+      >
         <div
           class="bg-blue-100 relative px-1 max-w-xs lg:max-w-sm pt-12 pb-20 lg:pb-24 rounded-xl text-center flex flex-col items-center"
         >
-          <img class="h-12 lg:h-14" src="/fish.svg" alt="" />
-          <strong class="uppercase font-bold text-base lg:text-xl mt-2">
-            ой, кажется, Корзина пуста
-          </strong>
-          <p class="text-sm mt-4">
-            Ваша корзина пуста, откройте «Меню» и выберите понравившийся товар
-          </p>
+          <img
+            class="h-12 lg:h-14"
+            src="/fish.svg"
+            alt=""
+          />
+          <strong class="uppercase font-bold text-base lg:text-xl mt-2"> ой, кажется, Корзина пуста </strong>
+          <p class="text-sm mt-4">Ваша корзина пуста, откройте «Меню» и выберите понравившийся товар</p>
           <p class="text-sm mt-2">Мы доставим ваш заказ от 699 ₽</p>
 
           <img
@@ -111,34 +111,32 @@
       </div>
     </Transition>
 
-    <span
-      class="absolute bottom-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden"
+    <span class="absolute bottom-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden"
       >Свайпай вправо, чтобы закрыть</span
     >
   </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { computed } from "vue";
-import { useImage } from "@vueuse/core";
-import { useCartStore } from "~/store/cart";
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+import { useImage } from '@vueuse/core'
+import { useCartStore } from '~/store/cart'
+import AnimatedNumber from '~/components/AnimatedNumber.vue'
 
-const emit = defineEmits(["proccedToPayment"]);
+const emit = defineEmits(['proccedToPayment'])
 
-const cartStore = useCartStore();
-const { itemsCount, totalCost, dishes, dishesCount } = storeToRefs(cartStore);
+const cartStore = useCartStore()
+const { itemsCount, totalCost, dishes, dishesCount } = storeToRefs(cartStore)
 
 const pluralizedItemsInCartCountWord = computed(() => {
-  if (itemsCount.value === 1) return "товар";
-  if (itemsCount.value === 2) return "товара";
-  if (itemsCount.value === 3) return "товара";
-  if (itemsCount.value === 4) return "товара";
-  return "товаров";
-});
+  if (itemsCount.value === 1) return 'товар'
+  if (itemsCount.value === 2) return 'товара'
+  if (itemsCount.value === 3) return 'товара'
+  if (itemsCount.value === 4) return 'товара'
+  return 'товаров'
+})
 
-const { isReady: isCupReady } = useImage({ src: "/upset-cup.svg" });
-const { isReady: isSushiReady } = useImage({ src: "/upset-sushi.svg" });
-
-const displayTotalCost = totalCost;
+const { isReady: isCupReady } = useImage({ src: '/upset-cup.svg' })
+const { isReady: isSushiReady } = useImage({ src: '/upset-sushi.svg' })
 </script>

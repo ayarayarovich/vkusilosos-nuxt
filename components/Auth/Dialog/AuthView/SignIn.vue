@@ -29,7 +29,10 @@
 
       <div class="flex justify-between items-center">
         <AuthDialogAuthViewQRCode />
-        <button class="text-orange-200" @click="changeView('recovery')">
+        <button
+          class="text-orange-200"
+          @click="changeView('recovery')"
+        >
           Забыли пароль?
         </button>
       </div>
@@ -51,21 +54,21 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { ref } from "vue";
-import { useUserStore } from "~/store/user";
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
+import { useUserStore } from '~/store/user'
 
-const login = ref("");
-const password = ref("");
+const login = ref('')
+const password = ref('')
 
-const userStore = useUserStore();
-const { isAuthenticated } = storeToRefs(userStore);
+const userStore = useUserStore()
+const { isAuthenticated } = storeToRefs(userStore)
 
-const { changeView } = inject<any>("view");
+const { changeView } = inject<any>('view')
 
 const error = computed(() => {
-  if (login.value.includes("pidor")) {
-    return "Охуел?";
+  if (login.value.includes('pidor')) {
+    return 'Охуел?'
   }
-});
+})
 </script>

@@ -1,37 +1,48 @@
 <template>
-  <div class="py-16 h-full flex items-center justify-center">
-    <div class="flex items-stretch gap-8">
-      <div class="">
-        <img
-          :src="currentArticle?.imgURL"
-          alt=""
-          class="h-[32rem] aspect-[3/4] object-cover object-center rounded-xl"
-        />
-      </div>
-      <div class="bg-white shadow-main p-8 rounded-xl w-[42rem]">
-        <div class="flex items-center justify-between mb-4">
-          <h1 class="text-orange-200 font-bold uppercase">
-            {{ currentArticle?.title }}
-          </h1>
-          <p class="text-sm text-black opacity-50">
-            {{ currentArticle?.date }}
-          </p>
+  <div class="container mx-auto px-4 flex flex-col h-full items-stretch">
+    <div
+      class="my-6 flex items-center leading-none gap-2"
+    >
+      <RouterLink to="/">Главная</RouterLink>
+      <span>/</span>
+      <RouterLink to="/blog">Блог</RouterLink>
+      <span>/</span>
+      <RouterLink :to="`/blog/${currentArticle?.id}`">{{ currentArticle?.title }}</RouterLink>
+    </div>
+    <div class="flex items-center justify-center grow">
+      <div class="flex items-stretch gap-8 py-12">
+        <div class="">
+          <img
+            :src="currentArticle?.imgURL"
+            alt=""
+            class="h-[32rem] aspect-[3/4] object-cover object-center rounded-xl"
+          />
         </div>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
-        <p>theas</p>
+        <div class="bg-white shadow-main p-8 rounded-xl w-[42rem]">
+          <div class="flex items-center justify-between mb-4">
+            <h1 class="text-orange-200 font-bold uppercase">
+              {{ currentArticle?.title }}
+            </h1>
+            <p class="text-sm text-black opacity-50">
+              {{ currentArticle?.date }}
+            </p>
+          </div>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+          <p>theas</p>
+        </div>
       </div>
     </div>
   </div>
@@ -68,6 +79,6 @@ const articles = ref([
 const route = useRoute();
 
 const currentArticle = computed(() =>
-  articles.value.find((el) => el.id === Number(route.params.id)),
+  articles.value.find((el) => el.id === Number(route.params.id))
 );
 </script>

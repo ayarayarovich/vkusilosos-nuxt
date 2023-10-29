@@ -48,7 +48,7 @@
             <div class="grow-[2] shrink-0 basis-0">24.03.2023, 20:08</div>
             <div class="grow-[1] shrink-0 basis-0">5875 &#8381;</div>
             <div class="grow-[1] shrink-0 basis-0">
-              <button class="text-orange-200">Посмотреть</button>
+              <ProfileDialogOrdersHistoryReceipt :order-id="222" />
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@
                   <div class="grow-[2] shrink-0 basis-0">24.03.2023, 20:08</div>
                   <div class="grow-[1] shrink-0 basis-0">5875 &#8381;</div>
                   <div class="grow-[1] shrink-0 basis-0">
-                    <button class="text-orange-200">Посмотреть</button>
+                    <ProfileDialogOrdersHistoryReceipt :order-id="index"/>
                   </div>
                 </div>
               </div>

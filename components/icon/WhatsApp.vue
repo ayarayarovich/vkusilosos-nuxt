@@ -1,3 +1,6 @@
 <template>
-  <img src="~/assets/icon/icon-whatsapp.svg" alt="" />
+  <img
+    src="~/assets/icon/icon-whatsapp.svg"
+    alt=""
+  />
 </template>

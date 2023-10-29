@@ -1,11 +1,14 @@
 <template>
   <div class="h-full w-full flex flex-col items-stretch justify-end">
-    <div class="h-full w-full bg-whitegray" @click.stop="">
+    <div
+      class="h-full w-full bg-whitegray"
+      @click.stop=""
+    >
       <ProfileDialogBonuses @go-back="emit('go-back')" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["go-back"]);
+const emit = defineEmits(['go-back'])
 </script>

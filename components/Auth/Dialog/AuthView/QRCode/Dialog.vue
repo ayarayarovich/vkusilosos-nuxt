@@ -1,6 +1,14 @@
 <template>
-  <HeadlessTransitionRoot appear :show="show" as="template">
-    <HeadlessDialog as="div" class="relative z-50" @close="emit('close')">
+  <HeadlessTransitionRoot
+    appear
+    :show="show"
+    as="template"
+  >
+    <HeadlessDialog
+      as="div"
+      class="relative z-50"
+      @close="emit('close')"
+    >
       <HeadlessTransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -13,12 +21,15 @@
         <div class="fixed inset-0 bg-black bg-opacity-25" />
       </HeadlessTransitionChild>
 
-      <MouseFollower :top="top" :bottom="bottom" :right="right" :left="left" />
+      <MouseFollower
+        :top="top"
+        :bottom="bottom"
+        :right="right"
+        :left="left"
+      />
 
       <div class="fixed inset-0 overflow-y-auto">
-        <div
-          class="flex min-h-full items-center justify-center p-4 text-center"
-        >
+        <div class="flex min-h-full items-center justify-center p-4 text-center">
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -33,9 +44,7 @@
                 ref="dialogPanelEl"
                 class="flex w-full transform flex-col items-start overflow-hidden rounded-2xl bg-white p-4"
               >
-                <div
-                  class="h-56 aspect-square flex items-center justify-center"
-                >
+                <div class="h-56 aspect-square flex items-center justify-center">
                   <img
                     class="h-full aspect-square"
                     src="~/assets/sample-qr-code.png"
@@ -52,15 +61,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from "vue";
+import { ref, toRefs } from 'vue'
 
 const props = defineProps<{
-  show?: boolean;
-}>();
-const { show } = toRefs(props);
-const emit = defineEmits(["close"]);
+  show?: boolean
+}>()
+const { show } = toRefs(props)
+const emit = defineEmits(['close'])
 
-const dialogPanelEl = ref<HTMLElement>();
+const dialogPanelEl = ref<HTMLElement>()
 
-const { top, bottom, right, left } = useElementBounding(dialogPanelEl);
+const { top, bottom, right, left } = useElementBounding(dialogPanelEl)
 </script>

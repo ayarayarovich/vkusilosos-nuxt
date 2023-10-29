@@ -2,9 +2,7 @@
   <div class="h-full w-full flex flex-col items-stretch justify-between">
     <div class="grow flex flex-col items-stretch justify-between pb-6">
       <div>
-        <p class="mb-4">
-          Напишите свой номер телефона, чтобы получить код по СМС для входа
-        </p>
+        <p class="mb-4">Напишите свой номер телефона, чтобы получить код по СМС для входа</p>
         <InputText
           v-model="phone"
           label="Телефон (пока без маски)"
@@ -16,16 +14,17 @@
         />
       </div>
 
-      <SimpleButton class="py-5 px-8 mb-2 w-full uppercase font-bold"
-        >Войти</SimpleButton
-      >
+      <SimpleButton class="py-5 px-8 mb-2 w-full uppercase font-bold">Войти</SimpleButton>
     </div>
 
     <div class="text-xs">
       <div class="h-px bg-gray"></div>
       <div class="py-8 text-center">
         Авторизуясь на сайте, я соглашаюсь с
-        <RouterLink to="#" class="text-orange-200">
+        <RouterLink
+          to="#"
+          class="text-orange-200"
+        >
           условиями использования
         </RouterLink>
       </div>
@@ -34,9 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const phone = ref("");
+const phone = ref('')
 
-const error = ref<string>();
+const error = ref<string>()
 </script>

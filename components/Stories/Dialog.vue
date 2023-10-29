@@ -1,6 +1,13 @@
 <template>
-  <HeadlessTransitionRoot appear :show="show" as="template">
-    <HeadlessDialog as="div" class="relative z-50">
+  <HeadlessTransitionRoot
+    appear
+    :show="show"
+    as="template"
+  >
+    <HeadlessDialog
+      as="div"
+      class="relative z-50"
+    >
       <HeadlessTransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -21,9 +28,7 @@
           <IconCloseGray class="h-10" />
         </button>
 
-        <div
-          class="flex flex-col items-stretch h-full py-8 md:py-24 text-center"
-        >
+        <div class="flex flex-col items-stretch h-full py-8 md:py-24 text-center">
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -33,9 +38,7 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <HeadlessDialogPanel
-              class="flex items-center justify-center relative h-full transition-all"
-            >
+            <HeadlessDialogPanel class="flex items-center justify-center relative h-full transition-all">
               <div
                 ref="storylineContainer"
                 class="relative flex items-center justify-center h-full w-full"
@@ -81,61 +84,59 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { toRefs, ref, watch } from "vue";
-import { onKeyUp } from "@vueuse/core";
-import { useStoriesStore } from "~/store/stories";
+import { storeToRefs } from 'pinia'
+import { toRefs, ref, watch } from 'vue'
+import { onKeyUp } from '@vueuse/core'
+import { useStoriesStore } from '~/store/stories'
 
-const storiesStore = useStoriesStore();
-const { currentStoriesID } = storeToRefs(storiesStore);
+const storiesStore = useStoriesStore()
+const { currentStoriesID } = storeToRefs(storiesStore)
 
 const props = defineProps<{
-  show?: boolean;
-}>();
+  show?: boolean
+}>()
 
-const { show } = toRefs(props);
-const emit = defineEmits(["close"]);
+const { show } = toRefs(props)
+const emit = defineEmits(['close'])
 
-const isTall = ref(false);
+const isTall = ref(false)
 
-const storylineContainer = ref();
+const storylineContainer = ref()
 useResizeObserver(storylineContainer, ([entry]) => {
-  const { width, height } = entry.contentRect;
-  isTall.value = width / height < 9 / 16;
-});
+  const { width, height } = entry.contentRect
+  isTall.value = width / height < 9 / 16
+})
 
-const transitionName = ref<"storyline-fade-right" | "storyline-fade-left">(
-  "storyline-fade-left",
-);
+const transitionName = ref<'storyline-fade-right' | 'storyline-fade-left'>('storyline-fade-left')
 
 watch([currentStoriesID], ([to], [from]) => {
   if (to && from) {
     if (to > from) {
-      transitionName.value = "storyline-fade-left";
+      transitionName.value = 'storyline-fade-left'
     } else {
-      transitionName.value = "storyline-fade-right";
+      transitionName.value = 'storyline-fade-right'
     }
   }
-});
+})
 
 const storylineReachedEnd = () => {
-  storiesStore.nextStoryline();
-};
+  storiesStore.nextStoryline()
+}
 
 const storylineReachedStart = () => {
-  storiesStore.prevStoryline();
-};
+  storiesStore.prevStoryline()
+}
 
-onKeyUp("Escape", () => {
-  emit("close");
-});
+onKeyUp('Escape', () => {
+  emit('close')
+})
 
-onKeyUp("ArrowLeft", () => {
-  storiesStore.prevStoryline();
-});
-onKeyUp("ArrowRight", () => {
-  storiesStore.nextStoryline();
-});
+onKeyUp('ArrowLeft', () => {
+  storiesStore.prevStoryline()
+})
+onKeyUp('ArrowRight', () => {
+  storiesStore.nextStoryline()
+})
 </script>
 
 <style>

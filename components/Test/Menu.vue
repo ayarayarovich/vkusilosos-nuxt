@@ -3,7 +3,10 @@
     class="h-full flex flex-col items-stretch justify-end w-full"
     @click.stop="emit('close')"
   >
-    <div class="bg-white rounded-t-xl" @click.stop="">
+    <div
+      class="bg-white rounded-t-xl"
+      @click.stop=""
+    >
       <div
         ref="draggingArea"
         class="flex pt-2 pb-4 items-center justify-center"
@@ -62,20 +65,20 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useUserStore } from "~/store/user";
-const emit = defineEmits(["close", "change-view"]);
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/store/user'
+const emit = defineEmits(['close', 'change-view'])
 
-const userStore = useUserStore();
-const { isAuthenticated } = storeToRefs(userStore);
+const userStore = useUserStore()
+const { isAuthenticated } = storeToRefs(userStore)
 
-const draggingArea = ref();
+const draggingArea = ref()
 
 useSwipe(draggingArea, {
-  onSwipeEnd(e, direction) {
-    if (direction === "down") {
-      emit("close");
+  onSwipeEnd(_, direction) {
+    if (direction === 'down') {
+      emit('close')
     }
   },
-});
+})
 </script>

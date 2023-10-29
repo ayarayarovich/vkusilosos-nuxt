@@ -1,6 +1,14 @@
 <template>
-  <HeadlessTransitionRoot appear :show="show" as="template">
-    <HeadlessDialog as="div" class="relative z-50" @close="emit('close')">
+  <HeadlessTransitionRoot
+    appear
+    :show="show"
+    as="template"
+  >
+    <HeadlessDialog
+      as="div"
+      class="relative z-50"
+      @close="emit('close')"
+    >
       <HeadlessTransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -13,12 +21,15 @@
         <div class="fixed inset-0 bg-black bg-opacity-25" />
       </HeadlessTransitionChild>
 
-      <MouseFollower :top="top" :bottom="bottom" :right="right" :left="left" />
+      <MouseFollower
+        :top="top"
+        :bottom="bottom"
+        :right="right"
+        :left="left"
+      />
 
       <div class="fixed inset-0 overflow-y-auto">
-        <div
-          class="flex min-h-full items-center justify-center p-4 text-center"
-        >
+        <div class="flex min-h-full items-center justify-center p-4 text-center">
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -28,15 +39,13 @@
             leave-from="opacity-100"
             leave-to="opacity-0"
           >
-            <HeadlessDialogPanel
-              class="w-full max-w-5xl rounded-2xl shadow-xl transition-all"
-            >
+            <HeadlessDialogPanel class="w-full max-w-5xl rounded-2xl shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
                 class="flex w-full transform items-stretch justify-between overflow-hidden rounded-2xl bg-whitegray"
               >
                 <ClientOnly>
-                  <div class="p-8 w-full flex flex-col items-stretch">
+                  <div class="p-8 w-full flex flex-col items-stretch shrink">
                     <div class="rounded-xl bg-current bg-gray p-1.5 text-sm">
                       <div class="relative">
                         <div
@@ -62,13 +71,12 @@
                     </div>
 
                     <div class="grow h-0">
-                      <Transition name="fade" mode="out-in">
-                        <MyLocationDialogRestaurants
-                          v-if="reciptionWay === 'restaurant'"
-                        />
-                        <MyLocationDialogDelivery
-                          v-else-if="reciptionWay === 'delivery'"
-                        />
+                      <Transition
+                        name="fade"
+                        mode="out-in"
+                      >
+                        <MyLocationDialogRestaurants v-if="reciptionWay === 'restaurant'" />
+                        <MyLocationDialogDelivery v-else-if="reciptionWay === 'delivery'" />
                       </Transition>
                     </div>
                   </div>
@@ -76,7 +84,7 @@
                   <YandexMap
                     :coordinates="[55.755864, 37.617698]"
                     :zoom="13"
-                    class="h-[32rem] aspect-square w-full rounded-xl overflow-hidden"
+                    class="h-[36rem] aspect-square shrink-0 rounded-xl overflow-hidden"
                   >
                     <YandexMarker
                       :coordinates="[45.019627, 39.031206]"
@@ -94,20 +102,22 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { ref, toRefs } from "vue";
-import { YandexMap, YandexMarker } from "vue-yandex-maps";
-import { useLocationStore } from "~/store/location";
+import { storeToRefs } from 'pinia'
+import { ref, toRefs } from 'vue'
+import { YandexMap, YandexMarker } from 'vue-yandex-maps'
+import { useLocationStore } from '~/store/location'
 
 const props = defineProps<{
-  show?: boolean;
-}>();
-const { show } = toRefs(props);
-const emit = defineEmits(["close"]);
+  show?: boolean
+}>()
+const { show } = toRefs(props)
+const emit = defineEmits(['close'])
 
-const locationStore = useLocationStore();
-const { reciptionWay } = storeToRefs(locationStore);
-const dialogPanelEl = ref<HTMLElement>();
+const currentView = ref<'editDeliveryAddress'>()
 
-const { top, bottom, right, left } = useElementBounding(dialogPanelEl);
+const locationStore = useLocationStore()
+const { reciptionWay } = storeToRefs(locationStore)
+const dialogPanelEl = ref<HTMLElement>()
+
+const { top, bottom, right, left } = useElementBounding(dialogPanelEl)
 </script>

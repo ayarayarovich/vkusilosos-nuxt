@@ -1,3 +1,6 @@
 <template>
-  <img src="~/assets/icon/main-logo.svg" alt="" />
+  <img
+    src="~/assets/icon/main-logo.svg"
+    alt=""
+  />
 </template>

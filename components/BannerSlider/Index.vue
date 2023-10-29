@@ -3,7 +3,10 @@
     ref="container"
     class="sm relative isolate h-[12rem] overflow-hidden rounded-3xl shadow-lg lg:h-[22.5rem]"
   >
-    <Transition name="fade" mode="in-out">
+    <Transition
+      name="fade"
+      mode="in-out"
+    >
       <div
         :key="activeSlideIndex"
         :class="`
@@ -35,99 +38,89 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, toRefs } from "vue";
-import { onKeyDown, onKeyUp } from "@vueuse/core";
-import _ from "lodash";
+import { ref, computed, watch, toRefs } from 'vue'
+import { onKeyDown, onKeyUp } from '@vueuse/core'
+import _ from 'lodash'
 
 const props = defineProps<{
-  autoplay?: boolean;
-  autoplayDelay: number;
-}>();
-const { autoplay, autoplayDelay } = toRefs(props);
+  autoplay?: boolean
+  autoplayDelay: number
+}>()
+const { autoplay, autoplayDelay } = toRefs(props)
 
-const container = ref(null);
+const container = ref(null)
 const slides = ref([
   {
-    imgSrc: "/banner-1.png",
-    link: "/promo/banner1",
+    imgSrc: '/banner-1.png',
+    link: '/promo/banner1',
   },
   {
-    imgSrc: "/banner-2.png",
-    link: "/promo/banner2",
+    imgSrc: '/banner-2.png',
+    link: '/promo/banner2',
   },
-]);
-const slidesCount = computed(() => slides.value.length);
-const activeSlideIndex = ref(0);
+])
+const slidesCount = computed(() => slides.value.length)
+const activeSlideIndex = ref(0)
 
 const nextSlide = () => {
-  activeSlideIndex.value = (activeSlideIndex.value + 1) % slidesCount.value;
-};
+  activeSlideIndex.value = (activeSlideIndex.value + 1) % slidesCount.value
+}
 const prevSlide = () => {
-  if (activeSlideIndex.value === 0)
-    activeSlideIndex.value = slidesCount.value - 1;
-  else activeSlideIndex.value -= 1;
-};
+  if (activeSlideIndex.value === 0) activeSlideIndex.value = slidesCount.value - 1
+  else activeSlideIndex.value -= 1
+}
 
 const { resume, pause } = useIntervalFn(nextSlide, autoplayDelay, {
   immediate: false,
-});
-const userInteractsWithSlider = ref(false);
+})
+const userInteractsWithSlider = ref(false)
 watch([userInteractsWithSlider], () => {
-  if (userInteractsWithSlider.value) pause();
-  else resume();
-});
+  if (userInteractsWithSlider.value) pause()
+  else resume()
+})
 
-const isMouseInside = useMouseInside(container);
+const isMouseInside = useMouseInside(container)
 onKeyStroke(
-  "ArrowRight",
+  'ArrowRight',
   _.throttle(() => {
     if (isMouseInside.value) {
-      nextSlide();
+      nextSlide()
     }
-  }, 300),
-);
+  }, 300)
+)
 onKeyStroke(
-  "ArrowLeft",
+  'ArrowLeft',
   _.throttle(() => {
     if (isMouseInside.value) {
-      prevSlide();
+      prevSlide()
     }
-  }, 300),
-);
+  }, 300)
+)
 
-onKeyDown(
-  ["ArrowLeft", "ArrowRight"],
-  () => (userInteractsWithSlider.value = true),
-);
-onKeyUp(
-  ["ArrowLeft", "ArrowRight"],
-  () => (userInteractsWithSlider.value = false),
-);
+onKeyDown(['ArrowLeft', 'ArrowRight'], () => (userInteractsWithSlider.value = true))
+onKeyUp(['ArrowLeft', 'ArrowRight'], () => (userInteractsWithSlider.value = false))
 
-const debouncedStoppedInteracting = _.debounce(
-  () => (userInteractsWithSlider.value = false),
-  1000,
-);
+const debouncedStoppedInteracting = _.debounce(() => (userInteractsWithSlider.value = false), 1000)
 useSwipe(container, {
   onSwipeStart() {
-    userInteractsWithSlider.value = true;
+    userInteractsWithSlider.value = true
   },
   onSwipeEnd(_, direction) {
-    if (["right", "left"].includes(direction)) {
-      if (direction === "right") prevSlide();
-      if (direction === "left") nextSlide();
-      debouncedStoppedInteracting();
+    if (['right', 'left'].includes(direction)) {
+      if (direction === 'right') prevSlide()
+      if (direction === 'left') nextSlide()
+      debouncedStoppedInteracting()
     }
   },
-});
+})
 
 watch(
   [autoplay],
   () => {
-    if (autoplay.value) resume();
+    if (autoplay.value) resume()
   },
-  { immediate: true },
-);
+  { immediate: true }
+)
 </script>
 
 <!-- <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -13,12 +13,12 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  disabled?: boolean;
-}>();
+  disabled?: boolean
+}>()
 
 const emit = defineEmits<{
-  (e: "click", event: MouseEvent): void;
-}>();
+  (e: 'click', event: MouseEvent): void
+}>()
 </script>
 
 <style></style>

@@ -5,13 +5,16 @@
   >
     Оставить отзыв
   </button>
-  <LeaveFeedbackDialog :show="isModalOpen" @close="closeModal" />
+  <LeaveFeedbackDialog
+    :show="isModalOpen"
+    @close="closeModal"
+  />
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const isModalOpen = ref(false);
+const isModalOpen = ref(false)
 
-const closeModal = () => (isModalOpen.value = false);
+const closeModal = () => (isModalOpen.value = false)
 </script>

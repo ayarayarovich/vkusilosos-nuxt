@@ -36,7 +36,7 @@
           <div class="h-full overflow-y-auto py-4 scrollbar-hide">
             <ul class="flex flex-col items-stretch gap-4">
               <li
-                v-for="index in 13"
+                v-for="index in 3"
                 :key="index"
                 class="p-4 bg-white shadow-main rounded-xl flex justify-between items-center gap-4"
               >
@@ -45,11 +45,7 @@
                   <div>проспект Строителей 29, под 5, эт 2, кв 55</div>
                 </div>
                 <div class="flex h-6 items-center shrink-0 gap-1 md:gap-4">
-                  <button
-                    class="focus:ring-2 ring-offset-2 transition-shadow ring-orange-200 rounded-lg p-1 outline-none"
-                  >
-                    <IconEditPen class="h-full" />
-                  </button>
+                  <ProfileDialogAddressesEditAddress/>
                   <button
                     class="focus:ring-2 ring-offset-2 transition-shadow ring-orange-200 rounded-lg p-1 outline-none"
                   >
@@ -69,9 +65,7 @@
         </div>
 
         <div class="mx-8 mb-8">
-          <SimpleButton class="px-8 py-4 w-full">
-            Добавить адресс
-          </SimpleButton>
+          <ProfileDialogAddressesAddAddress />
         </div>
       </div>
     </Transition>

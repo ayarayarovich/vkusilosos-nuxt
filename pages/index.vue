@@ -1,40 +1,35 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import type { Category } from "~/interfaces/dishes";
-import { useCategoryStore } from "~/store/category";
+import { storeToRefs } from 'pinia'
+import type { Category } from '~/interfaces/dishes'
+import { useCategoryStore } from '~/store/category'
 
-const categoryStore = useCategoryStore();
-const { categories } = storeToRefs(categoryStore);
+const categoryStore = useCategoryStore()
+const { categories } = storeToRefs(categoryStore)
 
-useFetch<Category[]>("https://api.losos.ayarayarovich.tech/api/categories", {
-  key: "categories",
+useFetch<Category[]>('https://api.losos.ayarayarovich.tech/api/categories', {
+  key: 'categories',
 }).then((res) => {
-  categories.value = res.data.value;
-});
+  categories.value = res.data.value
+})
 </script>
 
 <template>
   <main id="home">
     <div class="container mx-auto my-4 px-4 lg:my-8">
-      <BannerSlider autoplay :autoplay-delay="3000" />
+      <BannerSlider
+        autoplay
+        :autoplay-delay="3000"
+      />
     </div>
 
-    <div
-      class="container mx-auto my-4 flex flex-col gap-4 px-4 lg:my-8 lg:flex-row lg:gap-8"
-    >
-      <div
-        class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main"
-      >
+    <div class="container mx-auto my-4 flex flex-col gap-4 px-4 lg:my-8 lg:flex-row lg:gap-8">
+      <div class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main">
         <IconWallet class="mr-4 inline h-10" />Оплата любым удобным способом
       </div>
-      <div
-        class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main"
-      >
+      <div class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main">
         <IconBadge class="mr-4 inline h-10" />Ежедневные акции и подарки
       </div>
-      <div
-        class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main"
-      >
+      <div class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main">
         <IconToc class="mr-4 inline h-10" />Профессиональные сушисты
       </div>
     </div>
@@ -43,9 +38,7 @@ useFetch<Category[]>("https://api.losos.ayarayarovich.tech/api/categories", {
       <Stories />
     </div>
 
-    <div
-      class="sticky top-16 z-50 bg-white bg-opacity-30 backdrop-blur-sm lg:top-20"
-    >
+    <div class="sticky top-16 z-50 bg-white bg-opacity-30 backdrop-blur-sm lg:top-20">
       <div class="container mx-auto">
         <CategorySpy />
       </div>
@@ -73,19 +66,35 @@ useFetch<Category[]>("https://api.losos.ayarayarovich.tech/api/categories", {
             Скачайте приложение <br />
             на телефон ❤️
           </h1>
-          <p class="text-sm text-black opacity-50 mb-4">
-            С приложением делать заказы проще!
-          </p>
+          <p class="text-sm text-black opacity-50 mb-4">С приложением делать заказы проще!</p>
           <div class="flex gap-2 h-12">
-            <a href="https://google.com" target="_blank">
-              <img src="~/assets/googleplay.png" class="h-full w-auto" alt="" />
+            <a
+              href="https://google.com"
+              target="_blank"
+            >
+              <img
+                src="~/assets/googleplay.png"
+                class="h-full w-auto"
+                alt=""
+              />
             </a>
-            <a href="https://www.apple.com/app-store/" target="_blank">
-              <img src="~/assets/appstore.png" class="h-full w-auto" alt="" />
+            <a
+              href="https://www.apple.com/app-store/"
+              target="_blank"
+            >
+              <img
+                src="~/assets/appstore.png"
+                class="h-full w-auto"
+                alt=""
+              />
             </a>
           </div>
           <div class="absolute -bottom-12 right-0 h-96">
-            <img src="~/assets/phones.png" class="h-full w-auto" alt="" />
+            <img
+              src="~/assets/phones.png"
+              class="h-full w-auto"
+              alt=""
+            />
           </div>
         </div>
       </div>
@@ -99,7 +108,10 @@ useFetch<Category[]>("https://api.losos.ayarayarovich.tech/api/categories", {
           :zoom="13"
           class="h-96 w-full rounded-xl overflow-hidden"
         >
-          <YandexMarker :coordinates="[45.019627, 39.031206]" :marker-id="1" />
+          <YandexMarker
+            :coordinates="[45.019627, 39.031206]"
+            :marker-id="1"
+          />
         </YandexMap>
       </ClientOnly>
     </div>

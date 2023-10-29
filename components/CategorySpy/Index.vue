@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useCategoryStore } from "~/store/category";
+import { storeToRefs } from 'pinia'
+import { useCategoryStore } from '~/store/category'
 
-const categoryStore = useCategoryStore();
-const { categories } = storeToRefs(categoryStore);
+const categoryStore = useCategoryStore()
+const { categories } = storeToRefs(categoryStore)
 </script>

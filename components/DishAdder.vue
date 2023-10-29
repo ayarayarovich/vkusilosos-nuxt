@@ -9,10 +9,7 @@
       >
         -
       </button>
-      <span
-        class="mx-1 inline-block min-w-[2ch] text-center text-black lg:mx-2"
-        >{{ props.value || 0 }}</span
-      >
+      <span class="mx-1 inline-block min-w-[2ch] text-center text-black lg:mx-2">{{ props.value || 0 }}</span>
       <button
         class="rounded-full px-2 text-black"
         @click.stop="emit('increment')"
@@ -25,8 +22,8 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  value?: number;
-}>();
+  value?: number
+}>()
 
-const emit = defineEmits(["increment", "decrement"]);
+const emit = defineEmits(['increment', 'decrement'])
 </script>

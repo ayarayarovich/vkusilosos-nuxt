@@ -1,6 +1,14 @@
 <template>
-  <HeadlessTransitionRoot appear :show="show" as="template">
-    <HeadlessDialog as="div" class="relative z-50" @close="closeDialog()">
+  <HeadlessTransitionRoot
+    appear
+    :show="show"
+    as="template"
+  >
+    <HeadlessDialog
+      as="div"
+      class="relative z-50"
+      @close="closeDialog()"
+    >
       <HeadlessTransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -59,18 +67,16 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  show?: boolean;
-}>();
+  show?: boolean
+}>()
 
-const currentView = ref<
-  "menu" | "info" | "orders-history" | "addresses" | "bonus"
->("menu");
+const currentView = ref<'menu' | 'info' | 'orders-history' | 'addresses' | 'bonus'>('menu')
 
 const closeDialog = () => {
-  emit("close");
-  currentView.value = "menu";
-};
+  emit('close')
+  currentView.value = 'menu'
+}
 
-const { show } = toRefs(props);
-const emit = defineEmits(["close"]);
+const { show } = toRefs(props)
+const emit = defineEmits(['close'])
 </script>

@@ -4,9 +4,7 @@
     to="/bonus"
   >
     <span class="font-medium leading-none text-white">{{ amount }}</span>
-    <div
-      class="absolute bottom-0 left-0 right-0 h-9 overflow-hidden rounded-xl"
-    >
+    <div class="absolute bottom-0 left-0 right-0 h-9 overflow-hidden rounded-xl">
       <img
         class="absolute -bottom-2.5 transition-transform right-0.5 h-6 group-hover:-translate-y-0.5"
         src="~/assets/bottom-coin.png"
@@ -22,6 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-const amount = ref(47);
+import { ref } from 'vue'
+const amount = ref(47)
 </script>

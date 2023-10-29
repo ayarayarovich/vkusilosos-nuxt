@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="relative flex h-full w-full transform flex-col items-start overflow-hidden bg-white py-8"
-  >
+  <div class="relative flex h-full w-full transform flex-col items-start overflow-hidden bg-white py-8">
     <strong class="mb-4 px-4 text-2xl font-medium">Оформление заказа</strong>
 
     <div class="grow self-stretch px-4">
@@ -43,22 +41,21 @@
       </SimpleButton>
     </div>
 
-    <span
-      class="absolute bottom-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden"
+    <span class="absolute bottom-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden"
       >Свайпай вправо, чтобы закрыть</span
     >
   </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useCartStore } from "~/store/cart";
-import { usePaymentStore } from "~/store/payment";
+import { storeToRefs } from 'pinia'
+import { useCartStore } from '~/store/cart'
+import { usePaymentStore } from '~/store/payment'
 
-const emit = defineEmits(["backToCart"]);
+const emit = defineEmits(['backToCart'])
 
-const paymentStore = usePaymentStore();
-const cartStore = useCartStore();
-const { reciptionWay } = storeToRefs(paymentStore);
-const { totalCost } = storeToRefs(cartStore);
+const paymentStore = usePaymentStore()
+const cartStore = useCartStore()
+const { reciptionWay } = storeToRefs(paymentStore)
+const { totalCost } = storeToRefs(cartStore)
 </script>

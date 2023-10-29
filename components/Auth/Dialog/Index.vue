@@ -1,7 +1,15 @@
 import { AuthDialogAuthView } from '#build/components';
 <template>
-  <HeadlessTransitionRoot appear :show="show" as="template">
-    <HeadlessDialog as="div" class="relative z-50" @close="emit('close')">
+  <HeadlessTransitionRoot
+    appear
+    :show="show"
+    as="template"
+  >
+    <HeadlessDialog
+      as="div"
+      class="relative z-50"
+      @close="emit('close')"
+    >
       <HeadlessTransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -14,7 +22,12 @@ import { AuthDialogAuthView } from '#build/components';
         <div class="fixed inset-0 bg-black bg-opacity-25" />
       </HeadlessTransitionChild>
 
-      <MouseFollower :top="top" :bottom="bottom" :right="width" :left="0" />
+      <MouseFollower
+        :top="top"
+        :bottom="bottom"
+        :right="width"
+        :left="0"
+      />
 
       <div class="fixed inset-0 overflow-y-auto overflow-x-hidden">
         <div class="min-h-full">
@@ -27,20 +40,20 @@ import { AuthDialogAuthView } from '#build/components';
             leave-from="opacity-100 translate-x-0"
             leave-to="opacity-0 -translate-x-full"
           >
-            <HeadlessDialogPanel
-              class="absolute bg-white left-0 h-full w-full max-w-md shadow-xl transition-all"
-            >
-              <div ref="dialogPanelEl" class="h-full w-full relative">
-                <Transition name="fade" mode="out-in">
+            <HeadlessDialogPanel class="absolute bg-white left-0 h-full w-full max-w-md shadow-xl transition-all">
+              <div
+                ref="dialogPanelEl"
+                class="h-full w-full relative"
+              >
+                <Transition
+                  name="fade"
+                  mode="out-in"
+                >
                   <AuthDialogAuthView v-if="view === 'auth'" />
-                  <AuthDialogPasswordRecoveryView
-                    v-else-if="view === 'recovery'"
-                  />
+                  <AuthDialogPasswordRecoveryView v-else-if="view === 'recovery'" />
                 </Transition>
 
-                <div
-                  class="absolute top-2 text-black opacity-50 text-center text-sm w-full md:hidden"
-                >
+                <div class="absolute top-2 text-black opacity-50 text-center text-sm w-full md:hidden">
                   Свайпай влево, чтобы закрыть
                 </div>
               </div>
@@ -53,36 +66,36 @@ import { AuthDialogAuthView } from '#build/components';
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from "vue";
+import { ref, toRefs } from 'vue'
 
 const props = defineProps<{
-  show?: boolean;
-}>();
-const { show } = toRefs(props);
-const emit = defineEmits(["close"]);
+  show?: boolean
+}>()
+const { show } = toRefs(props)
+const emit = defineEmits(['close'])
 
-const dialogPanelEl = ref();
+const dialogPanelEl = ref()
 const { top, bottom, width } = useElementBounding(dialogPanelEl, {
   immediate: true,
   windowScroll: false,
-});
+})
 
-type AuthDialogViewType = "auth" | "recovery";
-const view = ref<AuthDialogViewType>("auth");
+type AuthDialogViewType = 'auth' | 'recovery'
+const view = ref<AuthDialogViewType>('auth')
 const changeView = (newView: AuthDialogViewType) => {
-  view.value = newView;
-};
+  view.value = newView
+}
 
-provide("view", {
+provide('view', {
   view,
   changeView,
-});
+})
 
 useSwipe(dialogPanelEl, {
   onSwipeEnd(_, direction) {
-    if (direction === "left") {
-      emit("close");
+    if (direction === 'left') {
+      emit('close')
     }
   },
-});
+})
 </script>

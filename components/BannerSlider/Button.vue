@@ -11,9 +11,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  active: boolean;
-}>();
-const { active } = toRefs(props);
+  active: boolean
+}>()
+const { active } = toRefs(props)
 
-const emit = defineEmits(["click"]);
+const emit = defineEmits(['click'])
 </script>

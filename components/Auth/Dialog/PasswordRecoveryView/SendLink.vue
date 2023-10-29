@@ -2,8 +2,7 @@
   <div class="py-6 h-full flex flex-col items-stretch justify-between">
     <div>
       <p class="mb-4">
-        Напишите свою электронную почту, указанную в аккаунте - мы вышлем вам
-        ссылку для восстановления пароля
+        Напишите свою электронную почту, указанную в аккаунте - мы вышлем вам ссылку для восстановления пароля
       </p>
       <InputText
         v-model="email"
@@ -25,20 +24,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const email = ref("");
-const error = ref<string>();
+const email = ref('')
+const error = ref<string>()
 
-const emit = defineEmits(["next-stage"]);
+const emit = defineEmits(['next-stage'])
 
 const sendLink = () => {
-  const emailIsValid = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value);
+  const emailIsValid = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value)
   if (emailIsValid) {
-    emit("next-stage");
-    error.value = undefined;
+    emit('next-stage')
+    error.value = undefined
   } else {
-    error.value = "Некорректный адрес почты";
+    error.value = 'Некорректный адрес почты'
   }
-};
+}
 </script>

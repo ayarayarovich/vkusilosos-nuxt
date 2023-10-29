@@ -1,9 +1,7 @@
 <template>
   <div class="flex flex-col items-stretch h-full gap-2 mt-2">
     <div class="grow h-0 relative">
-      <div
-        class="flex flex-col items-stretch gap-2 overflow-y-auto scrollbar-hide scroll-smooth h-full py-2"
-      >
+      <div class="flex flex-col items-stretch gap-2 overflow-y-auto scrollbar-hide scroll-smooth h-full py-2">
         <button
           v-for="(restaurant, index) in restaurantsLocations"
           :key="index"
@@ -25,32 +23,24 @@
         </button>
       </div>
 
-      <div
-        class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-b from-whitegray to-transparent"
-      ></div>
-      <div
-        class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-t from-whitegray to-transparent"
-      ></div>
+      <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-b from-whitegray to-transparent"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-t from-whitegray to-transparent"></div>
     </div>
 
     <SimpleButton
       class="py-4 px-4 uppercase font-medium"
-      @click="
-        console.log(
-          'current restaurant ' + JSON.stringify(currentRestaurantSelected),
-        )
-      "
+      @click="console.log('current restaurant ' + JSON.stringify(currentRestaurantSelected))"
       >Выбрать</SimpleButton
     >
   </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useLocationStore } from "~/store/location";
+import { storeToRefs } from 'pinia'
+import { useLocationStore } from '~/store/location'
 
-const locationStore = useLocationStore();
+const locationStore = useLocationStore()
 
-const { restaurantsLocations } = storeToRefs(locationStore);
-const currentRestaurantSelected = ref<(typeof restaurantsLocations.value)[0]>();
+const { restaurantsLocations } = storeToRefs(locationStore)
+const currentRestaurantSelected = ref<(typeof restaurantsLocations.value)[0]>()
 </script>

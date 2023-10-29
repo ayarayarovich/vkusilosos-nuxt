@@ -26,7 +26,12 @@
             name="email"
             label="Электронная почта"
           />
-          <InputText v-model="name" type="text" name="name" label="Имя" />
+          <InputText
+            v-model="name"
+            type="text"
+            name="name"
+            label="Имя"
+          />
           <InputText
             v-model="birthday"
             type="text"
@@ -74,36 +79,31 @@
         <div class="mb-8">
           <h3 class="block text-xl font-medium mb-5">Подписки</h3>
           <div class="flex items-center gap-2">
-            <input id="personal-recomendations-checkbox" type="checkbox" />
+            <input
+              id="personal-recomendations-checkbox"
+              type="checkbox"
+            />
 
-            <label for="personal-recomendations-checkbox">
-              Получать персональные предложения и акции
-            </label>
-            <Tooltip>
-              Согласен на получение от ООО “Вкуси Лосось” рекламных предложений
-            </Tooltip>
+            <label for="personal-recomendations-checkbox"> Получать персональные предложения и акции </label>
+            <Tooltip> Согласен на получение от ООО “Вкуси Лосось” рекламных предложений </Tooltip>
           </div>
         </div>
       </div>
 
-      <div
-        class="absolute h-4 top-0 left-0 right-0 bg-gradient-to-b from-whitegray to-transparent"
-      ></div>
-      <div
-        class="absolute h-4 bottom-0 left-0 right-0 bg-gradient-to-t from-whitegray to-transparent"
-      ></div>
+      <div class="absolute h-4 top-0 left-0 right-0 bg-gradient-to-b from-whitegray to-transparent"></div>
+      <div class="absolute h-4 bottom-0 left-0 right-0 bg-gradient-to-t from-whitegray to-transparent"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["go-back"]);
+const emit = defineEmits(['go-back'])
 
-const phone = ref("+7 (864) 974 - 83 - 44");
-const name = ref("Валентина");
-const email = ref("valentina97@gmail.com");
-const birthday = ref("11.07.97");
+const phone = ref('+7 (864) 974 - 83 - 44')
+const name = ref('Валентина')
+const email = ref('valentina97@gmail.com')
+const birthday = ref('11.07.97')
 
-const password = ref("10jhcydhgv12");
-const passwordRepeat = ref("");
+const password = ref('10jhcydhgv12')
+const passwordRepeat = ref('')
 </script>
