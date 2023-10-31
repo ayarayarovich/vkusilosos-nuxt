@@ -100,14 +100,14 @@ usePublicAxios(`categories`, async (axios) => {
               />
             </a>
           </div>
-          <div class="absolute -bottom-20 right-28 h-96">
+          <div class="absolute -bottom-20 right-28 h-96" v-motion-slide-visible-once-bottom :delay="200">
             <img
               src="/app-1.png"
               class="h-full w-auto"
               alt=""
             />
           </div>
-          <div class="absolute -bottom-12 right-0 h-96">
+          <div class="absolute -bottom-12 right-0 h-96" v-motion-slide-visible-once-bottom>
             <img
               src="/app-2.png"
               class="h-full w-auto"
