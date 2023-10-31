@@ -7,14 +7,18 @@
           <input
             v-for="(_, index) in 6"
             :key="index"
-            type="text"
             :ref="setItemRef"
+            :disabled="index !== currentIndex"
             v-imask="{
               mask: '0',
               lazy: false,
               placeholderChar: '_',
             }"
+            type="text"
             class="w-full shadow-main p-4 text-center rounded-xl border-2 border-transparent focus:border-orange-200 transition-colors text-sm outline-none"
+            :class="{
+              'bg-gray': index !== currentIndex,
+            }"
             @keydown="onKeyDown($event, index)"
             @complete="onComplete(index)"
           />
@@ -44,7 +48,7 @@ import { IMaskDirective } from 'vue-imask'
 
 const vImask = IMaskDirective
 
-let itemRefs: HTMLElement[] = []
+let itemRefs: HTMLInputElement[] = []
 const setItemRef = (el: any) => {
   if (el) {
     itemRefs.push(el)
@@ -54,15 +58,21 @@ onBeforeUpdate(() => {
   itemRefs = []
 })
 
+const currentIndex = ref(0)
+
 const onKeyDown = (e: any, index: number) => {
   const value = e.target.value
   if (e.key === 'Backspace' && value === '_' && index > 0) {
+    currentIndex.value = index - 1
+    itemRefs[index - 1].disabled = false
     itemRefs[index - 1].focus()
   }
 }
 
 const onComplete = (index: number) => {
   if (index + 1 < itemRefs.length) {
+    currentIndex.value = index + 1
+    itemRefs[index + 1].disabled = false
     itemRefs[index + 1].focus()
   }
 }
