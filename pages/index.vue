@@ -6,8 +6,17 @@ import { useCategoryStore } from '~/store/category'
 const categoryStore = useCategoryStore()
 const { categories } = storeToRefs(categoryStore)
 
-useFetch<Category[]>('https://api.losos.ayarayarovich.tech/api/categories', {
-  key: 'categories',
+// const publicAxios = usePublicAxios()
+// useAsyncData(async () => {
+//   const response = await publicAxios.get('api/categories')
+//   return response.data
+// }).then((res) => {
+//   categories.value = res.data.value
+// })
+
+usePublicAxios(`categories`, async (axios) => {
+  const response = await axios.get('api/categories')
+  return response.data
 }).then((res) => {
   categories.value = res.data.value
 })

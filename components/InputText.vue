@@ -66,10 +66,10 @@ const props = defineProps<{
   name: string
   locked?: boolean
   errorMessage?: string
-  type: 'text' | 'password'
+  type: 'text' | 'password' | 'number'
 }>()
 
-const _type = ref<'text' | 'password'>(props.type)
+const _type = ref(props.type)
 const toggleInputType = () => {
   if (_type.value === 'text') _type.value = 'password'
   else if (_type.value === 'password') _type.value = 'text'

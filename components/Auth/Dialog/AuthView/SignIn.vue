@@ -22,7 +22,7 @@
 
       <SimpleButton
         class="py-5 px-8 mb-2 w-full uppercase font-bold"
-        @click="isAuthenticated = true"
+        @click="signIn()"
       >
         Войти
       </SimpleButton>
@@ -54,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { useUserStore } from '~/store/user'
 
@@ -62,7 +61,25 @@ const login = ref('')
 const password = ref('')
 
 const userStore = useUserStore()
-const { isAuthenticated } = storeToRefs(userStore)
+
+const publicAxios = usePublicAxiosInstance()
+
+const signIn = () => {
+  publicAxios
+    .post('api/password_verification', {
+      phone: login.value,
+      password: password.value,
+    })
+    .then((res) => {
+      userStore.accessToken = res.data.accessToken
+      userStore.refreshToken = res.data.refreshToken
+      userStore.userID = res.data.user.userId
+      userStore.isAuthenticated = true
+    })
+    .catch((res) => {
+      console.log(res.data)
+    })
+}
 
 const { changeView } = inject<any>('view')
 

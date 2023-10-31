@@ -53,21 +53,33 @@ const fetchObserver = ref()
 const containerEl = ref()
 const categoryStore = useCategoryStore()
 
-const { data, status } = await useAsyncData<{ dishes: Dish[] }>(`dish-category-${props.category.id}`, async () => {
-  const response = await $fetch<{ dishes: Dish[] }>('https://api.losos.ayarayarovich.tech/api/dish', {
-    method: 'POST',
-    body: {
+// const { data, status } = await useAsyncData<{ dishes: Dish[] }>(`dish-category-${props.category.id}`, async () => {
+//   const response = await publicAxios.post('api/dish', {
+//     offset: 0,
+//     limit: 999999,
+//     min_price: 0,
+//     max_price: 9999999,
+//     category_id: props.category.id,
+//     have: false,
+//   })
+
+//   return response.data
+// })
+
+const { data, status } = await usePublicAxios<{ dishes: Dish[] }>(
+  `dish-category-${props.category.id}`,
+  async (axios) => {
+    const response = await axios.post('api/dish', {
       offset: 0,
       limit: 999999,
       min_price: 0,
       max_price: 9999999,
       category_id: props.category.id,
       have: false,
-    },
-  })
-
-  return response
-})
+    })
+    return response.data
+  },
+)
 
 // useIntersectionObserver(fetchObserver, ([{ isIntersecting }]) => {
 //     if (isIntersecting && status.value !== 'success') {

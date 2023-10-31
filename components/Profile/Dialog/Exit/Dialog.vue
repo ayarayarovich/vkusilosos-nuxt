@@ -7,6 +7,7 @@
     <HeadlessDialog
       as="div"
       class="relative z-50"
+      :initial-focus="cancelButton"
       @close="emit('close')"
     >
       <HeadlessTransitionChild
@@ -86,6 +87,7 @@ const signOut = () => {
 }
 
 const dialogPanelEl = ref<HTMLElement>()
+const cancelButton = ref<HTMLElement>()
 
 const { top, bottom, right, left } = useElementBounding(dialogPanelEl)
 </script>
