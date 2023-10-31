@@ -76,24 +76,26 @@ usePublicAxios(`categories`, async (axios) => {
             на телефон ❤️
           </h1>
           <p class="text-sm text-black opacity-50 mb-4">С приложением делать заказы проще!</p>
-          <div class="flex gap-2 h-12">
+          <div class="h-12">
             <a
+              class="inline-block h-full mr-2"
               href="https://google.com"
               target="_blank"
             >
               <img
                 src="~/assets/googleplay.png"
-                class="h-full w-auto"
+                class="h-full"
                 alt=""
               />
             </a>
             <a
+              class="inline-block h-full"
               href="https://www.apple.com/app-store/"
               target="_blank"
             >
               <img
                 src="~/assets/appstore.png"
-                class="h-full w-auto"
+                class="h-full"
                 alt=""
               />
             </a>
