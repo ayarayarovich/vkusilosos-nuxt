@@ -91,7 +91,7 @@
             <RouterLink to="/blog">БЛОГ</RouterLink>
             <LeaveFeedback />
             <WriteUs />
-            <RouterLink to="/profile">ЛИЧНЫЙ КАБИНЕТ</RouterLink>
+            <ProfileInFooter />
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@
           <div class="mr-auto flex flex-col gap-2 text-sm font-normal uppercase">
             <LeaveFeedback />
             <WriteUs />
-            <RouterLink to="/profile">ЛИЧНЫЙ КАБИНЕТ</RouterLink>
+            <ProfileInFooter />
           </div>
           <div class="flex flex-col gap-2 text-sm font-normal">
             <a
