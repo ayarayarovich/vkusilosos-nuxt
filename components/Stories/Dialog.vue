@@ -43,6 +43,7 @@
                 ref="storylineContainer"
                 class="relative flex h-full w-full items-center justify-center"
               >
+                <!-- eslint-disable vue/require-toggle-inside-transition -->
                 <Transition
                   :name="transitionName"
                   :duration="200"
@@ -61,6 +62,7 @@
                     />
                   </div>
                 </Transition>
+                <!-- eslint-enable -->
               </div>
 
               <button

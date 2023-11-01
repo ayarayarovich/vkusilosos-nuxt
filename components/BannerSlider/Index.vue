@@ -3,6 +3,7 @@
     ref="container"
     class="sm relative isolate h-[12rem] overflow-hidden rounded-3xl shadow-lg lg:h-[22.5rem]"
   >
+    <!-- eslint-disable vue/require-toggle-inside-transition -->
     <Transition
       name="fade"
       mode="in-out"
@@ -25,6 +26,7 @@
         </div>
       </div>
     </Transition>
+    <!-- eslint-enable -->
 
     <div class="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
       <BannerSliderButton
