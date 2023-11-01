@@ -13,7 +13,7 @@
                     absolute inset-0 flex items-center justify-center text-4xl transition-opacity
                 `"
       >
-        <RouterLink
+        <div
           class="block h-full w-full"
           :to="slides[activeSlideIndex].link"
         >
@@ -22,7 +22,7 @@
             :src="slides[activeSlideIndex].imgSrc"
             alt=""
           />
-        </RouterLink>
+        </div>
       </div>
     </Transition>
 

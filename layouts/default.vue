@@ -85,7 +85,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col justify-between gap-2 leading-none">
+          <div class="flex flex-col items-start justify-between gap-2 leading-none">
             <RouterLink to="/promo">АКЦИИ</RouterLink>
             <RouterLink to="/delivery">УСЛОВИЯ ДОСТАВКИ</RouterLink>
             <RouterLink to="/blog">БЛОГ</RouterLink>
@@ -103,12 +103,12 @@
             src="/main-logo.svg"
             class="h-14"
           />
-          <div class="flex flex-col gap-2 text-sm font-normal uppercase">
+          <div class="flex flex-col items-start gap-2 text-sm font-normal uppercase">
             <RouterLink to="/promo">АКЦИИ</RouterLink>
             <RouterLink to="/delivery">УСЛОВИЯ ДОСТАВКИ</RouterLink>
             <RouterLink to="/blog">БЛОГ</RouterLink>
           </div>
-          <div class="mr-auto flex flex-col gap-2 text-sm font-normal uppercase">
+          <div class="mr-auto flex items-start flex-col gap-2 text-sm font-normal uppercase">
             <LeaveFeedback />
             <WriteUs />
             <ProfileInFooter />

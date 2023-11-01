@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useUserStore } from '~/store/user'
 
 export default defineNuxtPlugin(() => {
-  const baseURL = 'https://api.losos.ayarayarovich.tech'
+  const { baseAPIURL: baseURL } = useAppConfig()
   const pinia = usePinia()
 
   const axiosPublic = axios.create({

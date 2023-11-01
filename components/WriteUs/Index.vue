@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex items-center rounded-xl uppercase"
+    class="flex items-center uppercase"
     @click="isModalOpen = true"
   >
     Напишите нам

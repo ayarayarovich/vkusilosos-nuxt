@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      siteUrl: 'losos.ayarayarovich.tech',
+      siteUrl: 'https://test.losos.ayarayarovich.tech',
       siteName: 'Вкус И Лосось',
       siteDescription: 'Доставка японской кухни',
       language: 'ru',
