@@ -43,7 +43,7 @@ usePublicAxios(`categories`, async (axios) => {
       </div>
     </div>
 
-    <div class="relative md:container md:mx-auto my-4 md:my-8">
+    <div class="relative my-4 md:container md:mx-auto md:my-8">
       <Stories />
     </div>
 
@@ -62,23 +62,23 @@ usePublicAxios(`categories`, async (axios) => {
       />
     </div>
 
-    <div class="hidden lg:block container mx-auto px-4 my-24">
-      <div class="relative w-full rounded-xl px-24 py-24 bg-white shadow-main">
+    <div class="container mx-auto my-24 hidden px-4 lg:block">
+      <div class="relative w-full rounded-xl bg-white px-24 py-24 shadow-main">
         <img
-          class="absolute top-0 left-0 h-full rounded-xl w-full select-none pointer-events-none"
+          class="pointer-events-none absolute left-0 top-0 h-full w-full select-none rounded-xl"
           :draggable="false"
           src="~/assets/app-decoration.svg"
           alt=""
         />
         <div class="relative">
-          <h1 class="text-4xl font-bold mb-4">
+          <h1 class="mb-4 text-4xl font-bold">
             Скачайте приложение <br />
             на телефон ❤️
           </h1>
-          <p class="text-sm text-black opacity-50 mb-4">С приложением делать заказы проще!</p>
+          <p class="mb-4 text-sm text-black opacity-50">С приложением делать заказы проще!</p>
           <div class="h-12">
             <a
-              class="inline-block h-full mr-2"
+              class="mr-2 inline-block h-full"
               href="https://google.com"
               target="_blank"
             >
@@ -100,14 +100,21 @@ usePublicAxios(`categories`, async (axios) => {
               />
             </a>
           </div>
-          <div class="absolute -bottom-20 right-28 h-96" v-motion-slide-visible-once-bottom :delay="200">
+          <div
+            v-motion-slide-visible-once-bottom
+            class="absolute -bottom-20 right-28 h-96"
+            :delay="200"
+          >
             <img
               src="/app-1.png"
               class="h-full w-auto"
               alt=""
             />
           </div>
-          <div class="absolute -bottom-12 right-0 h-96" v-motion-slide-visible-once-bottom>
+          <div
+            v-motion-slide-visible-once-bottom
+            class="absolute -bottom-12 right-0 h-96"
+          >
             <img
               src="/app-2.png"
               class="h-full w-auto"
@@ -118,13 +125,13 @@ usePublicAxios(`categories`, async (axios) => {
       </div>
     </div>
 
-    <div class="container mx-auto px-4 mb-24">
-      <h1 class="font-medium text-xl mb-4">Наши точки</h1>
+    <div class="container mx-auto mb-24 px-4">
+      <h1 class="mb-4 text-xl font-medium">Наши точки</h1>
       <ClientOnly>
         <YandexMap
           :coordinates="[55.755864, 37.617698]"
           :zoom="13"
-          class="h-96 w-full rounded-xl overflow-hidden"
+          class="h-96 w-full overflow-hidden rounded-xl"
         >
           <YandexMarker
             :coordinates="[45.019627, 39.031206]"

@@ -1,11 +1,11 @@
 <template>
-  <div class="relative bg-[#fdfdfd] h-full flex flex-col items-stretch">
+  <div class="relative flex h-full flex-col items-stretch bg-[#fdfdfd]">
     <div>
-      <strong class="block px-8 pt-12 mb-8 text-2xl font-medium"> Восстановление пароля </strong>
-      <div class="h-px mx-4 bg-gray"></div>
+      <strong class="mb-8 block px-8 pt-12 text-2xl font-medium"> Восстановление пароля </strong>
+      <div class="mx-4 h-px bg-gray"></div>
     </div>
 
-    <div class="grow mx-8">
+    <div class="mx-8 grow">
       <Transition
         name="fade"
         mode="out-in"
@@ -18,7 +18,7 @@
       </Transition>
     </div>
     <div class="mx-4">
-      <div class="h-px mx-4 bg-gray"></div>
+      <div class="mx-4 h-px bg-gray"></div>
       <div class="flex items-center justify-center">
         <button
           class="my-6 text-orange-200"

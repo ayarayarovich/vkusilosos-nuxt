@@ -10,6 +10,7 @@ const config = {
   printWidth: 120,
   quoteProps: 'consistent',
   singleAttributePerLine: true,
+  plugins: ['prettier-plugin-tailwindcss'],
 }
 
 export default config

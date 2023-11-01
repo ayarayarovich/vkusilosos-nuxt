@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 h-full flex flex-col items-stretch justify-between">
+  <div class="flex h-full flex-col items-stretch justify-between py-6">
     <div>
       <p class="mb-4">
         Напишите свою электронную почту, указанную в аккаунте - мы вышлем вам ссылку для восстановления пароля
@@ -15,7 +15,7 @@
     </div>
 
     <SimpleButton
-      class="py-5 px-8 mb-2 w-full uppercase font-bold"
+      class="mb-2 w-full px-8 py-5 font-bold uppercase"
       @click="sendLink"
     >
       Отправить

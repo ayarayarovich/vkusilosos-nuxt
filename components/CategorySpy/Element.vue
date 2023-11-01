@@ -1,15 +1,15 @@
 <template>
   <div
     ref="element"
-    class="pl-4 shrink-0"
+    class="shrink-0 pl-4"
   >
     <button
-      class="rounded-full accent-gradient-bg"
+      class="accent-gradient-bg rounded-full"
       @click="onClick"
     >
       <div
-        class="border-transparent rounded-full border-2 bg-clip-padding px-8 py-2 transition-colors"
-        :class="props.category.id == currentCategoryID ? 'text-white font-medium' : 'bg-white text-black'"
+        class="rounded-full border-2 border-transparent bg-clip-padding px-8 py-2 transition-colors"
+        :class="props.category.id == currentCategoryID ? 'font-medium text-white' : 'bg-white text-black'"
       >
         {{ props.category.name }}
       </div>

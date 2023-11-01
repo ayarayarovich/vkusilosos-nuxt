@@ -1,5 +1,8 @@
 <template>
-  <button class="text-orange-200" @click="isModalOpen = true">
+  <button
+    class="text-orange-200"
+    @click="isModalOpen = true"
+  >
     Посмотреть
   </button>
   <ProfileDialogOrdersHistoryReceiptDialog
@@ -10,13 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const props = defineProps<{
-  orderId: number;
-}>();
+const isModalOpen = ref(false)
 
-const isModalOpen = ref(false);
-
-const closeModal = () => (isModalOpen.value = false);
+const closeModal = () => (isModalOpen.value = false)
 </script>

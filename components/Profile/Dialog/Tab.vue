@@ -4,7 +4,7 @@
     as="template"
   >
     <button
-      class="py-3 px-6 outline-none font-medium transition-colors text-start text-lg"
+      class="px-6 py-3 text-start text-lg font-medium outline-none transition-colors"
       :class="{
         'bg-gray': !selected,
         'bg-white': selected,

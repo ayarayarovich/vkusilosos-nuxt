@@ -40,10 +40,10 @@ import { AuthDialogAuthView } from '#build/components';
             leave-from="opacity-100 translate-x-0"
             leave-to="opacity-0 -translate-x-full"
           >
-            <HeadlessDialogPanel class="absolute bg-white left-0 h-full w-full max-w-md shadow-xl transition-all">
+            <HeadlessDialogPanel class="absolute left-0 h-full w-full max-w-md bg-white shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
-                class="h-full w-full relative"
+                class="relative h-full w-full"
               >
                 <Transition
                   name="fade"
@@ -53,7 +53,7 @@ import { AuthDialogAuthView } from '#build/components';
                   <AuthDialogPasswordRecoveryView v-else-if="view === 'recovery'" />
                 </Transition>
 
-                <div class="absolute top-2 text-black opacity-50 text-center text-sm w-full md:hidden">
+                <div class="absolute top-2 w-full text-center text-sm text-black opacity-50 md:hidden">
                   Свайпай влево, чтобы закрыть
                 </div>
               </div>

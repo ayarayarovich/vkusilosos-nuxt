@@ -22,13 +22,13 @@
 
       <div class="fixed inset-0 overflow-y-hidden">
         <button
-          class="fixed hidden lg:block m-4 top-0 right-0"
+          class="fixed right-0 top-0 m-4 hidden lg:block"
           @click="emit('close')"
         >
           <IconCloseGray class="h-10" />
         </button>
 
-        <div class="flex flex-col items-stretch h-full py-8 md:py-24 text-center">
+        <div class="flex h-full flex-col items-stretch py-8 text-center md:py-24">
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -38,10 +38,10 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <HeadlessDialogPanel class="flex items-center justify-center relative h-full transition-all">
+            <HeadlessDialogPanel class="relative flex h-full items-center justify-center transition-all">
               <div
                 ref="storylineContainer"
-                class="relative flex items-center justify-center h-full w-full"
+                class="relative flex h-full w-full items-center justify-center"
               >
                 <Transition
                   :name="transitionName"
@@ -50,8 +50,8 @@
                 >
                   <div
                     :key="currentStoriesID"
-                    class="bg-white aspect-[9/16] shadow-lg overflow-hidden rounded-xl"
-                    :class="isTall ? 'w-full h-auto' : 'w-auto h-full'"
+                    class="aspect-[9/16] overflow-hidden rounded-xl bg-white shadow-lg"
+                    :class="isTall ? 'h-auto w-full' : 'h-full w-auto'"
                   >
                     <StoriesStoryline
                       :id="currentStoriesID"
@@ -64,13 +64,13 @@
               </div>
 
               <button
-                class="absolute hidden lg:block left-4 top-1/2 -translate-y-1/2 rounded-full"
+                class="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full lg:block"
                 @click.prevent="storiesStore.prevStoryline()"
               >
                 <IconRoundArrowRight class="w-8 rotate-180" />
               </button>
               <button
-                class="absolute hidden lg:block right-4 top-1/2 -translate-y-1/2 rounded-full"
+                class="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full lg:block"
                 @click.prevent="storiesStore.nextStoryline()"
               >
                 <IconRoundArrowRight class="w-8" />

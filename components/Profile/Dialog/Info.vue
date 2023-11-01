@@ -1,18 +1,18 @@
 <template>
-  <div class="flex flex-col items-stretch h-full">
+  <div class="flex h-full flex-col items-stretch">
     <button
-      class="flex items-center mt-10 mx-8 mb-4 gap-2"
+      class="mx-8 mb-4 mt-10 flex items-center gap-2"
       @click="emit('go-back')"
     >
-      <IconArrowRight class="h-8 md:hidden invert rotate-180" />
+      <IconArrowRight class="h-8 rotate-180 invert md:hidden" />
       <h2 class="block text-xl font-medium leading-none">Данные</h2>
     </button>
 
-    <div class="h-px bg-black opacity-10 mx-4 mb-4"></div>
+    <div class="mx-4 mb-4 h-px bg-black opacity-10"></div>
 
-    <div class="grow h-0 mb-4 mx-8 relative">
-      <div class="h-full overflow-y-auto py-4 scrollbar-hide scroll-smooth">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="relative mx-8 mb-4 h-0 grow">
+      <div class="scrollbar-hide h-full overflow-y-auto scroll-smooth py-4">
+        <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
           <InputText
             v-model="phone"
             type="text"
@@ -41,14 +41,14 @@
         </div>
 
         <div class="mb-8">
-          <h3 class="block text-xl font-medium mb-5">Привязанные карты</h3>
+          <h3 class="mb-5 block text-xl font-medium">Привязанные карты</h3>
           <ul class="flex flex-col items-stretch gap-4">
-            <li class="flex items-center p-4 bg-white rounded-xl shadow-main">
+            <li class="flex items-center rounded-xl bg-white p-4 shadow-main">
               <IconVisa class="h-6" />
               <span class="ml-4">4398 **** **** 8712</span>
               <button class="ml-auto"><IconTrashbin class="h-6" /></button>
             </li>
-            <li class="flex items-center p-4 bg-white rounded-xl shadow-main">
+            <li class="flex items-center rounded-xl bg-white p-4 shadow-main">
               <IconMasterCard class="h-6" />
               <span class="ml-4">4398 **** **** 8712</span>
               <button class="ml-auto"><IconTrashbin class="h-6" /></button>
@@ -57,7 +57,7 @@
         </div>
 
         <div class="mb-8">
-          <h3 class="block text-xl font-medium mb-5">Изменить пароль</h3>
+          <h3 class="mb-5 block text-xl font-medium">Изменить пароль</h3>
           <div class="flex gap-4">
             <InputText
               v-model="password"
@@ -77,7 +77,7 @@
         </div>
 
         <div class="mb-8">
-          <h3 class="block text-xl font-medium mb-5">Подписки</h3>
+          <h3 class="mb-5 block text-xl font-medium">Подписки</h3>
           <div class="flex items-center gap-2">
             <input
               id="personal-recomendations-checkbox"
@@ -90,8 +90,8 @@
         </div>
       </div>
 
-      <div class="absolute h-4 top-0 left-0 right-0 bg-gradient-to-b from-whitegray to-transparent"></div>
-      <div class="absolute h-4 bottom-0 left-0 right-0 bg-gradient-to-t from-whitegray to-transparent"></div>
+      <div class="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-whitegray to-transparent"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-whitegray to-transparent"></div>
     </div>
   </div>
 </template>

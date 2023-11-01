@@ -1,30 +1,30 @@
 <template>
-  <div class="relative w-full h-full">
+  <div class="relative h-full w-full">
     <div
-      class="absolute w-1/2 h-full top-0 left-0 opacity-50"
+      class="absolute left-0 top-0 h-full w-1/2 opacity-50"
       @click="prevSlide()"
     ></div>
     <div
-      class="absolute w-1/2 h-full top-0 right-0 opacity-50"
+      class="absolute right-0 top-0 h-full w-1/2 opacity-50"
       @click="nextSlide()"
     ></div>
 
     <img
-      class="w-full h-full object-cover"
+      class="h-full w-full object-cover"
       :src="slides[currentSlide].img"
       alt=""
     />
 
-    <div class="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[rgba(0,0,0,0.4)] to-transparent"></div>
+    <div class="absolute left-0 right-0 top-0 h-16 bg-gradient-to-b from-[rgba(0,0,0,0.4)] to-transparent"></div>
 
-    <div class="absolute top-0 left-0 right-0 flex items-center pt-4 px-4 gap-2">
+    <div class="absolute left-0 right-0 top-0 flex items-center gap-2 px-4 pt-4">
       <div
         v-for="(slide, index) in slides"
         :key="index"
-        class="h-1 rounded-full relative overflow-hidden bg-[rgba(255,255,255,0.5)] grow"
+        class="relative h-1 grow overflow-hidden rounded-full bg-[rgba(255,255,255,0.5)]"
       >
         <div
-          class="absolute top-0 left-0 h-full w-full bg-white rounded-full"
+          class="absolute left-0 top-0 h-full w-full rounded-full bg-white"
           :class="index < currentSlide ? 'translate-x-0' : '-translate-x-full'"
         ></div>
       </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full w-full flex flex-col items-stretch justify-between">
-    <div class="grow flex flex-col items-stretch justify-between pb-6">
+  <div class="flex h-full w-full flex-col items-stretch justify-between">
+    <div class="flex grow flex-col items-stretch justify-between pb-6">
       <div>
         <p class="mb-4">Повторная отправка возможна через {{ secondsLeft }} секунд</p>
         <div class="flex items-stretch gap-2 lg:gap-4">
@@ -8,14 +8,14 @@
             v-for="(_, index) in 6"
             :key="index"
             :ref="setItemRef"
-            :disabled="index !== currentIndex"
             v-imask="{
               mask: '0',
               lazy: false,
               placeholderChar: '_',
             }"
+            :disabled="index !== currentIndex"
             type="text"
-            class="w-full shadow-main p-4 text-center rounded-xl border-2 border-transparent focus:border-orange-200 transition-colors text-sm outline-none"
+            class="w-full rounded-xl border-2 border-transparent p-4 text-center text-sm shadow-main outline-none transition-colors focus:border-orange-200"
             :class="{
               'bg-gray': index !== currentIndex,
             }"
@@ -26,7 +26,7 @@
       </div>
 
       <button
-        class="py-4 px-4 mb-2 w-full uppercase font-bold rounded-xl text-sm transition-colors"
+        class="mb-2 w-full rounded-xl px-4 py-4 text-sm font-bold uppercase transition-colors"
         :class="secondsLeft > 0 ? 'bg-gray text-[rgba(0,0,0,0.5)]' : 'accent-gradient-bg text-white'"
         @click="emit('proceed')"
       >

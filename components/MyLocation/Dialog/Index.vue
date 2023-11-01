@@ -45,7 +45,7 @@
                 class="flex w-full transform items-stretch justify-between overflow-hidden rounded-2xl bg-whitegray"
               >
                 <ClientOnly>
-                  <div class="p-8 w-full flex flex-col items-stretch shrink">
+                  <div class="flex w-full shrink flex-col items-stretch p-8">
                     <div class="rounded-xl bg-current bg-gray p-1.5 text-sm">
                       <div class="relative">
                         <div
@@ -70,7 +70,7 @@
                       </div>
                     </div>
 
-                    <div class="grow h-0">
+                    <div class="h-0 grow">
                       <Transition
                         name="fade"
                         mode="out-in"
@@ -84,7 +84,7 @@
                   <YandexMap
                     :coordinates="[55.755864, 37.617698]"
                     :zoom="13"
-                    class="h-[36rem] aspect-square shrink-0 rounded-xl overflow-hidden"
+                    class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
                   >
                     <YandexMarker
                       :coordinates="[45.019627, 39.031206]"

@@ -42,9 +42,9 @@
             <HeadlessDialogPanel class="w-full max-w-sm rounded-2xl shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
-                class="flex flex-col w-full transform items-stretch justify-between overflow-hidden gap-4 rounded-2xl p-8 bg-whitegray"
+                class="flex w-full transform flex-col items-stretch justify-between gap-4 overflow-hidden rounded-2xl bg-whitegray p-8"
               >
-                <h1 class="text-center font-medium w-full text-lg mb-2">Оставить отзыв</h1>
+                <h1 class="mb-2 w-full text-center text-lg font-medium">Оставить отзыв</h1>
 
                 <InputText
                   v-model="name"
@@ -71,7 +71,7 @@
                   type="text"
                 />
 
-                <SimpleButton class="w-full py-4 px-4"> Отправить </SimpleButton>
+                <SimpleButton class="w-full px-4 py-4"> Отправить </SimpleButton>
               </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>

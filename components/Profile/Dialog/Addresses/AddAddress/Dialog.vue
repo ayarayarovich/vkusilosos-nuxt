@@ -45,9 +45,9 @@
                 class="flex w-full transform items-stretch justify-between overflow-hidden rounded-2xl bg-whitegray"
               >
                 <ClientOnly>
-                  <div class="p-8 w-full flex flex-col items-stretch justify-between">
-                    <div class="flex flex-col items-stretch gap-4 shrink">
-                      <h1 class="text-black text-xl text-start font-medium mb-4">Добавить адрес</h1>
+                  <div class="flex w-full flex-col items-stretch justify-between p-8">
+                    <div class="flex shrink flex-col items-stretch gap-4">
+                      <h1 class="mb-4 text-start text-xl font-medium text-black">Добавить адрес</h1>
                       <div>
                         <InputText
                           v-model="form.address"
@@ -87,14 +87,18 @@
                     </div>
 
                     <div>
-                      <SimpleButton class="w-full py-4 px-4 uppercase text-sm font-medium" @click="emit('close')">Сохранить</SimpleButton>
+                      <SimpleButton
+                        class="w-full px-4 py-4 text-sm font-medium uppercase"
+                        @click="emit('close')"
+                        >Сохранить</SimpleButton
+                      >
                     </div>
                   </div>
 
                   <YandexMap
                     :coordinates="[55.755864, 37.617698]"
                     :zoom="13"
-                    class="h-[36rem] aspect-square shrink-0 rounded-xl overflow-hidden"
+                    class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
                   >
                     <YandexMarker
                       :coordinates="[45.019627, 39.031206]"

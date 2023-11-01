@@ -5,7 +5,7 @@
     @click="showDialog = true"
   >
     <img
-      class="h-28 w-auto object-contain transition-opacity duration-1000 drop-shadow-lg sm:h-36 md:h-40 lg:h-40 xl:h-48"
+      class="h-28 w-auto object-contain drop-shadow-lg transition-opacity duration-1000 sm:h-36 md:h-40 lg:h-40 xl:h-48"
       :class="isReady ? 'opacity-100' : 'opacity-0'"
       :src="props.dish.img"
       alt=""
@@ -16,12 +16,12 @@
       :class="dish.big ? 'flex-row items-center gap-8' : 'flex-col items-stretch gap-4'"
     >
       <div class="flex shrink-0 items-center gap-4 text-black">
-        <span class="!leading-none text-sm font-medium lg:text-lg"> {{ props.dish.newPrice }} &#8381; </span>
-        <span class="w-px h-4 bg-black"></span>
-        <span class="!leading-none text-xs font-base lg:text-md"> {{ props.dish.weight }} гр </span>
+        <span class="text-sm font-medium !leading-none lg:text-lg"> {{ props.dish.newPrice }} &#8381; </span>
+        <span class="h-4 w-px bg-black"></span>
+        <span class="font-base lg:text-md text-xs !leading-none"> {{ props.dish.weight }} гр </span>
       </div>
       <div
-        class="h-9 lg:h-10 w-full"
+        class="h-9 w-full lg:h-10"
         :class="dish.big ? 'max-w-[16rem]' : ''"
       >
         <DishAdder

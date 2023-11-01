@@ -45,9 +45,9 @@
                 class="flex w-full transform items-stretch justify-between overflow-hidden rounded-2xl bg-whitegray"
               >
                 <ClientOnly>
-                  <div class="p-8 w-full flex flex-col items-stretch justify-between">
-                    <div class="flex flex-col items-stretch gap-4 shrink">
-                      <h1 class="text-black text-xl text-start font-medium mb-4">Изменить адрес</h1>
+                  <div class="flex w-full flex-col items-stretch justify-between p-8">
+                    <div class="flex shrink flex-col items-stretch gap-4">
+                      <h1 class="mb-4 text-start text-xl font-medium text-black">Изменить адрес</h1>
                       <div>
                         <InputText
                           v-model="form.address"
@@ -88,13 +88,13 @@
 
                     <div class="flex gap-4">
                       <button
-                        class="bg-gray px-4 py-4 rounded-xl flex-1 outline-none focus:ring-2 ring-offset-2 ring-gray transition-shadow"
+                        class="flex-1 rounded-xl bg-gray px-4 py-4 outline-none ring-gray ring-offset-2 transition-shadow focus:ring-2"
                         @click="emit('close')"
                       >
-                        <span class="text-black opacity-50 font-medium">Удалить</span>
+                        <span class="font-medium text-black opacity-50">Удалить</span>
                       </button>
                       <SimpleButton
-                        class="w-full py-4 px-4 uppercase text-sm font-medium flex-1"
+                        class="w-full flex-1 px-4 py-4 text-sm font-medium uppercase"
                         @click="emit('close')"
                         >Сохранить</SimpleButton
                       >
@@ -104,7 +104,7 @@
                   <YandexMap
                     :coordinates="[55.755864, 37.617698]"
                     :zoom="13"
-                    class="h-[36rem] aspect-square shrink-0 rounded-xl overflow-hidden"
+                    class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
                   >
                     <YandexMarker
                       :coordinates="[45.019627, 39.031206]"

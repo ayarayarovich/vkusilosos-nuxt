@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full w-full flex flex-col items-stretch justify-between">
-    <div class="grow flex flex-col items-stretch justify-between pb-6">
+  <div class="flex h-full w-full flex-col items-stretch justify-between">
+    <div class="flex grow flex-col items-stretch justify-between pb-6">
       <div>
         <p class="mb-4">Напишите свой номер телефона, чтобы получить код по СМС для входа</p>
         <InputMasked
@@ -13,7 +13,7 @@
       </div>
 
       <SimpleButton
-        class="py-5 px-8 mb-2 w-full uppercase font-bold"
+        class="mb-2 w-full px-8 py-5 font-bold uppercase"
         @click="emit('proceed')"
         >Получить код</SimpleButton
       >

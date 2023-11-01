@@ -30,7 +30,7 @@
 
     <div class="flex w-full gap-4 px-4 pt-8 font-medium shadow-main">
       <button
-        class="grow rounded-xl bg-gray text-xs px-2 py-4 leading-none flex items-center justify-center uppercase"
+        class="flex grow items-center justify-center rounded-xl bg-gray px-2 py-4 text-xs uppercase leading-none"
         @click="emit('backToCart')"
       >
         Назад в корзину

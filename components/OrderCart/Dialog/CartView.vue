@@ -80,30 +80,30 @@
 
       <div
         v-else
-        class="h-full flex items-center justify-center"
+        class="flex h-full items-center justify-center"
       >
         <div
-          class="bg-blue-100 relative px-1 max-w-xs lg:max-w-sm pt-12 pb-20 lg:pb-24 rounded-xl text-center flex flex-col items-center"
+          class="relative flex max-w-xs flex-col items-center rounded-xl bg-blue-100 px-1 pb-20 pt-12 text-center lg:max-w-sm lg:pb-24"
         >
           <img
             class="h-12 lg:h-14"
             src="/fish.svg"
             alt=""
           />
-          <strong class="uppercase font-bold text-base lg:text-xl mt-2"> ой, кажется, Корзина пуста </strong>
-          <p class="text-sm mt-4">Ваша корзина пуста, откройте «Меню» и выберите понравившийся товар</p>
-          <p class="text-sm mt-2">Мы доставим ваш заказ от 699 ₽</p>
+          <strong class="mt-2 text-base font-bold uppercase lg:text-xl"> ой, кажется, Корзина пуста </strong>
+          <p class="mt-4 text-sm">Ваша корзина пуста, откройте «Меню» и выберите понравившийся товар</p>
+          <p class="mt-2 text-sm">Мы доставим ваш заказ от 699 ₽</p>
 
           <img
             src="/upset-cup.svg"
-            class="h-24 lg:h-32 absolute top-0 -translate-y-3/4 transition-opacity"
+            class="absolute top-0 h-24 -translate-y-3/4 transition-opacity lg:h-32"
             :class="isCupReady ? 'opacity-100' : 'opacity-0'"
             alt=""
           />
 
           <img
             src="/upset-sushi.svg"
-            class="h-32 lg:h-40 absolute bottom-0 translate-y-1/2 max-w-none transition-opacity"
+            class="absolute bottom-0 h-32 max-w-none translate-y-1/2 transition-opacity lg:h-40"
             :class="isSushiReady ? 'opacity-100' : 'opacity-0'"
             alt=""
           />

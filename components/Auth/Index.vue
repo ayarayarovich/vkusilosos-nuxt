@@ -1,10 +1,10 @@
 <template>
   <button
-    class="relative group inline-block h-8 aspect-square"
+    class="group relative inline-block aspect-square h-8"
     @click="isOpen = true"
   >
-    <IconUserDark class="absolute top-0 left-0 h-full transition-opacity opacity-100 group-hover:opacity-0" />
-    <IconUserColor class="absolute top-0 left-0 h-full transition-opacity opacity-0 group-hover:opacity-100" />
+    <IconUserDark class="absolute left-0 top-0 h-full opacity-100 transition-opacity group-hover:opacity-0" />
+    <IconUserColor class="absolute left-0 top-0 h-full opacity-0 transition-opacity group-hover:opacity-100" />
   </button>
   <AuthDialog
     :show="isOpen"

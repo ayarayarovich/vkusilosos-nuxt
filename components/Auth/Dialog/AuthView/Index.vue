@@ -1,7 +1,7 @@
 <template>
-  <div class="relative bg-[#fdfdfd] h-full flex flex-col items-stretch">
-    <strong class="block px-8 pt-12 mb-8 text-2xl font-medium"> Пожалуйста, авторизуйтесь </strong>
-    <div class="h-px mx-4 mb-8 bg-gray"></div>
+  <div class="relative flex h-full flex-col items-stretch bg-[#fdfdfd]">
+    <strong class="mb-8 block px-8 pt-12 text-2xl font-medium"> Пожалуйста, авторизуйтесь </strong>
+    <div class="mx-4 mb-8 h-px bg-gray"></div>
     <div class="mx-8 mb-8">
       <div class="rounded-xl bg-current bg-gray p-1.5 text-sm">
         <div class="relative">
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="grow mx-8">
+    <div class="mx-8 grow">
       <Transition
         name="fade"
         mode="out-in"

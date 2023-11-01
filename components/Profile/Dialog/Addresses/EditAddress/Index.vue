@@ -1,6 +1,6 @@
 <template>
   <button
-    class="focus:ring-2 ring-offset-2 transition-shadow ring-orange-200 rounded-lg p-1 outline-none"
+    class="rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
     @click="isModalOpen = true"
   >
     <IconEditPen class="h-full" />

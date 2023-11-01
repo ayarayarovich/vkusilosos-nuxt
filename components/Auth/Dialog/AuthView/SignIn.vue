@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full flex flex-col items-stretch justify-between pb-8">
+  <div class="flex h-full w-full flex-col items-stretch justify-between pb-8">
     <div>
       <InputText
         v-model="login"
@@ -21,13 +21,13 @@
       />
 
       <SimpleButton
-        class="py-5 px-8 mb-2 w-full uppercase font-bold"
+        class="mb-2 w-full px-8 py-5 font-bold uppercase"
         @click="signIn()"
       >
         Войти
       </SimpleButton>
 
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <AuthDialogAuthViewQRCode />
         <button
           class="text-orange-200"
@@ -40,12 +40,12 @@
 
     <div>
       <button
-        class="text-[#21A049] font-bold mb-4 uppercase text-base py-3 px-8 w-full rounded-xl border-2 border-[#21A049] flex items-center justify-center gap-3"
+        class="mb-4 flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#21A049] px-8 py-3 text-base font-bold uppercase text-[#21A049]"
       >
         <IconSber class="h-6" /> Войти по сбербанк ID
       </button>
       <button
-        class="text-[#6B78EE] font-bold uppercase text-base py-3 px-8 w-full rounded-xl border-2 border-[#6B78EE] flex items-center justify-center gap-3"
+        class="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#6B78EE] px-8 py-3 text-base font-bold uppercase text-[#6B78EE]"
       >
         <IconVKBlue class="h-4" /> Войти через вконтакте
       </button>
@@ -75,9 +75,6 @@ const signIn = () => {
       userStore.refreshToken = res.data.refreshToken
       userStore.userID = res.data.user.userId
       userStore.isAuthenticated = true
-    })
-    .catch((res) => {
-      console.log(res.data)
     })
 }
 

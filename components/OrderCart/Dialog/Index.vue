@@ -39,7 +39,7 @@
             leave-from="opacity-100 translate-x-0"
             leave-to="opacity-0 translate-x-full"
           >
-            <HeadlessDialogPanel class="absolute bg-white right-0 h-full w-full max-w-xl shadow-xl transition-all">
+            <HeadlessDialogPanel class="absolute right-0 h-full w-full max-w-xl bg-white shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
                 class="h-full w-full"

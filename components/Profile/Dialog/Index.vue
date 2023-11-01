@@ -39,25 +39,25 @@
             leave-from="opacity-100 translate-x-0"
             leave-to="opacity-0 -translate-x-full"
           >
-            <HeadlessDialogPanel class="absolute bg-white left-0 h-full w-full max-w-5xl shadow-xl transition-all">
+            <HeadlessDialogPanel class="absolute left-0 h-full w-full max-w-5xl bg-white shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
-                class="h-full w-full relative"
+                class="relative h-full w-full"
               >
                 <HeadlessTabGroup vertical>
                   <div class="flex h-full w-full">
                     <HeadlessTabList class="flex flex-col items-stretch bg-gray">
-                      <div class="flex items-center mt-10 mb-4 mx-6 gap-2">
+                      <div class="mx-6 mb-4 mt-10 flex items-center gap-2">
                         <IconUserDark class="h-8" />
-                        <span class="font-medium text-xl">+7 (864) 974 - 83 - 44</span>
+                        <span class="text-xl font-medium">+7 (864) 974 - 83 - 44</span>
                       </div>
-                      <div class="h-px bg-[#252321] opacity-10 mx-4 mb-8"></div>
+                      <div class="mx-4 mb-8 h-px bg-[#252321] opacity-10"></div>
                       <ProfileDialogTab>История заказов</ProfileDialogTab>
                       <ProfileDialogTab>Данные</ProfileDialogTab>
                       <ProfileDialogTab>Адреса</ProfileDialogTab>
                       <ProfileDialogTab>Бонусная система</ProfileDialogTab>
-                      <div class="h-px bg-[#252321] opacity-10 mx-4 mt-auto"></div>
-                      <ProfileDialogExit/>
+                      <div class="mx-4 mt-auto h-px bg-[#252321] opacity-10"></div>
+                      <ProfileDialogExit />
                     </HeadlessTabList>
                     <HeadlessTabPanels class="grow bg-whitegray">
                       <HeadlessTabPanel class="h-full">
@@ -85,18 +85,13 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { ref, toRefs } from 'vue'
-import { useUserStore } from '~/store/user'
 
 const props = defineProps<{
   show?: boolean
 }>()
 const { show } = toRefs(props)
 const emit = defineEmits(['close'])
-
-const userStore = useUserStore()
-const { isAuthenticated } = storeToRefs(userStore)
 
 const dialogPanelEl = ref()
 const { top, bottom, width } = useElementBounding(dialogPanelEl, {

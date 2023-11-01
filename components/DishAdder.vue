@@ -1,7 +1,7 @@
 <template>
-  <div class="overflow-hidden rounded-xl accent-gradient-bg">
+  <div class="accent-gradient-bg overflow-hidden rounded-xl">
     <div
-      class="outer-bg-color rounded-xl flex h-full w-full items-center justify-center border-transparent border-2 bg-clip-padding"
+      class="outer-bg-color flex h-full w-full items-center justify-center rounded-xl border-2 border-transparent bg-clip-padding"
     >
       <button
         class="rounded-full px-2 text-black"

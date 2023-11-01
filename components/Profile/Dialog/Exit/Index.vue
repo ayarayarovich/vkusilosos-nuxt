@@ -1,9 +1,9 @@
 <template>
   <button
-    class="my-4 py-4 px-6 text-start transition-colors hover:bg-white"
+    class="my-4 px-6 py-4 text-start transition-colors hover:bg-white"
     @click="isModalOpen = true"
   >
-    Выйти <IconExit class="h-6 inline-block" />
+    Выйти <IconExit class="inline-block h-6" />
   </button>
   <ProfileDialogExitDialog
     :show="isModalOpen"
@@ -13,10 +13,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
-const props = defineProps<{
-  orderId: number
-}>()
 
 const isModalOpen = ref(false)
 

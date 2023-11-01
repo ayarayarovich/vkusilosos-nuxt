@@ -1,5 +1,8 @@
 <template>
-  <SimpleButton class="px-8 py-4 w-full" @click="isModalOpen = true">
+  <SimpleButton
+    class="w-full px-8 py-4"
+    @click="isModalOpen = true"
+  >
     Добавить адресс
   </SimpleButton>
 
@@ -10,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-const isModalOpen = ref(false);
+import { ref } from 'vue'
+const isModalOpen = ref(false)
 
-const closeModal = () => (isModalOpen.value = false);
+const closeModal = () => (isModalOpen.value = false)
 </script>

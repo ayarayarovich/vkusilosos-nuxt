@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="absolute top-0 bottom-0 left-0 bg-gradient-to-l from-transparent to-white w-4"></div>
-    <div class="absolute top-0 bottom-0 right-0 bg-gradient-to-r from-transparent to-white w-4"></div>
+    <div class="absolute bottom-0 left-0 top-0 w-4 bg-gradient-to-l from-transparent to-white"></div>
+    <div class="absolute bottom-0 right-0 top-0 w-4 bg-gradient-to-r from-transparent to-white"></div>
     <div class="scrollbar-hide flex flex-nowrap gap-8 overflow-x-auto scroll-smooth px-4">
       <StoriesItem
         v-for="index in 10"

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full flex flex-col items-stretch justify-end">
+  <div class="flex h-full w-full flex-col items-stretch justify-end">
     <div
       class="h-full w-full bg-whitegray"
       @click.stop=""

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-orange-100 h-full flex items-center justify-center font-medium">
+  <div class="flex h-full items-center justify-center bg-orange-100 font-medium">
     <Test />
   </div>
 </template>

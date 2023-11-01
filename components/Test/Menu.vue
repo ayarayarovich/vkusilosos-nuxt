@@ -1,50 +1,50 @@
 <template>
   <div
-    class="h-full flex flex-col items-stretch justify-end w-full"
+    class="flex h-full w-full flex-col items-stretch justify-end"
     @click.stop="emit('close')"
   >
     <div
-      class="bg-white rounded-t-xl"
+      class="rounded-t-xl bg-white"
       @click.stop=""
     >
       <div
         ref="draggingArea"
-        class="flex pt-2 pb-4 items-center justify-center"
+        class="flex items-center justify-center pb-4 pt-2"
       >
-        <div class="mx-auto bg-gray h-1 w-8 rounded-full"></div>
+        <div class="mx-auto h-1 w-8 rounded-full bg-gray"></div>
       </div>
 
-      <div class="flex items-center px-4 pb-4 text-lg font-medium gap-2">
+      <div class="flex items-center gap-2 px-4 pb-4 text-lg font-medium">
         <IconUserDark class="h-8" />
         <span>+7 (864) 974 - 83 -44</span>
       </div>
-      <div class="bg-gray h-px mx-4"></div>
+      <div class="mx-4 h-px bg-gray"></div>
 
       <div class="mx-4 my-8 flex flex-col items-stretch gap-4">
         <button
-          class="font-medium text-black text-lg text-start"
+          class="text-start text-lg font-medium text-black"
           @click="emit('change-view', 'orders-history')"
         >
           История заказов
         </button>
 
         <button
-          class="font-medium text-black flex items-center gap-2 text-lg text-start"
+          class="flex items-center gap-2 text-start text-lg font-medium text-black"
           @click="emit('change-view', 'info')"
         >
           Данные
-          <div class="inline-block h-2 aspect-square rounded-full bg-red"></div>
+          <div class="inline-block aspect-square h-2 rounded-full bg-red"></div>
         </button>
 
         <button
-          class="font-medium text-black text-lg text-start"
+          class="text-start text-lg font-medium text-black"
           @click="emit('change-view', 'addresses')"
         >
           Адреса
         </button>
 
         <button
-          class="font-medium text-black text-lg text-start"
+          class="text-start text-lg font-medium text-black"
           @click="emit('change-view', 'bonus')"
         >
           Бонусная система
@@ -52,12 +52,12 @@
       </div>
 
       <div class="mt-16">
-        <div class="bg-gray h-px mx-4"></div>
+        <div class="mx-4 h-px bg-gray"></div>
         <button
-          class="py-6 px-6 w-full text-start transition-colors hover:bg-white"
+          class="w-full px-6 py-6 text-start transition-colors hover:bg-white"
           @click="isAuthenticated = false"
         >
-          Выйти <IconExit class="h-6 inline-block" />
+          Выйти <IconExit class="inline-block h-6" />
         </button>
       </div>
     </div>

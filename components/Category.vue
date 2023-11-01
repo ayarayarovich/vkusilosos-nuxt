@@ -78,7 +78,7 @@ const { data, status } = await usePublicAxios<{ dishes: Dish[] }>(
       have: false,
     })
     return response.data
-  },
+  }
 )
 
 // useIntersectionObserver(fetchObserver, ([{ isIntersecting }]) => {

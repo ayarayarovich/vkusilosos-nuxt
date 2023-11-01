@@ -44,9 +44,9 @@
                 ref="dialogPanelEl"
                 class="flex w-full transform flex-col items-start overflow-hidden rounded-2xl bg-white p-4"
               >
-                <div class="h-56 aspect-square flex items-center justify-center">
+                <div class="flex aspect-square h-56 items-center justify-center">
                   <img
-                    class="h-full aspect-square"
+                    class="aspect-square h-full"
                     src="~/assets/sample-qr-code.png"
                     alt=""
                   />
