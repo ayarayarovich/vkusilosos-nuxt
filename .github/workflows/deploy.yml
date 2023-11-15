@@ -36,4 +36,4 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
-          script: sudo docker compose pull && sudo docker compose up -d
+          script: echo "VKUSILOSOS_NUXT_IMAGE_TAG=${{ github.ref_name }}" > .env && ./deploy.sh
