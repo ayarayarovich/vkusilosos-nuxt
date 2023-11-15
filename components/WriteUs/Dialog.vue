@@ -18,26 +18,21 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div class="fixed inset-0 bg-black bg-opacity-25">
+          <MouseFollower :hide-when-over-el="dialogPanelEl" />
+        </div>
       </HeadlessTransitionChild>
-
-      <MouseFollower
-        :top="top"
-        :bottom="bottom"
-        :right="right"
-        :left="left"
-      />
 
       <div class="fixed inset-0 overflow-y-auto">
         <div class="flex min-h-full items-center justify-center p-4 text-center">
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
-            enter-from="opacity-0"
-            enter-to="opacity-100"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
             leave="duration-200 ease-in"
-            leave-from="opacity-100"
-            leave-to="opacity-0"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95"
           >
             <HeadlessDialogPanel class="w-full max-w-sm rounded-2xl shadow-xl transition-all">
               <div
@@ -91,8 +86,6 @@ const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
 const dialogPanelEl = ref<HTMLElement>()
-
-const { top, bottom, right, left } = useElementBounding(dialogPanelEl)
 
 const name = ref('')
 const email = ref('')

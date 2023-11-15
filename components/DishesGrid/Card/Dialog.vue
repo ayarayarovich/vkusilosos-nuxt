@@ -19,15 +19,10 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div class="fixed inset-0 bg-black bg-opacity-25">
+          <MouseFollower :hide-when-over-el="dialogPanelEl" />
+        </div>
       </HeadlessTransitionChild>
-
-      <MouseFollower
-        :top="top"
-        :bottom="bottom"
-        :right="right"
-        :left="left"
-      />
 
       <div class="fixed inset-0 overflow-y-auto">
         <div class="flex min-h-full items-center justify-center p-4 text-center">
@@ -100,8 +95,6 @@ const emit = defineEmits(['close'])
 const cartStore = useCartStore()
 
 const dialogPanelEl = ref<HTMLElement>()
-
-const { top, bottom, right, left } = useElementBounding(dialogPanelEl)
 
 const addToCartButton = ref()
 </script>

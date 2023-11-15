@@ -1,23 +1,20 @@
 <template>
   <div
     ref="mouseFollowerEl"
-    class="fixed left-0 top-0 z-50 -my-4 -ml-4 aspect-square h-8 rounded-full"
+    class="fixed left-0 top-0 z-50 -my-4 -ml-4 aspect-square h-8 rounded-full pointer-events-none"
   >
     <IconCloseGray class="h-8" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps<{
-  top: number
-  bottom: number
-  left: number
-  right: number
+  hideWhenOverEl: HTMLElement
 }>()
 
-const { top, bottom, left, right } = toRefs(props)
+const { hideWhenOverEl } = toRefs(props)
 
 const mouseFollowerEl = ref()
 
@@ -36,11 +33,18 @@ const { x, y } = useMouse({
   window,
 })
 
-const isOutside = computed(
-  () => !(left.value <= x.value && x.value <= right.value && top.value <= y.value && y.value <= bottom.value)
-)
+const isOutside = ref(true)
+useEventListener(hideWhenOverEl, 'mouseenter', () => {
+  isOutside.value = false
+})
+useEventListener(hideWhenOverEl, 'mouseover', () => {
+  isOutside.value = false
+})
+useEventListener(hideWhenOverEl, 'mouseleave', () => {
+  isOutside.value = true
+})
 
-watch([x, y, isOutside], () => {
+watch([x, y], () => {
   if (isOutside.value) {
     apply({
       x: x.value,

@@ -18,15 +18,10 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div class="fixed inset-0 bg-black bg-opacity-25">
+          <MouseFollower :hide-when-over-el="dialogPanelEl" />
+        </div>
       </HeadlessTransitionChild>
-
-      <MouseFollower
-        :top="top"
-        :bottom="bottom"
-        :right="width"
-        :left="0"
-      />
 
       <div class="fixed inset-0 overflow-y-auto overflow-x-hidden">
         <div class="min-h-full">
