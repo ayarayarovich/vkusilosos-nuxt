@@ -48,7 +48,7 @@ usePublicAxios(`categories`, async (axios) => {
     </div>
 
     <div class="sticky top-16 z-50 bg-white bg-opacity-30 backdrop-blur-sm lg:top-20">
-      <div class="container mx-auto">
+      <div class="container mx-auto py-4">
         <CategorySpy />
       </div>
     </div>
