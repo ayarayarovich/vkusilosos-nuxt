@@ -4,6 +4,12 @@ export interface AdditionalInfo {
   imgId: number
 }
 
+export interface Tag {
+  id: number
+  name: string
+  img: string
+}
+
 export interface Dish {
   id: number
   name: string
@@ -14,7 +20,8 @@ export interface Dish {
   description: string
   weight: number
   big: boolean
-  additionalInfo: AdditionalInfo[]
+  additionalInfo: AdditionalInfo[],
+  tags: Tag[]
 }
 
 // Интерфейс для категорий
