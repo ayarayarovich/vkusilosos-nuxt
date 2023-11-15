@@ -18,26 +18,21 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div class="fixed inset-0 bg-black bg-opacity-25">
+          <MouseFollower :hide-when-over-el="dialogPanelEl" />
+        </div>
       </HeadlessTransitionChild>
 
-      <MouseFollower
-        :top="top"
-        :bottom="bottom"
-        :right="right"
-        :left="left"
-      />
-
-      <div class="fixed inset-0 overflow-y-auto">
+      <div class="fixed bottom-0 left-0 top-0 w-screen overflow-y-auto overflow-x-hidden">
         <div class="flex min-h-full items-center justify-center p-4 text-center">
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
-            enter-from="opacity-0"
-            enter-to="opacity-100"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
             leave="duration-200 ease-in"
-            leave-from="opacity-100"
-            leave-to="opacity-0"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95"
           >
             <HeadlessDialogPanel class="w-full max-w-5xl rounded-2xl shadow-xl transition-all">
               <div
@@ -141,6 +136,4 @@ const form = reactive({
 })
 
 const dialogPanelEl = ref<HTMLElement>()
-
-const { top, bottom, right, left } = useElementBounding(dialogPanelEl)
 </script>
