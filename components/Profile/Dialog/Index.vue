@@ -23,7 +23,7 @@
         </div>
       </HeadlessTransitionChild>
 
-      <div class="fixed top-0 left-0 bottom-0 w-screen overflow-y-auto overflow-x-hidden">
+      <div class="fixed bottom-0 left-0 top-0 w-screen overflow-y-auto overflow-x-hidden">
         <div class="min-h-full">
           <HeadlessTransitionChild
             as="template"
@@ -89,10 +89,6 @@ const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
 const dialogPanelEl = ref()
-const { top, bottom, width } = useElementBounding(dialogPanelEl, {
-  immediate: true,
-  windowScroll: false,
-})
 
 type AuthDialogViewType = 'auth' | 'recovery'
 const view = ref<AuthDialogViewType>('auth')

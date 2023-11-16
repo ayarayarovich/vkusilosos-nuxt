@@ -1,7 +1,7 @@
 <template>
   <div
     ref="container"
-    class="sm relative isolate h-[12rem] overflow-hidden rounded-3xl shadow-lg lg:h-[22.5rem]"
+    class="sm relative isolate aspect-[30/9] overflow-hidden rounded-3xl shadow-lg"
   >
     <!-- eslint-disable vue/require-toggle-inside-transition -->
     <Transition

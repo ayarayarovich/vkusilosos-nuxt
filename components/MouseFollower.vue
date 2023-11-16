@@ -1,7 +1,7 @@
 <template>
   <div
     ref="mouseFollowerEl"
-    class="fixed left-0 top-0 z-50 -my-4 -ml-4 aspect-square h-8 rounded-full pointer-events-none"
+    class="pointer-events-none fixed left-0 top-0 z-50 -my-4 -ml-4 aspect-square h-8 rounded-full"
   >
     <IconCloseGray class="h-8" />
   </div>

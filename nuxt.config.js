@@ -8,7 +8,19 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-headlessui',
     '@vueuse/motion/nuxt',
+    '@vee-validate/nuxt',
   ],
+  veeValidate: {
+    // disable or enable auto imports
+    autoImports: true,
+    // Use different names for components
+    componentNames: {
+      Form: 'VeeForm',
+      Field: 'VeeField',
+      FieldArray: 'VeeFieldArray',
+      ErrorMessage: 'VeeErrorMessage',
+    },
+  },
   appConfig: {
     baseAPIURL: 'https://api.losos.ayarayarovich.tech',
   },

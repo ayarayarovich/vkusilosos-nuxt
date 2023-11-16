@@ -1,31 +1,28 @@
 <template>
   <div class="flex h-full w-full flex-col items-stretch justify-between pb-8">
     <div>
-      <InputText
-        v-model="login"
-        label="Электронная почта"
-        class="mb-4"
-        name="email"
-        type="text"
-        :is-error="true"
-        :error-message="error"
-      />
-      <InputText
-        v-model="password"
-        label="Пароль"
-        class="mb-6"
-        name="password"
-        type="password"
-        :is-error="true"
-        :error-message="error"
-      />
+      <form @submit="signIn">
+        <InputText
+          label="Электронная почта"
+          class="mb-4"
+          name="phone"
+          type="text"
+        />
+        <InputText
+          label="Пароль"
+          class="mb-6"
+          name="password"
+          type="password"
+        />
 
-      <SimpleButton
-        class="mb-2 w-full px-8 py-5 font-bold uppercase"
-        @click="signIn()"
-      >
-        Войти
-      </SimpleButton>
+        <SimpleButton
+          :disabled="isLoading"
+          :class="{ 'opacity-50': isLoading }"
+          class="mb-2 w-full px-8 py-5 font-bold uppercase"
+        >
+          Войти
+        </SimpleButton>
+      </form>
 
       <div class="flex items-center justify-between">
         <AuthDialogAuthViewQRCode />
@@ -54,35 +51,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import * as yup from 'yup'
 import { useUserStore } from '~/store/user'
 
-const login = ref('')
-const password = ref('')
+const { handleSubmit, setErrors } = useForm({
+  validationSchema: yup.object({
+    phone: yup.string().required().label('Электронная почта'),
+    password: yup.string().required().label('Пароль'),
+  }),
+})
 
 const userStore = useUserStore()
 
 const publicAxios = usePublicAxiosInstance()
 
-const signIn = () => {
+const isLoading = ref(false)
+
+const signIn = handleSubmit((vals) => {
+  isLoading.value = true
   publicAxios
-    .post('api/password_verification', {
-      phone: login.value,
-      password: password.value,
-    })
+    .post('api/password_verification', vals)
     .then((res) => {
       userStore.accessToken = res.data.accessToken
       userStore.refreshToken = res.data.refreshToken
       userStore.userID = res.data.user.userId
       userStore.isAuthenticated = true
     })
-}
+    .catch(() => {
+      setErrors({
+        phone: 'Неверный логин или пароль',
+        password: 'Неверный логин или пароль',
+      })
+    })
+    .finally(() => {
+      isLoading.value = false
+    })
+})
 
 const { changeView } = inject<any>('view')
-
-const error = computed(() => {
-  if (login.value.includes('pidor')) {
-    return 'Охуел?'
-  }
-})
 </script>

@@ -20,7 +20,7 @@ export interface Dish {
   description: string
   weight: number
   big: boolean
-  additionalInfo: AdditionalInfo[],
+  additionalInfo: AdditionalInfo[]
   tags: Tag[]
 }
 

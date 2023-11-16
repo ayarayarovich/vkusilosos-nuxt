@@ -20,7 +20,7 @@
         <div class="fixed inset-0 bg-[#252321] bg-opacity-70" />
       </HeadlessTransitionChild>
 
-      <div class="fixed top-0 left-0 bottom-0 w-screen overflow-y-auto overflow-x-hidden">
+      <div class="fixed bottom-0 left-0 top-0 w-screen overflow-y-auto overflow-x-hidden">
         <button
           class="absolute right-0 top-0 m-4 hidden lg:block"
           @click="emit('close')"

@@ -16,24 +16,26 @@
         mode="out-in"
       >
         <div
-          v-if="status == 'pending'"
+          v-if="dishesStatus == 'pending'"
           class="flex h-full items-center justify-center"
         >
           <span class="loader"></span>
         </div>
-        <DishesGrid v-else-if="status == 'success'">
-          <DishesGridCard
-            v-for="dish in dishes"
-            :key="dish.id"
-            :dish="dish"
-            :big_card="dish.newPrice > 1000 || (500 < dish.newPrice && dish.newPrice < 600)"
-            :class="{
-              'orange-bg': dish.newPrice < 400,
-              'yellowgreen-bg': dish.newPrice > 1000,
-              'blue-bg': 800 < dish.newPrice && dish.newPrice < 900,
-            }"
-          />
-        </DishesGrid>
+        <div v-else-if="dishesStatus == 'success'">
+          <DishesGrid>
+            <DishesGridCard
+              v-for="dish in dishes"
+              :key="dish.id"
+              :dish="dish"
+              :big_card="dish.newPrice > 1000 || (500 < dish.newPrice && dish.newPrice < 600)"
+              :class="{
+                'orange-bg': dish.newPrice < 400,
+                'yellowgreen-bg': dish.newPrice > 1000,
+                'blue-bg': 800 < dish.newPrice && dish.newPrice < 900,
+              }"
+            />
+          </DishesGrid>
+        </div>
       </Transition>
     </div>
   </section>
@@ -53,20 +55,7 @@ const fetchObserver = ref()
 const containerEl = ref()
 const categoryStore = useCategoryStore()
 
-// const { data, status } = await useAsyncData<{ dishes: Dish[] }>(`dish-category-${props.category.id}`, async () => {
-//   const response = await publicAxios.post('api/dish', {
-//     offset: 0,
-//     limit: 999999,
-//     min_price: 0,
-//     max_price: 9999999,
-//     category_id: props.category.id,
-//     have: false,
-//   })
-
-//   return response.data
-// })
-
-const { data, status } = await usePublicAxios<{ dishes: Dish[] }>(
+const { data: dishesData, status: dishesStatus } = await usePublicAxios<{ dishes: Dish[] }>(
   `dish-category-${props.category.id}`,
   async (axios) => {
     const response = await axios.post('api/dish', {
@@ -81,12 +70,18 @@ const { data, status } = await usePublicAxios<{ dishes: Dish[] }>(
   }
 )
 
-// useIntersectionObserver(fetchObserver, ([{ isIntersecting }]) => {
-//     if (isIntersecting && status.value !== 'success') {
-//         console.log('refreshing')
-//         refresh()
-//     }
-// })
+const { data: tagsData, status: tagsStatus } = await usePublicAxios<{ id: number; name: string; img: string }[]>(
+  `dish-category-${props.category.id}-tags`,
+  async (axios) => {
+    const response = await axios.get('api/tags', {
+      params: {
+        category: props.category.id,
+      },
+    })
+
+    return response.data
+  }
+)
 
 useIntersectionObserver(
   containerEl,
@@ -100,7 +95,7 @@ useIntersectionObserver(
   }
 )
 
-const dishes = computed(() => data.value?.dishes)
+const dishes = computed(() => dishesData.value?.dishes)
 </script>
 
 <style scoped>

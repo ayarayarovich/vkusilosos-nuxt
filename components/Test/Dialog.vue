@@ -21,7 +21,7 @@
         <div class="fixed inset-0 bg-black bg-opacity-25" />
       </HeadlessTransitionChild>
 
-      <div class="fixed top-0 left-0 bottom-0 w-screen overflow-y-hidden overflow-x-hidden">
+      <div class="fixed bottom-0 left-0 top-0 w-screen overflow-x-hidden overflow-y-hidden">
         <div class="min-h-full">
           <HeadlessTransitionChild
             as="template"

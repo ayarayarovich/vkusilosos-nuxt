@@ -4,9 +4,18 @@
     :class="dish.big ? 'col-span-2' : 'col-span-1'"
     @click="showDialog = true"
   >
-    <div class="absolute z-20 top-4 right-4 flex flex-col items-end gap-2">
-      <div v-for="tag in dish.tags" :key="tag.id" class="px-3 py-1 text-sm rounded-full bg-white font-medium shadow-main flex gap-2">
-        <img v-if="tag.img" :src="tag.img" class="h-4" alt="">
+    <div class="absolute right-4 top-4 z-20 flex flex-col items-end gap-2">
+      <div
+        v-for="tag in dish.tags"
+        :key="tag.id"
+        class="flex gap-2 rounded-full bg-white px-3 py-1 text-sm font-medium shadow-main"
+      >
+        <img
+          v-if="tag.img"
+          :src="tag.img"
+          class="h-4"
+          alt=""
+        />
         {{ tag.name }}
       </div>
     </div>
