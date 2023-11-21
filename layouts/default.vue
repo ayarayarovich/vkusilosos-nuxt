@@ -142,9 +142,9 @@
           class="container mx-auto flex flex-col items-center gap-2 text-xs font-medium text-white lg:flex-row lg:gap-8"
         >
           <span class="lg:mr-auto">&copy; 2023 «ВкусиЛосось». Все права защищены.</span>
-          <a href="#">Публичная оферта</a>
-          <a href="#">Пользовательское соглашение</a>
-          <a href="#">Политика конфиденциальности</a>
+          <PublicOffer />
+          <UserAgreement />
+          <PrivacyPolicy />
         </div>
       </div>
     </footer>
