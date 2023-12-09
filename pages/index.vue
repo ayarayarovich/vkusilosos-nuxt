@@ -1,24 +1,11 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import type { Category } from '~/interfaces/dishes'
-import { useCategoryStore } from '~/store/category'
+import { useCategories } from '~/composables/useCategories'
 
-const categoryStore = useCategoryStore()
-const { categories } = storeToRefs(categoryStore)
+const { data: recomendations } = useMain((v) => v.recomendation)
+const { data: categories, suspense } = useCategories()
 
-// const publicAxios = usePublicAxios()
-// useAsyncData(async () => {
-//   const response = await publicAxios.get('api/categories')
-//   return response.data
-// }).then((res) => {
-//   categories.value = res.data.value
-// })
-
-usePublicAxios(`categories`, async (axios) => {
-  const response = await axios.get('api/categories')
-  return response.data
-}).then((res) => {
-  categories.value = res.data.value
+onServerPrefetch(async () => {
+  await suspense()
 })
 </script>
 
@@ -46,6 +33,33 @@ usePublicAxios(`categories`, async (axios) => {
     <div class="relative my-4 md:container md:mx-auto md:my-8">
       <Stories />
     </div>
+
+    <section class="my-8 lg:my-16">
+      <div
+        ref="containerEl"
+        class="container mx-auto min-h-[10rem] px-4"
+      >
+        <h1 class="mb-8 text-2xl font-medium uppercase text-black">МЫ РЕКОМЕНДУЕМ</h1>
+
+        <div class="grid grid-flow-row-dense grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
+          <template
+            v-for="dish in recomendations"
+            :key="dish.id"
+          >
+            <DishCard
+              :dish="dish"
+              :big_card="dish.size === 2"
+              :class="{
+                'orange-bg': dish.color === 1,
+                'blue-bg': dish.color === 2,
+                'yellowgreen-bg': dish.color === 3,
+                'yellow-bg': dish.color === 4,
+              }"
+            />
+          </template>
+        </div>
+      </div>
+    </section>
 
     <div class="sticky top-16 z-50 bg-white bg-opacity-30 backdrop-blur-sm lg:top-20">
       <div class="container mx-auto py-4">

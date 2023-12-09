@@ -44,7 +44,7 @@
                     <HeadlessTabList class="flex flex-col items-stretch bg-gray">
                       <div class="mx-6 mb-4 mt-10 flex items-center gap-2">
                         <IconUserDark class="h-8" />
-                        <span class="text-xl font-medium">+7 (864) 974 - 83 - 44</span>
+                        <span class="text-xl font-medium">{{ formatPhone(user?.phone || '') }}</span>
                       </div>
                       <div class="mx-4 mb-8 h-px bg-[#252321] opacity-10"></div>
                       <ProfileDialogTab>История заказов</ProfileDialogTab>
@@ -81,12 +81,15 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
+import { formatPhone } from '~/utils'
 
 const props = defineProps<{
   show?: boolean
 }>()
 const { show } = toRefs(props)
 const emit = defineEmits(['close'])
+
+const { data: user } = useUser((v) => v)
 
 const dialogPanelEl = ref()
 

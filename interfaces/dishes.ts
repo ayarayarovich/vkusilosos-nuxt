@@ -12,16 +12,37 @@ export interface Tag {
 
 export interface Dish {
   id: number
+  category: number
   name: string
-  price: number
-  newPrice: number
   img: string
-  spice: boolean
-  description: string
+  price: number
   weight: number
-  big: boolean
-  additionalInfo: AdditionalInfo[]
-  tags: Tag[]
+  count: number
+  count_basket: number
+  basket_id: number
+  color: number
+  size: number
+  tags: number[] | null
+}
+
+export interface ExpandedDish {
+  id: number
+  name: string
+  description: string
+  img: string
+  category: number
+  price: number
+  weight: number
+  pich_cen: number
+  belki: number
+  ziri: number
+  uglevodi: number
+  count: number
+  color: number
+  can_deliver: boolean
+  have: boolean
+  active: boolean
+  size: number
 }
 
 // Интерфейс для категорий
@@ -29,7 +50,6 @@ export interface Category {
   id: number
   name: string
   img: string
-  have_tags: boolean
 }
 
 // Интерфейс для вариаций блюд

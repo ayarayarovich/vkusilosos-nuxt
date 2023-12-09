@@ -9,7 +9,11 @@ export default defineNuxtConfig({
     'nuxt-headlessui',
     '@vueuse/motion/nuxt',
     '@vee-validate/nuxt',
+    'nuxt-lodash'
   ],
+  lodash: {
+    prefix: "_",
+  },
   veeValidate: {
     // disable or enable auto imports
     autoImports: true,
@@ -22,19 +26,19 @@ export default defineNuxtConfig({
     },
   },
   appConfig: {
-    baseAPIURL: 'https://api.losos.ayarayarovich.tech',
+    baseAPIURL: 'https://api.losos.toolio.space',
   },
   runtimeConfig: {
     public: {
-      siteUrl: 'https://test.losos.ayarayarovich.tech',
+      siteUrl: 'https://test.losos.toolio.space',
       siteName: 'Вкус И Лосось',
       siteDescription: 'Доставка японской кухни',
       language: 'ru',
     },
   },
   routeRules: {
-    '/': { swr: 60 },
-    '/blog/**': { swr: 60 },
+    // '/': { swr: 60 },
+    // '/blog/**': { swr: 60 },
   },
   css: ['~/assets/main.css'],
   // extends: [

@@ -1,9 +1,10 @@
 <template>
   <button
+    v-if="isSuccess"
     class="flex items-center gap-1 rounded-xl p-2 text-sm font-light"
     @click="isOpen = true"
   >
-    <IconCart class="inline h-8" /> <AnimatedNumber :number="displayCost" />
+    <IconCart class="inline h-8" /> <AnimatedNumber :number="data" />
     <span class="font-medium">&#8381;</span>
   </button>
   <OrderCartDialog
@@ -13,11 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
-import { useCartStore } from '~/store/cart'
+import { ref } from 'vue'
 
-const cartStore = toRefs(useCartStore())
-const displayCost = cartStore.totalCost
+const { data, isSuccess } = useBasket((v) => v.total_price)
 
 const isOpen = ref(false)
 function closeDialog() {

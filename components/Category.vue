@@ -1,14 +1,13 @@
 <template>
   <section
     :id="'dish-category-' + props.category.id"
-    ref="fetchObserver"
     class="mb-8 mt-4 lg:mb-16 lg:mt-8"
   >
     <div
       ref="containerEl"
       class="container mx-auto min-h-[10rem] px-4"
     >
-      <h1 class="my-8 text-2xl font-medium uppercase text-black">
+      <h1 class="mb-8 text-2xl font-medium uppercase text-black">
         {{ props.category.name }}
       </h1>
       <Transition
@@ -22,19 +21,52 @@
           <span class="loader"></span>
         </div>
         <div v-else-if="dishesStatus == 'success'">
-          <DishesGrid>
-            <DishesGridCard
-              v-for="dish in dishes"
+          <HeadlessRadioGroup
+            v-if="dishesData?.tags && dishesData?.tags.length > 0"
+            v-model="currentTag"
+            class="mb-8 flex flex-wrap items-center gap-2"
+          >
+            <HeadlessRadioGroupOption
+              v-slot="{ checked }"
+              :value="-1"
+            >
+              <Tag
+                name="Все"
+                :checked="checked"
+              />
+            </HeadlessRadioGroupOption>
+
+            <HeadlessRadioGroupOption
+              v-for="tag in dishesData?.tags"
+              :key="tag.id"
+              v-slot="{ checked }"
+              :value="tag.id"
+            >
+              <Tag
+                v-bind="tag"
+                :checked="checked"
+              />
+            </HeadlessRadioGroupOption>
+          </HeadlessRadioGroup>
+          <div class="grid grid-flow-row-dense grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
+            <template
+              v-for="dish in dishesData?.dishes"
               :key="dish.id"
-              :dish="dish"
-              :big_card="dish.newPrice > 1000 || (500 < dish.newPrice && dish.newPrice < 600)"
-              :class="{
-                'orange-bg': dish.newPrice < 400,
-                'yellowgreen-bg': dish.newPrice > 1000,
-                'blue-bg': 800 < dish.newPrice && dish.newPrice < 900,
-              }"
-            />
-          </DishesGrid>
+            >
+              <DishCard
+                v-if="currentTag == -1 || dish.tags?.includes(currentTag)"
+                :dish="dish"
+                :big_card="dish.size === 2"
+                :class="{
+                  'orange-bg': dish.color === 1,
+                  'blue-bg': dish.color === 2,
+                  'yellowgreen-bg': dish.color === 3,
+                  'yellow-bg': dish.color === 4,
+                }"
+                :category-tags="dishesData?.tags"
+              />
+            </template>
+          </div>
         </div>
       </Transition>
     </div>
@@ -42,8 +74,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import type { Category, Dish } from '~/interfaces/dishes'
+import { ref } from 'vue'
+import type { Category } from '~/interfaces/dishes'
 import { useCategoryStore } from '~/store/category'
 
 const props = defineProps<{
@@ -51,37 +83,15 @@ const props = defineProps<{
   immediate?: boolean
 }>()
 
-const fetchObserver = ref()
+const currentTag = ref<number>(-1)
+
 const containerEl = ref()
 const categoryStore = useCategoryStore()
 
-const { data: dishesData, status: dishesStatus } = await usePublicAxios<{ dishes: Dish[] }>(
-  `dish-category-${props.category.id}`,
-  async (axios) => {
-    const response = await axios.post('api/dish', {
-      offset: 0,
-      limit: 999999,
-      min_price: 0,
-      max_price: 9999999,
-      category_id: props.category.id,
-      have: false,
-    })
-    return response.data
-  }
-)
-
-const { data: tagsData, status: tagsStatus } = await usePublicAxios<{ id: number; name: string; img: string }[]>(
-  `dish-category-${props.category.id}-tags`,
-  async (axios) => {
-    const response = await axios.get('api/tags', {
-      params: {
-        category: props.category.id,
-      },
-    })
-
-    return response.data
-  }
-)
+const { data: dishesData, status: dishesStatus, suspense } = useDishes(props.category.id)
+onServerPrefetch(async () => {
+  await suspense()
+})
 
 useIntersectionObserver(
   containerEl,
@@ -91,11 +101,10 @@ useIntersectionObserver(
     }
   },
   {
-    rootMargin: '-30% 0px -50% 0px',
+    rootMargin: '-30% 0px -69% 0px',
+    threshold: 0,
   }
 )
-
-const dishes = computed(() => dishesData.value?.dishes)
 </script>
 
 <style scoped>
@@ -110,6 +119,20 @@ const dishes = computed(() => dishesData.value?.dishes)
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.list-complete-item {
+  transition: all 0.8s ease;
+  /* display: inline-block; */
+}
+
+.list-complete-enter-from,
+.list-complete-leave-to {
+  opacity: 0;
+}
+
+.list-complete-leave-active {
+  position: absolute;
 }
 
 .loader {

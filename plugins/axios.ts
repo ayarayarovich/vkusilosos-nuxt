@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
       const userStore = useUserStore(pinia)
       if (userStore.isAuthenticated) {
         // eslint-disable-next-line dot-notation
-        config.headers['Authorization'] = `Bearer ${userStore.accessToken}`
+        config.headers['Authorization'] = userStore.accessToken
       } else {
         userStore.signOut()
       }
@@ -46,7 +46,7 @@ export default defineNuxtPlugin(() => {
             userStore.refreshToken = refreshToken
 
             // eslint-disable-next-line dot-notation
-            axiosPrivate.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+            axiosPrivate.defaults.headers.common['Authorization'] = accessToken
 
             return axiosPrivate(originalConfig)
           } catch (_error: any) {

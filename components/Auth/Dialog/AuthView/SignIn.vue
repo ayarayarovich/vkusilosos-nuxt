@@ -5,7 +5,7 @@
         <InputText
           label="Электронная почта"
           class="mb-4"
-          name="phone"
+          name="login"
           type="text"
         />
         <InputText
@@ -20,7 +20,16 @@
           :class="{ 'opacity-50': isLoading }"
           class="mb-2 w-full px-8 py-5 font-bold uppercase"
         >
-          Войти
+          <Transition
+            name="fade"
+            mode="out-in"
+          >
+            <div
+              v-if="isLoading"
+              class="lds-dual-ring"
+            ></div>
+            <span v-else>Войти</span>
+          </Transition>
         </SimpleButton>
       </form>
 
@@ -56,7 +65,7 @@ import { useUserStore } from '~/store/user'
 
 const { handleSubmit, setErrors } = useForm({
   validationSchema: yup.object({
-    phone: yup.string().required().label('Электронная почта'),
+    login: yup.string().required().label('Электронная почта'),
     password: yup.string().required().label('Пароль'),
   }),
 })
@@ -70,11 +79,10 @@ const isLoading = ref(false)
 const signIn = handleSubmit((vals) => {
   isLoading.value = true
   publicAxios
-    .post('api/password_verification', vals)
+    .post('auth/login', vals)
     .then((res) => {
-      userStore.accessToken = res.data.accessToken
+      userStore.accessToken = res.data.token
       userStore.refreshToken = res.data.refreshToken
-      userStore.userID = res.data.user.userId
       userStore.isAuthenticated = true
     })
     .catch(() => {
@@ -90,3 +98,30 @@ const signIn = handleSubmit((vals) => {
 
 const { changeView } = inject<any>('view')
 </script>
+
+<style scoped>
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: ' ';
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

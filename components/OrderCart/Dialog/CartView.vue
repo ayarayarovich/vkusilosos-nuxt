@@ -5,11 +5,12 @@
       mode="out-in"
     >
       <div
-        v-if="itemsCount > 0"
+        v-if="basket && basket.total_count > 0"
         class="relative flex h-full w-full transform flex-col items-start overflow-hidden bg-white py-8"
       >
         <strong class="px-4 text-2xl font-medium">
-          {{ itemsCount }} {{ pluralizedItemsInCartCountWord }} на <AnimatedNumber :number="totalCost" /> &#8381;
+          {{ basket?.total_count || 0 }} {{ pluralizedItemsInCartCountWord }} на
+          <AnimatedNumber :number="basket?.total_price || 0" /> &#8381;
         </strong>
 
         <p class="mt-2 px-4 opacity-50">Бесплатная доставка</p>
@@ -22,33 +23,31 @@
           ></div>
           <ul class="absolute inset-0 overflow-y-auto px-4">
             <li
-              v-for="dish in dishes"
-              :key="dish.id"
+              v-for="position in basket?.list"
+              :key="position.id"
               class="my-2 flex w-full gap-2 rounded-xl bg-white p-4 shadow-main"
             >
               <img
                 class="h-full w-24 self-center object-contain object-center lg:h-24 lg:w-36"
-                :src="dish.img"
+                :src="position.img"
                 alt=""
               />
               <div class="flex grow flex-col items-stretch justify-between self-stretch">
                 <div class="flex items-start justify-between">
                   <div>
-                    <p class="text-black">{{ dish.name }}</p>
-                    <p class="text-sm text-black opacity-50">{{ dish.weight }} гр</p>
+                    <p class="text-black">{{ position.name }}</p>
+                    <p class="text-sm text-black opacity-50">{{ position.weight }} гр</p>
                   </div>
-                  <button @click="cartStore.removeAll(dish.id)">
+                  <button @click="removeAll(position)">
                     <IconClose class="h-6" />
                   </button>
                 </div>
                 <div class="flex items-end justify-between">
-                  <p class="mt-auto text-lg text-black">{{ dish.newPrice }} &#8381;</p>
+                  <p class="mt-auto text-lg text-black">{{ position.price }} &#8381;</p>
                   <div>
                     <DishAdder
                       class="h-8 w-28 md:w-32"
-                      :value="dishesCount[dish.id]"
-                      @increment="cartStore.addDish(dish)"
-                      @decrement="cartStore.removeOne(dish.id)"
+                      :dish-id="position.dish_id"
                     />
                   </div>
                 </div>
@@ -59,8 +58,8 @@
 
         <div class="w-full px-4 pt-8 font-medium shadow-main">
           <div class="flex items-center justify-between">
-            <span>{{ itemsCount }} {{ pluralizedItemsInCartCountWord }}</span>
-            <span><AnimatedNumber :number="totalCost" /> &#8381;</span>
+            <span>{{ basket?.total_count }} {{ pluralizedItemsInCartCountWord }}</span>
+            <span><AnimatedNumber :number="basket?.total_price || 0" /> &#8381;</span>
           </div>
 
           <div class="flex items-center justify-between">
@@ -69,7 +68,7 @@
           </div>
 
           <SimpleButton
-            :disabled="itemsCount == 0"
+            :disabled="basket?.total_count == 0"
             class="mt-8 w-full px-4 py-4 text-xs uppercase"
             @click="emit('proccedToPayment')"
           >
@@ -118,24 +117,32 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useImage } from '@vueuse/core'
-import { useCartStore } from '~/store/cart'
 import AnimatedNumber from '~/components/AnimatedNumber.vue'
+import type { DishInBasket } from '~/interfaces/main'
 
 const emit = defineEmits(['proccedToPayment'])
 
-const cartStore = useCartStore()
-const { itemsCount, totalCost, dishes, dishesCount } = storeToRefs(cartStore)
+const { data: basket } = useBasket((v) => v)
 
 const pluralizedItemsInCartCountWord = computed(() => {
-  if (itemsCount.value === 1) return 'товар'
-  if (itemsCount.value === 2) return 'товара'
-  if (itemsCount.value === 3) return 'товара'
-  if (itemsCount.value === 4) return 'товара'
+  if (basket.value?.total_count === 1) return 'товар'
+  if (basket.value?.total_count === 2) return 'товара'
+  if (basket.value?.total_count === 3) return 'товара'
+  if (basket.value?.total_count === 4) return 'товара'
   return 'товаров'
 })
+
+const { mutate } = useAddToBasket()
+
+const removeAll = (position: DishInBasket) => {
+  mutate({
+    id: position.id,
+    count: 0,
+    dish_id: position.dish_id,
+  })
+}
 
 const { isReady: isCupReady } = useImage({ src: '/upset-cup.svg' })
 const { isReady: isSushiReady } = useImage({ src: '/upset-sushi.svg' })

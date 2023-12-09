@@ -9,21 +9,20 @@
       mode="in-out"
     >
       <div
+        v-if="slides"
         :key="activeSlideIndex"
-        :class="`
-                    absolute inset-0 flex items-center justify-center text-4xl transition-opacity
-                `"
+        class="absolute inset-0 flex items-center justify-center text-4xl transition-opacity"
       >
-        <div
+        <RouterLink
           class="block h-full w-full"
           :to="slides[activeSlideIndex].link"
         >
           <img
             class="h-full w-full object-cover"
-            :src="slides[activeSlideIndex].imgSrc"
+            :src="slides[activeSlideIndex].img"
             alt=""
           />
-        </div>
+        </RouterLink>
       </div>
     </Transition>
     <!-- eslint-enable -->
@@ -51,17 +50,18 @@ const props = defineProps<{
 const { autoplay, autoplayDelay } = toRefs(props)
 
 const container = ref(null)
-const slides = ref([
-  {
-    imgSrc: '/banner-1.png',
-    link: '/promo/banner1',
-  },
-  {
-    imgSrc: '/banner-2.png',
-    link: '/promo/banner2',
-  },
-])
-const slidesCount = computed(() => slides.value.length)
+const { data: slides } = useMain((v) => v.banners)
+// const slides = ref([
+//   {
+//     imgSrc: '/banner-1.png',
+//     link: '/promo/banner1',
+//   },
+//   {
+//     imgSrc: '/banner-2.png',
+//     link: '/promo/banner2',
+//   },
+// ])
+const slidesCount = computed(() => slides.value?.length || 0)
 const activeSlideIndex = ref(0)
 
 const nextSlide = () => {

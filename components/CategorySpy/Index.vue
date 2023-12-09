@@ -17,9 +17,5 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useCategoryStore } from '~/store/category'
-
-const categoryStore = useCategoryStore()
-const { categories } = storeToRefs(categoryStore)
+const { data: categories } = useCategories()
 </script>

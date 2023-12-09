@@ -38,7 +38,7 @@
             <HeadlessDialogPanel class="w-full max-w-4xl rounded-2xl shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
-                class="flex w-full transform flex-col gap-8 overflow-hidden rounded-2xl bg-white p-12 md:flex-row"
+                class="flex w-full transform flex-col gap-8 overflow-hidden rounded-2xl bg-white py-12 px-8 md:flex-row"
               >
                 <img
                   class="h-48 w-64 self-center object-contain"
@@ -51,24 +51,31 @@
                     <HeadlessDialogTitle
                       as="h1"
                       class="mb-2 text-2xl font-medium"
-                      >{{ props.dish.name }}</HeadlessDialogTitle
                     >
-                    <p class="mb-2 text-sm">{{ props.dish.description }}</p>
+                      {{ props.dish.name }}
+                    </HeadlessDialogTitle>
+                    <!-- <p class="mb-2 text-sm">{{ props.dish.description }}</p> -->
                     <p class="mb-8 text-sm lg:mb-24">{{ props.dish.weight }} гр</p>
                   </div>
                   <div class="flex gap-4">
                     <DishAdder
                       class="h-9 w-24 text-black lg:h-10 lg:w-32"
-                      :value="cartStore.dishesCount[props.dish.id]"
-                      @increment="cartStore.addDish(props.dish)"
-                      @decrement="cartStore.removeOne(props.dish.id)"
+                      hide-button
+                      :dish-id="props.dish.id"
                     />
-                    <SimpleButton
+                    <DishAdder
+                      class="h-9 grow text-black lg:h-10"
+                      always-button
+                      :dish-id="props.dish.id"
+                    >
+                      В корзину за {{ dish.price }} &#8381;
+                    </DishAdder>
+                    <!-- <SimpleButton
                       ref="addToCartButton"
                       class="h-9 grow rounded-lg text-[0.7rem] font-medium uppercase text-white lg:h-10 lg:text-sm"
-                      @click="cartStore.addDish(props.dish)"
-                      >В корзину за {{ dish.newPrice }} &#8381;</SimpleButton
+                      @click=""
                     >
+                    </SimpleButton> -->
                   </div>
                 </div>
               </div>
