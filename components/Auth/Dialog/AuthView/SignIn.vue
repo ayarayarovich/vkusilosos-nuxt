@@ -6,13 +6,11 @@
           label="Электронная почта"
           class="mb-4"
           name="login"
-          type="text"
         />
-        <InputText
+        <InputPassword
           label="Пароль"
           class="mb-6"
           name="password"
-          type="password"
         />
 
         <SimpleButton

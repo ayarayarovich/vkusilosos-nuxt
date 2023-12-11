@@ -14,26 +14,22 @@
       <div class="scrollbar-hide h-full overflow-y-auto scroll-smooth py-4">
         <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
           <InputText
-            v-model="phone"
             type="text"
             name="phone"
             label="Телефон"
             locked
           />
           <InputText
-            v-model="email"
             type="text"
             name="email"
             label="Электронная почта"
           />
           <InputText
-            v-model="name"
             type="text"
             name="name"
             label="Имя"
           />
           <InputText
-            v-model="birthday"
             type="text"
             name="birthday"
             label="Дата рождаения"
@@ -59,17 +55,13 @@
         <div class="mb-8">
           <h3 class="mb-5 block text-xl font-medium">Изменить пароль</h3>
           <div class="flex gap-4">
-            <InputText
-              v-model="password"
+            <InputPassword
               class="flex-1"
-              type="password"
               name="password"
               label="Пароль"
             />
-            <InputText
-              v-model="passwordRepeat"
+            <InputPassword
               class="flex-1"
-              type="password"
               name="passwordRepeat"
               label="Повторите пароль"
             />
@@ -97,12 +89,25 @@
 </template>
 
 <script setup lang="ts">
+import * as yup from 'yup'
+
 const emit = defineEmits(['go-back'])
 
-const phone = ref('+7 (864) 974 - 83 - 44')
-const name = ref('Валентина')
-const email = ref('valentina97@gmail.com')
-const birthday = ref('11.07.97')
+const { data: user } = useUser((v) => ({
+  name: v.name,
+  phone: v.phone,
+  email: v.email,
+  birthday: v.birthday,
+}))
+
+const { handleSubmit } = useForm({
+  validationSchema: yup.object({
+    name: yup.string().label('Имя'),
+    email: yup.string().label('Электронная почта'),
+    phone: yup.string().label('Телефон'),
+  }),
+  initialValues: user,
+})
 
 const password = ref('10jhcydhgv12')
 const passwordRepeat = ref('')

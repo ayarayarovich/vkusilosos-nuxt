@@ -3,13 +3,11 @@
     <input
       :id="inputID"
       v-model="value"
-      class="peer w-full rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
+      class="peer w-full rounded-xl border-2 border-transparent bg-white pb-3 pl-4 pr-14 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
       :class="{
         '!border-red': errorMessage,
-        '!pr-14': locked,
       }"
-      :disabled="locked"
-      type="text"
+      :type="inputType"
       :name="name"
       placeholder="Введите"
       @change="handleChange"
@@ -26,13 +24,23 @@
     </label>
 
     <button
-      v-if="locked"
       class="absolute right-4 top-1/2 -translate-y-1/2"
       type="button"
-      disabled
       @click.stop="toggleInputType"
     >
-      <IconLock class="aspect-square h-6" />
+      <Transition
+        name="fade"
+        mode="out-in"
+      >
+        <IconEye
+          v-if="inputType === 'text'"
+          class="aspect-square h-6"
+        />
+        <IconEyeClosed
+          v-else-if="inputType === 'password'"
+          class="aspect-square h-6"
+        />
+      </Transition>
     </button>
   </div>
 </template>
@@ -47,8 +55,13 @@ const props = defineProps<{
 }>()
 
 const inputID = uuidv4()
+const inputType = ref<'text' | 'password'>('password')
 
-const { name, label, locked } = toRefs(props)
+const { name, label } = toRefs(props)
 
 const { value, handleBlur, handleChange, errorMessage } = useField(name)
+
+const toggleInputType = () => {
+  inputType.value = inputType.value === 'text' ? 'password' : 'text'
+}
 </script>
