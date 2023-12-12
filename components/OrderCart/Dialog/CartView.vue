@@ -5,11 +5,11 @@
       mode="out-in"
     >
       <div
-        v-if="basket && basket.total_count > 0"
+        v-if="basket && basket.total > 0"
         class="relative flex h-full w-full transform flex-col items-start overflow-hidden bg-white py-8"
       >
         <strong class="px-4 text-2xl font-medium">
-          {{ basket?.total_count || 0 }} {{ pluralizedItemsInCartCountWord }} на
+          {{ basket?.total || 0 }} {{ pluralizedItemsInCartCountWord }} на
           <AnimatedNumber :number="basket?.total_price || 0" /> &#8381;
         </strong>
 
@@ -58,7 +58,7 @@
 
         <div class="w-full px-4 pt-8 font-medium shadow-main">
           <div class="flex items-center justify-between">
-            <span>{{ basket?.total_count }} {{ pluralizedItemsInCartCountWord }}</span>
+            <span>{{ basket?.total }} {{ pluralizedItemsInCartCountWord }}</span>
             <span><AnimatedNumber :number="basket?.total_price || 0" /> &#8381;</span>
           </div>
 
@@ -68,7 +68,7 @@
           </div>
 
           <SimpleButton
-            :disabled="basket?.total_count == 0"
+            :disabled="basket?.total == 0"
             class="mt-8 w-full px-4 py-4 text-xs uppercase"
             @click="emit('proccedToPayment')"
           >
@@ -127,10 +127,10 @@ const emit = defineEmits(['proccedToPayment'])
 const { data: basket } = useBasket((v) => v)
 
 const pluralizedItemsInCartCountWord = computed(() => {
-  if (basket.value?.total_count === 1) return 'товар'
-  if (basket.value?.total_count === 2) return 'товара'
-  if (basket.value?.total_count === 3) return 'товара'
-  if (basket.value?.total_count === 4) return 'товара'
+  if (basket.value?.total === 1) return 'товар'
+  if (basket.value?.total === 2) return 'товара'
+  if (basket.value?.total === 3) return 'товара'
+  if (basket.value?.total === 4) return 'товара'
   return 'товаров'
 })
 

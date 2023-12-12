@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useCategories } from '~/composables/useCategories'
 
+defineOgImage({
+  
+})
+
 const { data: recomendations } = useMain((v) => v.recomendation)
 const { data: categories, suspense } = useCategories()
 
@@ -61,7 +65,7 @@ onServerPrefetch(async () => {
       </div>
     </section>
 
-    <div class="sticky top-16 z-50 bg-white bg-opacity-30 backdrop-blur-sm lg:top-20">
+    <div class="sticky top-[calc(4rem-0.5px)] z-30 bg-white bg-opacity-30 backdrop-blur-sm lg:top-[calc(5rem-0.5px)]">
       <div class="container mx-auto py-4">
         <CategorySpy />
       </div>

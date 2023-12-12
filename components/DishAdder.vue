@@ -87,7 +87,7 @@ const updatePosition = _Debounce((count: number) => {
       count,
     })
   }
-}, 500)
+}, 1000)
 
 const addNewPosition = () => {
   if (!userStore.isAuthenticated) {

@@ -6,7 +6,6 @@ interface GetResponse {
   total: number
   list: DishInBasket[]
   total_price: number
-  total_count: number
 }
 
 export const useBasket = <SData>(select: (response: GetResponse) => SData) => {
@@ -37,7 +36,7 @@ export const useInvalidateBasket = () => {
 
   return () => {
     queryClient.invalidateQueries({
-      queryKey: ['basket']
+      queryKey: ['user', 'basket']
     })
   }
 }

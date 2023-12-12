@@ -11,10 +11,8 @@ export const useProfileDialogStore = defineStore('profileDialog', () => {
 
   const open = () => {
     if (userStore.isAuthenticated) {
-      console.log('атлешна, в акаунт зашел, на тебе профиль')
       isOpen.value = true
     } else {
-      console.log('бля, он не вошел в акаунт, надо зайти!')
       authDialogStore.open()
     }
   }

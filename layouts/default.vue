@@ -5,7 +5,7 @@
 
     <header
       id="header"
-      class="sticky left-0 right-0 top-0 z-40 h-16 bg-white bg-opacity-30 shadow-main backdrop-blur-sm"
+      class="sticky left-0 right-0 top-0 z-30 h-16 lg:h-20 bg-white bg-opacity-30 shadow-main backdrop-blur-sm"
     >
       <!-- desktop -->
       <div

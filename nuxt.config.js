@@ -9,13 +9,14 @@ export default defineNuxtConfig({
     'nuxt-headlessui',
     '@vueuse/motion/nuxt',
     '@vee-validate/nuxt',
-    'nuxt-lodash'
+    'nuxt-lodash',
+    '@nuxtseo/module',
   ],
   tailwindcss: {
-    exposeConfig: true
+    exposeConfig: true,
   },
   lodash: {
-    prefix: "_",
+    prefix: '_',
   },
   veeValidate: {
     // disable or enable auto imports
@@ -31,22 +32,17 @@ export default defineNuxtConfig({
   appConfig: {
     baseAPIURL: 'https://api.losos.toolio.space',
   },
-  runtimeConfig: {
-    public: {
-      siteUrl: 'https://test.losos.toolio.space',
-      siteName: 'Вкус И Лосось',
-      siteDescription: 'Доставка японской кухни',
-      language: 'ru',
-    },
+  site: {
+    name: 'Вкус И Лосось',
+    url: 'https://test.losos.toolio.space',
+    description: 'Доставка японской кухни',
+    defaultLocale: 'ru'
   },
   routeRules: {
-    // '/': { swr: 60 },
-    // '/blog/**': { swr: 60 },
+    '/': { swr: 60 },
+    '/blog/**': { swr: 60 },
   },
   css: ['~/assets/main.css'],
-  // extends: [
-  //   'nuxt-seo-kit'
-  // ],
   devtools: {
     enabled: true,
 
