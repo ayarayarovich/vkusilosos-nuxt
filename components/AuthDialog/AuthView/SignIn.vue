@@ -59,6 +59,8 @@
 
 <script setup lang="ts">
 import * as yup from 'yup'
+import { useAuthDialogStore } from '~/store/authDialog';
+import { useProfileDialogStore } from '~/store/profileDialog';
 import { useUserStore } from '~/store/user'
 
 const { handleSubmit, setErrors } = useForm({
@@ -69,6 +71,8 @@ const { handleSubmit, setErrors } = useForm({
 })
 
 const userStore = useUserStore()
+const authDialogStore = useAuthDialogStore()
+const profileDialogStore = useProfileDialogStore()
 
 const publicAxios = usePublicAxiosInstance()
 
@@ -82,6 +86,9 @@ const signIn = handleSubmit((vals) => {
       userStore.accessToken = res.data.token
       userStore.refreshToken = res.data.refreshToken
       userStore.isAuthenticated = true
+
+      authDialogStore.close()
+      profileDialogStore.open()
     })
     .catch(() => {
       setErrors({

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { DishInBasket } from '~/interfaces/main'
+import { useUserStore } from '~/store/user'
 
 interface GetResponse {
   total: number
@@ -10,9 +11,10 @@ interface GetResponse {
 
 export const useBasket = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
+  const userStore = useUserStore()
 
   return useQuery({
-    queryKey: ['basket'],
+    queryKey: ['user', 'basket'],
     queryFn: async () => {
       const response = await privateAxios.get<GetResponse>('user/basket', {
         params: {
@@ -26,6 +28,7 @@ export const useBasket = <SData>(select: (response: GetResponse) => SData) => {
       return response.data
     },
     select,
+    enabled: userStore.isAuthenticated
   })
 }
 

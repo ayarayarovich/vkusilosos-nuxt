@@ -1,18 +1,23 @@
 <template>
   <button
-    class="my-4 px-6 py-4 text-start transition-colors hover:bg-white"
+    class="text-orange-200"
     @click="isModalOpen = true"
   >
-    Выйти <IconExit class="inline-block h-6" />
+    Посмотреть
   </button>
-  <ProfileDialogExitDialog
+  <ProfileDesktopDialogOrdersHistoryReceiptDialog
     :show="isModalOpen"
+    :order-id="props.orderId"
     @close="closeModal"
   />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+const props = defineProps<{
+  orderId: number
+}>()
 
 const isModalOpen = ref(false)
 

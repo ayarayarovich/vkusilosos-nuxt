@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/vue-query'
 import type { User } from '~/interfaces/users'
+import { useUserStore } from '~/store/user'
 
 type GetResponse = User
 
 export const useUser = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
+  const userStore = useUserStore()
 
   return useQuery({
     queryKey: ['user'],
@@ -13,5 +15,6 @@ export const useUser = <SData>(select: (response: GetResponse) => SData) => {
       return response.data
     },
     select,
+    enabled: userStore.isAuthenticated
   })
 }

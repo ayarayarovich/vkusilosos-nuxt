@@ -1,14 +1,13 @@
-import { AuthDialogAuthView } from '#build/components';
 <template>
   <HeadlessTransitionRoot
     appear
-    :show="show"
+    :show="authDialogStore.isOpen"
     as="template"
   >
     <HeadlessDialog
       as="div"
       class="relative z-50"
-      @close="emit('close')"
+      @close="authDialogStore.close()"
     >
       <HeadlessTransitionChild
         as="template"
@@ -61,13 +60,10 @@ import { AuthDialogAuthView } from '#build/components';
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
+import { provide, ref } from 'vue'
+import { useAuthDialogStore } from '~/store/authDialog'
 
-const props = defineProps<{
-  show?: boolean
-}>()
-const { show } = toRefs(props)
-const emit = defineEmits(['close'])
+const authDialogStore = useAuthDialogStore()
 
 const dialogPanelEl = ref()
 
@@ -85,7 +81,7 @@ provide('view', {
 useSwipe(dialogPanelEl, {
   onSwipeEnd(_, direction) {
     if (direction === 'left') {
-      emit('close')
+      authDialogStore.close()
     }
   },
 })

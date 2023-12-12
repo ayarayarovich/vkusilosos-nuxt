@@ -66,6 +66,7 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
+import { useProfileDialogStore } from '~/store/profileDialog'
 import { useUserStore } from '~/store/user'
 
 const props = defineProps<{
@@ -75,9 +76,11 @@ const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
 const userStore = useUserStore()
+const profileDialogStore = useProfileDialogStore()
 
 const signOut = () => {
   emit('close')
+  profileDialogStore.close()
   userStore.signOut()
 }
 

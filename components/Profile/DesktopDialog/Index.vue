@@ -1,13 +1,13 @@
 <template>
   <HeadlessTransitionRoot
     appear
-    :show="show"
+    :show="profileDialogStore.isOpen"
     as="template"
   >
     <HeadlessDialog
       as="div"
       class="relative z-50"
-      @close="emit('close')"
+      @close="profileDialogStore.close()"
     >
       <HeadlessTransitionChild
         as="template"
@@ -47,25 +47,25 @@
                         <span class="text-xl font-medium">{{ formatPhone(user?.phone || '') }}</span>
                       </div>
                       <div class="mx-4 mb-8 h-px bg-[#252321] opacity-10"></div>
-                      <ProfileDialogTab>История заказов</ProfileDialogTab>
-                      <ProfileDialogTab>Данные</ProfileDialogTab>
-                      <ProfileDialogTab>Адреса</ProfileDialogTab>
-                      <ProfileDialogTab>Бонусная система</ProfileDialogTab>
+                      <ProfileDesktopDialogTab>История заказов</ProfileDesktopDialogTab>
+                      <ProfileDesktopDialogTab>Данные</ProfileDesktopDialogTab>
+                      <ProfileDesktopDialogTab>Адреса</ProfileDesktopDialogTab>
+                      <ProfileDesktopDialogTab>Бонусная система</ProfileDesktopDialogTab>
                       <div class="mx-4 mt-auto h-px bg-[#252321] opacity-10"></div>
-                      <ProfileDialogExit />
+                      <ProfileDesktopDialogExit />
                     </HeadlessTabList>
                     <HeadlessTabPanels class="grow bg-whitegray">
                       <HeadlessTabPanel class="h-full">
-                        <ProfileDialogOrdersHistory />
+                        <ProfileDesktopDialogOrdersHistory />
                       </HeadlessTabPanel>
                       <HeadlessTabPanel class="h-full">
-                        <ProfileDialogInfo />
+                        <ProfileDesktopDialogInfo />
                       </HeadlessTabPanel>
                       <HeadlessTabPanel class="h-full">
-                        <ProfileDialogAddresses />
+                        <ProfileDesktopDialogAddresses />
                       </HeadlessTabPanel>
                       <HeadlessTabPanel class="h-full">
-                        <ProfileDialogBonuses />
+                        <ProfileDesktopDialogBonuses />
                       </HeadlessTabPanel>
                     </HeadlessTabPanels>
                   </div>
@@ -80,14 +80,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
+import { ref } from 'vue'
+import { useProfileDialogStore } from '~/store/profileDialog';
 import { formatPhone } from '~/utils'
 
-const props = defineProps<{
-  show?: boolean
-}>()
-const { show } = toRefs(props)
-const emit = defineEmits(['close'])
+const profileDialogStore = useProfileDialogStore()
 
 const { data: user } = useUser((v) => v)
 
@@ -107,7 +104,7 @@ provide('view', {
 useSwipe(dialogPanelEl, {
   onSwipeEnd(_, direction) {
     if (direction === 'left') {
-      emit('close')
+      profileDialogStore.close()
     }
   },
 })

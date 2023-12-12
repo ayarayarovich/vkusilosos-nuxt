@@ -11,6 +11,9 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     'nuxt-lodash'
   ],
+  tailwindcss: {
+    exposeConfig: true
+  },
   lodash: {
     prefix: "_",
   },

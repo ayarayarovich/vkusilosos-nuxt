@@ -1,12 +1,11 @@
 <template>
   <button
-    class="rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
+    class="my-4 px-6 py-4 text-start transition-colors hover:bg-white"
     @click="isModalOpen = true"
   >
-    <IconEditPen class="h-full" />
+    Выйти <IconExit class="inline-block h-6" />
   </button>
-
-  <ProfileDialogAddressesEditAddressDialog
+  <ProfileDesktopDialogExitDialog
     :show="isModalOpen"
     @close="closeModal"
   />
@@ -14,6 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
 const isModalOpen = ref(false)
 
 const closeModal = () => (isModalOpen.value = false)

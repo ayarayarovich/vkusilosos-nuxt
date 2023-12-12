@@ -20,7 +20,7 @@ export default defineNuxtPlugin(() => {
         // eslint-disable-next-line dot-notation
         config.headers['Authorization'] = userStore.accessToken
       } else {
-        userStore.signOut()
+        userStore.forgetCredentials()
       }
       return config
     },
@@ -34,7 +34,7 @@ export default defineNuxtPlugin(() => {
 
       const originalConfig = err.config
       if (err.response) {
-        if ((err.response.status === 403 || err.response.status === 401) && !originalConfig._retry) {
+        if ((err.response.status === 403 || err.response.status === 401) && !originalConfig._retry && userStore.refreshToken) {
           originalConfig._retry = true
 
           try {
@@ -51,11 +51,11 @@ export default defineNuxtPlugin(() => {
             return axiosPrivate(originalConfig)
           } catch (_error: any) {
             if (_error.response && _error.response.data) {
-              userStore.isAuthenticated = false
+              userStore.signOut()
               return Promise.reject(_error.response.data)
             }
 
-            userStore.isAuthenticated = false
+            userStore.signOut()
             return Promise.reject(_error)
           }
         }

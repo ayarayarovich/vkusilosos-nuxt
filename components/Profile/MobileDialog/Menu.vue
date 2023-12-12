@@ -55,7 +55,7 @@
         <div class="mx-4 h-px bg-gray"></div>
         <button
           class="w-full px-6 py-6 text-start transition-colors hover:bg-white"
-          @click="isAuthenticated = false"
+          @click="signOut()"
         >
           Выйти <IconExit class="inline-block h-6" />
         </button>
@@ -65,12 +65,17 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
+import { useProfileDialogStore } from '~/store/profileDialog';
 import { useUserStore } from '~/store/user'
 const emit = defineEmits(['close', 'change-view'])
 
 const userStore = useUserStore()
-const { isAuthenticated } = storeToRefs(userStore)
+const profileDialogStore = useProfileDialogStore()
+
+const signOut = () => {
+  profileDialogStore.close()
+  userStore.signOut()
+}
 
 const draggingArea = ref()
 

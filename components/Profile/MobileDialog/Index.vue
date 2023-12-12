@@ -1,7 +1,7 @@
 <template>
   <HeadlessTransitionRoot
     appear
-    :show="show"
+    :show="profileDialogStore.isOpen"
     as="template"
   >
     <HeadlessDialog
@@ -33,27 +33,27 @@
             leave-to="opacity-0 translate-y-full"
           >
             <HeadlessDialogPanel
-              class="absolute bottom-0 h-full w-full max-w-xl shadow-xl transition-all"
+              class="absolute bottom-0 h-full w-full shadow-xl transition-all"
               @click="emit('close')"
             >
-              <TestMenu
+              <ProfileMobileDialogMenu
                 v-if="currentView === 'menu'"
                 @close="emit('close')"
                 @change-view="currentView = $event"
               />
-              <TestInfo
+              <ProfileMobileDialogInfo
                 v-else-if="currentView === 'info'"
                 @go-back="currentView = 'menu'"
               />
-              <TestAddresses
+              <ProfileMobileDialogAddresses
                 v-else-if="currentView === 'addresses'"
                 @go-back="currentView = 'menu'"
               />
-              <TestBonuses
+              <ProfileMobileDialogBonuses
                 v-else-if="currentView === 'bonus'"
                 @go-back="currentView = 'menu'"
               />
-              <TestOrdersHistory
+              <ProfileMobileDialogOrdersHistory
                 v-else-if="currentView === 'orders-history'"
                 @go-back="currentView = 'menu'"
               />
@@ -66,17 +66,17 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  show?: boolean
-}>()
+import { ref } from 'vue';
+import { useProfileDialogStore } from '~/store/profileDialog'
+
+const emit = defineEmits(['close'])
+
+const profileDialogStore = useProfileDialogStore()
 
 const currentView = ref<'menu' | 'info' | 'orders-history' | 'addresses' | 'bonus'>('menu')
 
 const closeDialog = () => {
-  emit('close')
+  profileDialogStore.close()
   currentView.value = 'menu'
 }
-
-const { show } = toRefs(props)
-const emit = defineEmits(['close'])
 </script>

@@ -1,9 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useQueryClient } from '@tanstack/vue-query'
 
 export const useUserStore = defineStore(
   'user',
   () => {
+    const queryClient = useQueryClient()
+
     const userID = ref<string>()
     const userPhone = ref<string>()
 
@@ -12,7 +15,7 @@ export const useUserStore = defineStore(
 
     const isAuthenticated = ref(false)
 
-    const signOut = () => {
+    const forgetCredentials = () => {
       userID.value = undefined
       userPhone.value = undefined
       accessToken.value = undefined
@@ -20,7 +23,14 @@ export const useUserStore = defineStore(
       isAuthenticated.value = false
     }
 
-    return { userID, userPhone, accessToken, refreshToken, isAuthenticated, signOut }
+    const signOut = () => {
+      forgetCredentials()
+      queryClient.removeQueries({
+        queryKey: ['user'],
+      })
+    }
+
+    return { userID, userPhone, accessToken, refreshToken, isAuthenticated, signOut, forgetCredentials }
   },
   { persist: true }
 )

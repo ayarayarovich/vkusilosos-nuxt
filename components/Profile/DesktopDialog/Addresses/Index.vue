@@ -50,7 +50,7 @@
                   <div>проспект Строителей 29, под 5, эт 2, кв 55</div>
                 </div>
                 <div class="flex h-6 shrink-0 items-center gap-1 md:gap-4">
-                  <ProfileDialogAddressesEditAddress />
+                  <ProfileDesktopDialogAddressesEditAddress />
                   <button
                     class="rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
                   >
@@ -66,7 +66,7 @@
         </div>
 
         <div class="mx-8 mb-8">
-          <ProfileDialogAddressesAddAddress />
+          <ProfileDesktopDialogAddressesAddAddress />
         </div>
       </div>
     </Transition>

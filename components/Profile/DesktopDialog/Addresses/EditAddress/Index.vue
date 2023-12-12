@@ -1,12 +1,12 @@
 <template>
-  <SimpleButton
-    class="w-full px-8 py-4"
+  <button
+    class="rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
     @click="isModalOpen = true"
   >
-    Добавить адресс
-  </SimpleButton>
+    <IconEditPen class="h-full" />
+  </button>
 
-  <ProfileDialogAddressesAddAddressDialog
+  <ProfileDesktopDialogAddressesEditAddressDialog
     :show="isModalOpen"
     @close="closeModal"
   />

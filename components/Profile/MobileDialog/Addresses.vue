@@ -4,7 +4,7 @@
       class="h-full w-full bg-whitegray"
       @click.stop=""
     >
-      <ProfileDialogAddresses @go-back="emit('go-back')" />
+      <ProfileDesktopDialogAddresses @go-back="emit('go-back')" />
     </div>
   </div>
 </template>

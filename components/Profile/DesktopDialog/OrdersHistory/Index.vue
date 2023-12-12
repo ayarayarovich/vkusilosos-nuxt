@@ -24,7 +24,7 @@
       mode="out-in"
     >
       <div
-        v-if="isEmpty"
+        v-if="false"
         class="flex h-0 grow items-center justify-center p-8"
       >
         <div>
@@ -56,7 +56,7 @@
             <div class="shrink-0 grow-[2] basis-0">24.03.2023, 20:08</div>
             <div class="shrink-0 grow-[1] basis-0">5875 &#8381;</div>
             <div class="shrink-0 grow-[1] basis-0">
-              <ProfileDialogOrdersHistoryReceipt :order-id="222" />
+              <ProfileDesktopDialogOrdersHistoryReceipt :order-id="222" />
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@
                   <div class="shrink-0 grow-[2] basis-0">24.03.2023, 20:08</div>
                   <div class="shrink-0 grow-[1] basis-0">5875 &#8381;</div>
                   <div class="shrink-0 grow-[1] basis-0">
-                    <ProfileDialogOrdersHistoryReceipt :order-id="index" />
+                    <ProfileDesktopDialogOrdersHistoryReceipt :order-id="index" />
                   </div>
                 </div>
               </div>
