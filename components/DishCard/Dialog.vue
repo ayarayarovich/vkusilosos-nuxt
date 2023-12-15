@@ -37,11 +37,11 @@
             <HeadlessDialogPanel class="w-full max-w-4xl rounded-2xl shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
-                class="flex w-full transform flex-col gap-8 overflow-hidden rounded-2xl bg-white py-12 px-8 md:flex-row"
+                class="flex w-full transform flex-col gap-8 overflow-hidden rounded-2xl bg-white px-8 py-12 md:flex-row"
               >
                 <img
                   class="h-48 w-64 self-center object-contain"
-                  :src="props.dish.img"
+                  :src="dish.img"
                   alt=""
                 />
 
@@ -49,23 +49,58 @@
                   <div class="text-left">
                     <HeadlessDialogTitle
                       as="h1"
-                      class="mb-2 text-2xl font-medium"
+                      class="mb-2 flex items-center gap-2 text-2xl font-medium"
                     >
-                      {{ props.dish.name }}
+                      {{ dish.name }}
+                      <Hint>
+                        <div class="mb-4 text-center">Пищевая ценность на 100 г</div>
+                        <div class="flex justify-between gap-8">
+                          <span> Энерг. ценность </span>
+                          <span> {{ dishDetails?.energ_cen }} ккал </span>
+                        </div>
+                        <div class="flex justify-between gap-8">
+                          <span>Белки</span>
+                          <span> {{ dishDetails?.belki }} г </span>
+                        </div>
+                        <div class="flex justify-between gap-8">
+                          <span>Жиры</span>
+                          <span> {{ dishDetails?.ziri }} г </span>
+                        </div>
+                        <div class="flex justify-between gap-8">
+                          <span>Углеводы</span>
+                          <span> {{ dishDetails?.uglevodi }} г </span>
+                        </div>
+                      </Hint>
                     </HeadlessDialogTitle>
-                    <!-- <p class="mb-2 text-sm">{{ props.dish.description }}</p> -->
-                    <p class="mb-8 text-sm lg:mb-24">{{ props.dish.weight }} гр</p>
+                    <div class="mb-2 text-sm">
+                      <Skeleton
+                        height="1.25rem"
+                        width="50%"
+                        :show-content="isSuccess"
+                      >
+                        <span> {{ dishDetails?.description }} </span>
+                      </Skeleton>
+                    </div>
+                    <div class="mb-8 text-sm lg:mb-24">
+                      <Skeleton
+                        height="1.25rem"
+                        width="33%"
+                        :show-content="isSuccess"
+                      >
+                        <span> {{ dishDetails?.count }} / {{ dishDetails?.weight }} гр </span>
+                      </Skeleton>
+                    </div>
                   </div>
                   <div class="flex gap-4">
                     <DishAdder
                       class="h-9 w-24 text-black lg:h-10 lg:w-32"
                       hide-button
-                      :dish-id="props.dish.id"
+                      :dish-id="dishDetails?.id"
                     />
                     <DishAdder
                       class="h-9 grow text-black lg:h-10"
                       always-button
-                      :dish-id="props.dish.id"
+                      :dish-id="dishDetails?.id"
                     >
                       В корзину за {{ dish.price }} &#8381;
                     </DishAdder>
@@ -88,8 +123,10 @@ const props = defineProps<{
   show?: boolean
   dish: Dish
 }>()
-const { show } = toRefs(props)
+const { show, dish } = toRefs(props)
 const emit = defineEmits(['close'])
+
+const { data: dishDetails, isSuccess } = useDish(dish.value?.id, show)
 
 const dialogPanelEl = ref<HTMLElement>()
 </script>

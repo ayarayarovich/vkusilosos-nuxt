@@ -5,12 +5,10 @@
 
     <header
       id="header"
-      class="sticky left-0 right-0 top-0 z-30 h-16 lg:h-20 bg-white bg-opacity-30 shadow-main backdrop-blur-sm"
+      class="sticky left-0 right-0 top-0 z-30 h-16 bg-white bg-opacity-30 shadow-main backdrop-blur-sm lg:h-20"
     >
       <!-- desktop -->
-      <div
-        class="container mx-auto hidden h-full px-4 lg:flex lg:items-center"
-      >
+      <div class="container mx-auto hidden h-full px-4 lg:flex lg:items-center">
         <div class="flex flex-1 items-center justify-start gap-4">
           <button
             class="group relative inline-block aspect-square h-8"
@@ -38,9 +36,7 @@
       </div>
 
       <!-- mobile -->
-      <div
-        class="container mx-auto flex h-full items-center justify-between px-4 lg:hidden"
-      >
+      <div class="container mx-auto flex h-full items-center justify-between px-4 lg:hidden">
         <div class="flex shrink grow-0 justify-center">
           <RouterLink to="/">
             <img
@@ -70,9 +66,7 @@
 
     <footer>
       <!-- desktop -->
-      <div
-        class="hidden bg-white py-9 shadow-[0_0_35px_0_rgba(0,0,0,0.05)] lg:block"
-      >
+      <div class="hidden bg-white py-9 shadow-[0_0_35px_0_rgba(0,0,0,0.05)] lg:block">
         <div class="container mx-auto flex items-center gap-8">
           <img
             src="/main-logo.svg"
@@ -118,9 +112,7 @@
       </div>
 
       <!-- mobile -->
-      <div
-        class="bg-white py-5 shadow-[0_0_35px_0_rgba(0,0,0,0.05)] lg:hidden"
-      >
+      <div class="bg-white py-5 shadow-[0_0_35px_0_rgba(0,0,0,0.05)] lg:hidden">
         <div class="container mx-auto flex justify-around gap-4 px-4">
           <div class="flex flex-col items-start justify-between gap-4">
             <img

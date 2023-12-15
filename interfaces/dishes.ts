@@ -45,6 +45,35 @@ export interface ExpandedDish {
   size: number
 }
 
+export interface DishDetails {
+  id: number
+  created_at: string
+  updated_at: string
+  deleted_at: null
+  name: string
+  description: string
+  img: string
+  iiko_id: string
+  category: number
+  vars: null
+  tags: null
+  price: number
+  weight: number
+  pich_cen: number
+  energ_cen: number
+  belki: number
+  ziri: number
+  uglevodi: number
+  count: number
+  color: number
+  size: number
+  from_hour: number
+  to_hour: number
+  can_deliver: boolean
+  have: boolean
+  active: boolean
+}
+
 // Интерфейс для категорий
 export interface Category {
   id: number

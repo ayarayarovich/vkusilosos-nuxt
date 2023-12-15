@@ -1,10 +1,10 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
-import type { Dish, Tag } from '~/interfaces/dishes'
+import type { Dish, Tag, DishDetails } from '~/interfaces/dishes'
 
 export const useDishes = (categoryID: MaybeRefOrGetter<number>) => {
   interface Response {
     dishes: Dish[]
-    tags: Tag[],
+    tags: Tag[]
     can_deliver: boolean
     total: number
   }
@@ -26,6 +26,28 @@ export const useDishes = (categoryID: MaybeRefOrGetter<number>) => {
 
       return response.data
     },
+  })
+}
+
+export const useDish = (dishID: MaybeRefOrGetter<number>, enabled: MaybeRefOrGetter<boolean>) => {
+  type Response = DishDetails
+
+  const publicAxios = usePublicAxiosInstance()
+
+  return useQuery({
+    queryKey: ['dishes', { dishID }],
+    queryFn: async ({ queryKey }) => {
+      const _dishID = (queryKey[1] as any).dishID
+
+      const response = await publicAxios.get<Response>('api/dish', {
+        params: {
+          id: _dishID,
+        },
+      })
+
+      return response.data
+    },
+    enabled,
   })
 }
 

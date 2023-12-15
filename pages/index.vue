@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { useCategories } from '~/composables/useCategories'
 
-defineOgImage({
-  
-})
-
 const { data: recomendations } = useMain((v) => v.recomendation)
 const { data: categories, suspense } = useCategories()
 
 onServerPrefetch(async () => {
   await suspense()
 })
+
+defineOgImage({})
 </script>
 
 <template>

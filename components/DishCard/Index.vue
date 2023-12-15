@@ -11,7 +11,7 @@
       <div
         v-for="tag in shownTags"
         :key="tag.id"
-        class="flex items-center gap-2 rounded-full bg-white px-3 py-1 text-sm font-medium shadow-main"
+        class="flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs shadow-main"
       >
         <img
           v-if="tag.img"
@@ -23,11 +23,11 @@
       </div>
     </div>
     <img
-      class="h-28 w-auto object-contain drop-shadow-lg transition-opacity duration-1000 sm:h-36 md:h-40 lg:h-40 xl:h-48"
+      class="h-28 w-auto mt-4 object-contain drop-shadow-lg transition-opacity duration-1000 sm:h-36 md:h-40 lg:h-40 xl:h-48"
       :src="dish.img"
       alt=""
     />
-    <h2 class="mb-auto mt-4 text-center text-sm">{{ dish.name }}</h2>
+    <h2 class="mb-auto mt-4 text-center">{{ dish.name }}</h2>
     <div
       class="mt-8 flex justify-between self-stretch"
       :class="dish.size === 2 ? 'flex-row items-center gap-8' : 'flex-col items-stretch gap-4'"

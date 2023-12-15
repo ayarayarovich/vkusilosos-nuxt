@@ -228,7 +228,7 @@ const isModalOpen = ref(false)
 <style scoped>
 
 .document > h3 {
-  @apply text-base font-semibold mb-2
+  @apply text-base font-bold mb-2
 }
 .document > p {
   @apply text-sm mb-4

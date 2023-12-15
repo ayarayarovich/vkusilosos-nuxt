@@ -10,8 +10,14 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@vee-validate/nuxt',
     'nuxt-lodash',
+    '@nuxtjs/google-fonts',
     '@nuxtseo/module',
   ],
+  googleFonts: {
+    families: {
+      'Ubuntu': [300, 400, 500, 700]
+    }
+  },
   tailwindcss: {
     exposeConfig: true,
   },
@@ -36,7 +42,9 @@ export default defineNuxtConfig({
     name: 'Вкус И Лосось',
     url: 'https://test.losos.toolio.space',
     description: 'Доставка японской кухни',
-    defaultLocale: 'ru'
+    defaultLocale: 'ru',
+    indexable: true,
+    trailingSlash: false
   },
   routeRules: {
     '/': { swr: 60 },
