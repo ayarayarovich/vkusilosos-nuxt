@@ -9,7 +9,6 @@
     >
       <!-- desktop -->
       <div
-        v-if="isLargeScreen"
         class="container mx-auto hidden h-full px-4 lg:flex lg:items-center"
       >
         <div class="flex flex-1 items-center justify-start gap-4">
@@ -40,7 +39,6 @@
 
       <!-- mobile -->
       <div
-        v-else
         class="container mx-auto flex h-full items-center justify-between px-4 lg:hidden"
       >
         <div class="flex shrink grow-0 justify-center">
@@ -73,7 +71,6 @@
     <footer>
       <!-- desktop -->
       <div
-        v-if="isLargeScreen"
         class="hidden bg-white py-9 shadow-[0_0_35px_0_rgba(0,0,0,0.05)] lg:block"
       >
         <div class="container mx-auto flex items-center gap-8">
@@ -122,7 +119,6 @@
 
       <!-- mobile -->
       <div
-        v-else
         class="bg-white py-5 shadow-[0_0_35px_0_rgba(0,0,0,0.05)] lg:hidden"
       >
         <div class="container mx-auto flex justify-around gap-4 px-4">
@@ -189,11 +185,8 @@
 <script setup lang="ts">
 import { useProfileDialogStore } from '~/store/profileDialog'
 import { useUserStore } from '~/store/user'
-import { useTailwindBreakpoint } from '~/composables/useTailwindBreakpoint'
 
 const profileDialogStore = useProfileDialogStore()
-
-const isLargeScreen = useTailwindBreakpoint('lg')
 
 const userStore = useUserStore()
 </script>
