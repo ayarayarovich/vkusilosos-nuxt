@@ -63,6 +63,7 @@
                   'yellowgreen-bg': dish.color === 3,
                   'yellow-bg': dish.color === 4,
                 }"
+                :should-include-tag="currentTag"
                 :category-tags="dishesData?.tags"
               />
             </template>

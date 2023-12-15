@@ -6,7 +6,6 @@
   >
     <HeadlessDialog
       as="div"
-      :initial-focus="addToCartButton"
       class="relative z-50"
       @close="emit('close')"
     >
@@ -70,12 +69,6 @@
                     >
                       В корзину за {{ dish.price }} &#8381;
                     </DishAdder>
-                    <!-- <SimpleButton
-                      ref="addToCartButton"
-                      class="h-9 grow rounded-lg text-[0.7rem] font-medium uppercase text-white lg:h-10 lg:text-sm"
-                      @click=""
-                    >
-                    </SimpleButton> -->
                   </div>
                 </div>
               </div>
@@ -89,7 +82,6 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
-import { useCartStore } from '~/store/cart'
 import type { Dish } from '~/interfaces/dishes'
 
 const props = defineProps<{
@@ -99,9 +91,5 @@ const props = defineProps<{
 const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
-const cartStore = useCartStore()
-
 const dialogPanelEl = ref<HTMLElement>()
-
-const addToCartButton = ref()
 </script>

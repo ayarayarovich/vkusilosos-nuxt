@@ -9,7 +9,7 @@
       class="absolute right-4 top-4 z-20 flex flex-col items-end gap-2"
     >
       <div
-        v-for="tag in tags"
+        v-for="tag in shownTags"
         :key="tag.id"
         class="flex items-center gap-2 rounded-full bg-white px-3 py-1 text-sm font-medium shadow-main"
       >
@@ -58,18 +58,30 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Dish, Tag } from '~/interfaces/dishes'
-import { useCartStore } from '~/store/cart'
 
-const props = defineProps<{ dish: Dish; categoryTags?: Tag[] }>()
+const props = defineProps<{ dish: Dish; categoryTags?: Tag[]; shouldIncludeTag?: number }>()
 const { dish } = toRefs(props)
-
-const cartStore = useCartStore()
-
-const { data: dishInBasket } = useBasket((v) => v.list.find((d) => d.dish_id === dish.value.id))
-
-const { mutate } = useAddToBasket()
 
 const showDialog = ref(false)
 
 const tags = computed(() => props.categoryTags?.filter((tag) => dish.value.tags?.includes(tag.id)))
+
+const shownTags = computed(() => {
+  if (tags.value && props.shouldIncludeTag) {
+    const tagsToBeShown: Tag[] = []
+
+    const tag = tags.value.find((tag) => tag.id === props.shouldIncludeTag)
+    if (tag) {
+      tagsToBeShown.push(tag)
+    }
+    const otherTags = tags.value.filter((tag) => tag.id !== props.shouldIncludeTag)
+
+    const needAdd = otherTags.slice(0, Math.min(2 - tagsToBeShown.length, otherTags.length))
+
+    tagsToBeShown.push(...needAdd)
+
+    return tagsToBeShown
+  }
+  return tags.value?.splice(0, 2)
+})
 </script>

@@ -124,7 +124,3 @@ watch(
   { immediate: true }
 )
 </script>
-
-<!-- <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.5 13C10.0898 13 13 10.0898 13 6.5C13 2.91016 10.0898 0 6.5 0C2.91016 0 0 2.91016 0 6.5C0 10.0898 2.91016 13 6.5 13ZM6.5 11C8.98535 11 11 8.98535 11 6.5C11 4.01465 8.98535 2 6.5 2C4.01465 2 2 4.01465 2 6.5C2 8.98535 4.01465 11 6.5 11Z" fill="#D9D9D9"/>
-</svg> -->
