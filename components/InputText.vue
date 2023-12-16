@@ -3,7 +3,7 @@
     <input
       :id="inputID"
       v-model="value"
-      class="peer w-full rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
+      class="peer w-full select-none rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
       :class="{
         '!border-red': errorMessage,
         '!pr-14': locked,

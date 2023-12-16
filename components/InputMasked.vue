@@ -26,7 +26,7 @@
       ref="el"
       type="text"
       :disabled="locked"
-      class="w-full rounded-xl border-2 border-transparent bg-white pb-4 pl-4 leading-none text-black shadow-main outline-none transition-all focus:border-orange-200"
+      class="w-full select-none rounded-xl border-2 border-transparent bg-white pb-4 pl-4 leading-none text-black shadow-main outline-none transition-all focus:border-orange-200"
       :class="{
         '!border-red': props.errorMessage,
         'pr-16': locked,
