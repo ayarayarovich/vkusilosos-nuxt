@@ -1,12 +1,12 @@
 <template>
   <button
     type="button"
-    class="border-2 border-transparent overflow-hidden rounded-full bg-orange-200 transition"
+    class="overflow-hidden rounded-full border-2 border-transparent bg-orange-200 transition"
     :class="{
-      'bg-opacity-50': !checked
+      'bg-opacity-50': !checked,
     }"
   >
-    <div class="bg-white flex gap-2 items-center py-2 px-6">
+    <div class="flex items-center gap-2 bg-white px-6 py-2">
       <img
         v-if="props.img"
         class="aspect-square h-4 object-cover"
@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-
 const props = defineProps<{
   id?: number
   img?: string

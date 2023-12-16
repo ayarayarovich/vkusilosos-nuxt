@@ -46,47 +46,56 @@
         v-else
         class="mt-8 flex h-0 grow flex-col items-stretch gap-8 text-xs md:mt-16 md:gap-16 md:text-base"
       >
-        <div class="mx-8 rounded-xl bg-white p-4 shadow-main">
-          <div class="mb-4 flex items-center justify-between">
-            <div>Активный заказ</div>
-            <div class="text-[#999700] md:mr-4">Готовится</div>
-          </div>
-          <div class="flex w-full">
-            <div class="shrink-0 grow-[1] basis-0">222</div>
-            <div class="shrink-0 grow-[2] basis-0">24.03.2023, 20:08</div>
-            <div class="shrink-0 grow-[1] basis-0">5875 &#8381;</div>
-            <div class="shrink-0 grow-[1] basis-0">
-              <ProfileDesktopDialogOrdersHistoryReceipt :order-id="222" />
+        <ul
+          v-if="orders?.active_orders.length"
+          class="flex flex-col gap-4"
+        >
+          <li
+            v-for="o in orders.active_orders"
+            :key="o.id"
+            class="mx-4 rounded-xl bg-white p-4 shadow-main lg:mx-8"
+          >
+            <div class="mb-4 flex items-center justify-between">
+              <div>Активный заказ</div>
+              <div class="text-[#999700]">{{ displayStatus(o.status) }}</div>
             </div>
-          </div>
-        </div>
+            <div class="flex w-full">
+              <div class="shrink-0 grow-[1] basis-0">{{ o.id }}</div>
+              <div class="shrink-0 grow-[2] basis-0">{{ formatDate(o.created_at) }}</div>
+              <div class="shrink-0 grow-[1] basis-0">{{ o.price }} &#8381;</div>
+              <div class="shrink grow-0 basis-0">
+                <ProfileDesktopDialogOrdersHistoryReceipt :order="o" />
+              </div>
+            </div>
+          </li>
+        </ul>
 
-        <div class="grow px-6 pb-6">
+        <div class="grow px-4 pb-8 lg:px-8">
           <div class="flex h-full flex-col items-stretch">
             <div class="mb-2 flex w-full rounded-xl bg-gray px-4 py-2">
               <div class="shrink-0 grow-[1] basis-0">№</div>
               <div class="shrink-0 grow-[2] basis-0">Время заказа</div>
               <div class="shrink-0 grow-[1] basis-0">Сумма</div>
-              <div class="w-[10ch] shrink-0 grow-[1] basis-0">Чек</div>
+              <div class="shrink grow-0 basis-[10ch]">Чек</div>
             </div>
 
             <div class="relative h-0 flex-auto">
               <div class="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-white to-transparent"></div>
               <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white to-transparent"></div>
-              <div class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto scroll-smooth py-4">
-                <div
-                  v-for="index in 20"
-                  :key="index"
+              <ul class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto scroll-smooth py-4">
+                <li
+                  v-for="o in orders?.last_orders"
+                  :key="o.id"
                   class="flex w-full rounded-xl bg-white px-4 py-2 shadow-main"
                 >
-                  <div class="shrink-0 grow-[1] basis-0">{{ index }}</div>
-                  <div class="shrink-0 grow-[2] basis-0">24.03.2023, 20:08</div>
-                  <div class="shrink-0 grow-[1] basis-0">5875 &#8381;</div>
-                  <div class="shrink-0 grow-[1] basis-0">
-                    <ProfileDesktopDialogOrdersHistoryReceipt :order-id="index" />
+                  <div class="shrink-0 grow-[1] basis-0">{{ o.id }}</div>
+                  <div class="shrink-0 grow-[2] basis-0">{{ formatDate(o.created_at) }}</div>
+                  <div class="shrink-0 grow-[1] basis-0">{{ o.price }} &#8381;</div>
+                  <div class="shrink grow-0 basis-0">
+                    <ProfileDesktopDialogOrdersHistoryReceipt :order="o" />
                   </div>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -96,6 +105,41 @@
 </template>
 
 <script setup lang="ts">
+import { pad } from '~/utils'
+
 const emit = defineEmits(['go-back'])
-const isEmpty = ref(false)
+
+const { data: orders } = useOrders((v) => v)
+
+const isEmpty = computed(() => !orders.value?.total)
+
+const displayStatus = (s: string) => {
+  const map = {
+    accepted: 'Выполнен',
+    delivered: 'Доставлен',
+    waitAdmin: 'Ожидает подтверждения',
+    rejectedByUser: 'Отменён клиентом',
+    rejectedByAdmin: 'Отменён админом',
+    rejected: 'Отменён',
+    waitPay: 'Ожидает оплаты',
+    cooking: 'Готовится',
+    process: 'В процессе',
+    deliver: 'В пути',
+  } as any
+
+  return map[s]
+}
+
+const formatDate = (d: string) => {
+  const date = new Date(Date.parse(d))
+
+  const day = pad(date.getDate(), 2)
+  const month = pad(date.getMonth(), 2)
+  const year = date.getFullYear()
+
+  const hour = pad(date.getHours(), 2)
+  const minutes = pad(date.getMinutes(), 2)
+
+  return `${day}.${month}.${year}, ${hour}:${minutes}`
+}
 </script>

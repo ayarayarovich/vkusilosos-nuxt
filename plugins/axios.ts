@@ -34,7 +34,11 @@ export default defineNuxtPlugin(() => {
 
       const originalConfig = err.config
       if (err.response) {
-        if ((err.response.status === 403 || err.response.status === 401) && !originalConfig._retry && userStore.refreshToken) {
+        if (
+          (err.response.status === 403 || err.response.status === 401) &&
+          !originalConfig._retry &&
+          userStore.refreshToken
+        ) {
           originalConfig._retry = true
 
           try {

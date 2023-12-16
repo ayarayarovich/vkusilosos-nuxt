@@ -7,13 +7,18 @@ export interface succesAuthDto {
   refreshToken: string
 }
 
+export interface Cart {
+  id: number
+  cart: string
+}
+
 export interface User {
   adres_id: number
   birthday: string
   bonuses: number
-  carts: unknown[],
-  count_in_basket: number,
-  email: string,
+  carts: Cart[]
+  count_in_basket: number
+  email: string
   email_pushes: boolean
   get_pushes: boolean
   sms_pushes: boolean
@@ -22,4 +27,11 @@ export interface User {
   phone: string
   rest_id: number
   total_basket: number
+}
+
+export interface Order {
+  id: number
+  price: number
+  status: string
+  created_at: string
 }

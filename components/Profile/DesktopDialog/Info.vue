@@ -37,19 +37,7 @@
         </div>
 
         <div class="mb-8">
-          <h3 class="mb-5 block text-xl font-medium">Привязанные карты</h3>
-          <ul class="flex flex-col items-stretch gap-4">
-            <li class="flex items-center rounded-xl bg-white p-4 shadow-main">
-              <IconVisa class="h-6" />
-              <span class="ml-4">4398 **** **** 8712</span>
-              <button class="ml-auto"><IconTrashbin class="h-6" /></button>
-            </li>
-            <li class="flex items-center rounded-xl bg-white p-4 shadow-main">
-              <IconMasterCard class="h-6" />
-              <span class="ml-4">4398 **** **** 8712</span>
-              <button class="ml-auto"><IconTrashbin class="h-6" /></button>
-            </li>
-          </ul>
+          <ProfileCreditCards />
         </div>
 
         <div class="mb-8">
@@ -93,12 +81,14 @@ import * as yup from 'yup'
 
 const emit = defineEmits(['go-back'])
 
-const { data: user } = useUser((v) => ({
-  name: v.name,
-  phone: v.phone,
-  email: v.email,
-  birthday: v.birthday,
-}))
+const { data: user } = useUser((v) => {
+  return {
+    name: v.name,
+    phone: v.phone,
+    email: v.email,
+    birthday: v.birthday,
+  }
+})
 
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
@@ -108,7 +98,4 @@ const { handleSubmit } = useForm({
   }),
   initialValues: user,
 })
-
-const password = ref('10jhcydhgv12')
-const passwordRepeat = ref('')
 </script>

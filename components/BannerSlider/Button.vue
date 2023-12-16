@@ -4,8 +4,18 @@
     @click="emit('click')"
   >
     <Transition name="fade">
-      <img v-if="active" class="absolute h-full w-full inset-0" src="~/assets/active-slider-button.svg" alt=""/>
-      <img v-else class="absolute h-full w-full inset-0" src="~/assets/inactive-slider-button.svg" alt=""/>
+      <img
+        v-if="active"
+        class="absolute inset-0 h-full w-full"
+        src="~/assets/active-slider-button.svg"
+        alt=""
+      />
+      <img
+        v-else
+        class="absolute inset-0 h-full w-full"
+        src="~/assets/inactive-slider-button.svg"
+        alt=""
+      />
     </Transition>
   </button>
 </template>

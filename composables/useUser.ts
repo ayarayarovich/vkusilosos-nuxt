@@ -15,6 +15,6 @@ export const useUser = <SData>(select: (response: GetResponse) => SData) => {
       return response.data
     },
     select,
-    enabled: userStore.isAuthenticated
+    enabled: userStore.isAuthenticated,
   })
 }

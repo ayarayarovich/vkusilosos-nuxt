@@ -59,8 +59,8 @@
 
 <script setup lang="ts">
 import * as yup from 'yup'
-import { useAuthDialogStore } from '~/store/authDialog';
-import { useProfileDialogStore } from '~/store/profileDialog';
+import { useAuthDialogStore } from '~/store/authDialog'
+import { useProfileDialogStore } from '~/store/profileDialog'
 import { useUserStore } from '~/store/user'
 
 const { handleSubmit, setErrors } = useForm({

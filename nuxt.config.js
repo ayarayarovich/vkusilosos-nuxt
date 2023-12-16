@@ -15,8 +15,8 @@ export default defineNuxtConfig({
   ],
   googleFonts: {
     families: {
-      'Ubuntu': [300, 400, 500, 700]
-    }
+      Ubuntu: [300, 400, 500, 700],
+    },
   },
   tailwindcss: {
     exposeConfig: true,
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     description: 'Доставка японской кухни',
     defaultLocale: 'ru',
     indexable: true,
-    trailingSlash: false
+    trailingSlash: false,
   },
   routeRules: {
     '/': { swr: 60 },

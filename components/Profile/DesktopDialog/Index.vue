@@ -81,7 +81,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useProfileDialogStore } from '~/store/profileDialog';
+import { useProfileDialogStore } from '~/store/profileDialog'
 import { formatPhone } from '~/utils'
 
 const profileDialogStore = useProfileDialogStore()

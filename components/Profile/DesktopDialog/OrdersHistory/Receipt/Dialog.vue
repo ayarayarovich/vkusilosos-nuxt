@@ -39,35 +39,38 @@
                 ref="dialogPanelEl"
                 class="w-full transform overflow-hidden rounded-2xl bg-white py-8"
               >
-                <h1 class="mx-8 mb-4 text-start text-xl font-medium">Заказ № {{ orderId }}</h1>
+                <h1 class="mx-8 mb-4 text-start text-xl font-medium">Заказ № {{ order.id }}</h1>
                 <div class="mx-4 h-px bg-gray"></div>
                 <ul class="m-8 text-start text-sm">
-                  <li class="flex items-center gap-2">
-                    <p class="shrink-0 grow-[4] basis-0">Ролл авокадо с креветками</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">2 шт</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">540 &#8381;</p>
-                  </li>
-                  <div class="my-2 h-px bg-gray"></div>
-                  <li class="flex items-center gap-2">
-                    <p class="shrink-0 grow-[4] basis-0">Фурай маки</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">2 шт</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">540 &#8381;</p>
-                  </li>
-                  <div class="my-2 h-px bg-gray"></div>
-                  <li class="flex items-center gap-2">
-                    <p class="shrink-0 grow-[4] basis-0">Суши с тунцом</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">2 шт</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">5409 &#8381;</p>
-                  </li>
-                  <div class="my-2 h-px bg-gray"></div>
-                  <li class="flex items-center gap-2">
-                    <p class="shrink-0 grow-[4] basis-0">Филадельфия с манго</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">2 шт</p>
-                    <p class="shrink-0 grow-[2] basis-0 text-end">540 &#8381;</p>
-                  </li>
+                  <template v-if="isSuccess">
+                    <template
+                      v-for="(p, index) in data?.list"
+                      :key="index"
+                    >
+                      <li class="flex items-center gap-2">
+                        <p class="shrink-0 grow-[4] basis-0">{{ p.name }}</p>
+                        <p class="shrink-0 grow-[2] basis-0 text-end">{{ p.count }} шт</p>
+                        <p class="shrink-0 grow-[2] basis-0 text-end">{{ p.price }} &#8381;</p>
+                      </li>
+                      <div class="my-2 h-px bg-gray last:hidden"></div>
+                    </template>
+                  </template>
+
+                  <template v-else>
+                    <template
+                      v-for="i in 3"
+                      :key="i"
+                    >
+                      <Skeleton
+                        height="1.25rem"
+                        width="100%"
+                      />
+                      <div class="my-2 h-px bg-gray last:hidden"></div>
+                    </template>
+                  </template>
                 </ul>
                 <div class="mx-4 mb-4 h-px bg-gray"></div>
-                <h1 class="mx-8 text-start text-xl font-medium">Итого: 2185 &#8381;</h1>
+                <p class="mx-8 text-start text-xl font-medium">Итого: {{ order.price }} &#8381;</p>
               </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
@@ -79,13 +82,20 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
+import type { Order } from '~/interfaces/users'
 
 const props = defineProps<{
   show?: boolean
-  orderId: number
+  order: Order
 }>()
-const { show, orderId } = toRefs(props)
+const { show, order } = toRefs(props)
 const emit = defineEmits(['close'])
+
+const { data, isSuccess } = useOrder({
+  enabled: show,
+  orderID: order.value.id,
+  select: (v) => v,
+})
 
 const dialogPanelEl = ref<HTMLElement>()
 </script>

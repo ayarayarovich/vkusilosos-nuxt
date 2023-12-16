@@ -6,7 +6,7 @@
       alt=""
     />
     <div
-      class="accent-gradient-bg absolute z-20 left-1/2 mt-2 w-max max-w-[18rem] -translate-x-1/2 rounded-lg p-4 opacity-0 scale-95 shadow-xl transition-all peer-hover:opacity-100 peer-hover:scale-100"
+      class="accent-gradient-bg absolute left-1/2 z-20 mt-2 w-max max-w-[18rem] -translate-x-1/2 scale-95 rounded-lg p-4 opacity-0 shadow-xl transition-all peer-hover:scale-100 peer-hover:opacity-100"
     >
       <slot></slot>
     </div>

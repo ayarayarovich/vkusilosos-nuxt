@@ -7,16 +7,17 @@
   </button>
   <ProfileDesktopDialogOrdersHistoryReceiptDialog
     :show="isModalOpen"
-    :order-id="props.orderId"
+    :order="props.order"
     @close="closeModal"
   />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { Order } from '~/interfaces/users'
 
 const props = defineProps<{
-  orderId: number
+  order: Order
 }>()
 
 const isModalOpen = ref(false)

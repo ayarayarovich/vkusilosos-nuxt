@@ -47,6 +47,7 @@
                   <div>
                     <DishAdder
                       class="h-8 w-28 md:w-32"
+                      hide-button
                       :dish-id="position.dish_id"
                     />
                   </div>

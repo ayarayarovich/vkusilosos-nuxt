@@ -43,6 +43,7 @@
     "@vueuse/motion": "^2.0.0",
     "@vueuse/nuxt": "^10.5.0",
     "axios": "^1.6.0",
+    "credit-card-type": "^10.0.0",
     "gsap": "^3.12.2",
     "pinia": "^2.1.6",
     "uuid": "^9.0.1",

@@ -18,12 +18,10 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <HeadlessDialogBackdrop class="fixed z-40 inset-0 bg-black bg-opacity-25" />
+        <HeadlessDialogBackdrop class="fixed inset-0 z-40 bg-black bg-opacity-25" />
       </HeadlessTransitionChild>
 
-      <div
-        class="fixed bottom-0 left-0 top-0 w-screen overflow-x-hidden overflow-y-hidden"
-      >
+      <div class="fixed bottom-0 left-0 top-0 w-screen overflow-x-hidden overflow-y-hidden">
         <HeadlessTransitionChild
           as="template"
           enter="duration-500 ease-out"

@@ -16,7 +16,6 @@ export interface Story {
   story_items: StoryItem[]
 }
 
-
 export interface DishInBasket {
   id: number
   dish_id: number
