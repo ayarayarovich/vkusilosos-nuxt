@@ -7,7 +7,7 @@
     <HeadlessDialog
       as="div"
       class="relative z-50"
-      @close="emit('close')"
+      @close="close()"
     >
       <HeadlessTransitionChild
         as="template"
@@ -39,8 +39,14 @@
                 ref="dialogPanelEl"
                 class="flex w-full transform items-stretch justify-between overflow-hidden rounded-2xl bg-whitegray"
               >
-                <ClientOnly>
-                  <div class="flex w-full shrink flex-col items-stretch p-8">
+                <Transition
+                  name="fade"
+                  mode="out-in"
+                >
+                  <div
+                    v-if="currentView === 'default'"
+                    class="flex w-full shrink flex-col items-stretch p-8"
+                  >
                     <div class="rounded-xl bg-current bg-gray p-1.5 text-sm">
                       <div class="relative">
                         <div
@@ -71,19 +77,44 @@
                         mode="out-in"
                       >
                         <MyLocationDialogRestaurants v-if="reciptionWay === 'restaurant'" />
-                        <MyLocationDialogDelivery v-else-if="reciptionWay === 'delivery'" />
+                        <MyLocationDialogDelivery
+                          v-else-if="reciptionWay === 'delivery'"
+                          @edit="editAddress($event)"
+                          @new="currentView = 'new'"
+                          @update-coords="coordinates = $event"
+                        />
                       </Transition>
                     </div>
                   </div>
+                  <MyLocationDialogEditDeliveryAddress
+                    v-else-if="currentView === 'edit'"
+                    :address="editingAddress"
+                    @update-coords="coordinates = $event"
+                    @go-back="currentView = 'default'"
+                  />
+                  <MyLocationDialogAddDeliveryAddress
+                    v-else-if="currentView === 'new'"
+                    @update-coords="coordinates = $event"
+                    @go-back="currentView = 'default'"
+                  />
+                </Transition>
 
+                <ClientOnly>
                   <YandexMap
-                    :coordinates="[55.755864, 37.617698]"
-                    :zoom="13"
+                    :coordinates="coordinates"
+                    :zoom="17"
+                    :controls="['zoomControl', 'geolocationControl']"
                     class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
                   >
                     <YandexMarker
-                      :coordinates="[45.019627, 39.031206]"
+                      :coordinates="coordinates"
                       :marker-id="1"
+                      :options="{
+                        iconLayout: 'default#image',
+                        iconImageSize: [34, 40],
+                        iconOffset: [0, 0],
+                        iconImageHref: '/map-marker.png',
+                      }"
                     />
                   </YandexMap>
                 </ClientOnly>
@@ -100,6 +131,7 @@
 import { storeToRefs } from 'pinia'
 import { ref, toRefs } from 'vue'
 import { YandexMap, YandexMarker } from 'vue-yandex-maps'
+import type { Address } from '~/interfaces/main'
 import { useLocationStore } from '~/store/location'
 
 const props = defineProps<{
@@ -108,7 +140,24 @@ const props = defineProps<{
 const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
-const currentView = ref<'editDeliveryAddress'>()
+const currentView = ref<'edit' | 'new' | 'default'>('default')
+const editingAddress = ref<Address>()
+
+const editAddress = (address: Address) => {
+  editingAddress.value = address
+  currentView.value = 'edit'
+}
+
+const coordinates = ref([55.755864, 37.617698])
+
+const close = () => {
+  emit('close')
+  if (currentView.value !== 'default') {
+    setTimeout(() => {
+      currentView.value = 'default'
+    }, 300)
+  }
+}
 
 const locationStore = useLocationStore()
 const { reciptionWay } = storeToRefs(locationStore)

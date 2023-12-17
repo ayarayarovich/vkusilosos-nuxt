@@ -38,30 +38,40 @@
 
 <script setup lang="ts">
 import { useIMask } from 'vue-imask'
+import { v4 as uuidv4 } from 'uuid'
 
 const props = defineProps<{
   label?: string
   name: string
   locked?: boolean
-  mask: any
-  textCenter?: boolean
 }>()
 
 const { label, name, locked } = toRefs(props)
 
+const inputID = uuidv4()
+
 const { el, unmasked } = useIMask({
-  mask: props.mask,
   lazy: false,
-  normalizeZeros: true
+  mask: Number,
+  normalizeZeros: true,
+  value: '',
 })
 
 watch([unmasked], () => {
-  setValue(unmasked.value || undefined)
+  if (unmasked.value.length) {
+    setValue(Number(unmasked.value))
+  } else {
+    setValue(undefined)
+  }
 })
 
-const { setValue, errorMessage, value } = useField<string | undefined>(name)
+const { setValue, errorMessage, value } = useField<number | undefined>(name)
 
 watch([value], () => {
-  unmasked.value = value.value || ''
+  if (value.value !== undefined) {
+    unmasked.value = value.value.toString()
+  } else {
+    unmasked.value = ''
+  }
 })
 </script>

@@ -1,14 +1,17 @@
 <template>
   <div class="relative">
-    <textarea
+    <input
       :id="inputID"
       v-model="value"
-      :rows="rows"
-      class="peer w-full min-h-[6rem] select-none rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
+      class="peer w-full select-none rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
       :class="{
         '!border-red': errorMessage,
-        'resize-none': props.disableResize
+        '!pr-14': locked,
       }"
+      :disabled="locked"
+      type="number"
+      :min="0"
+      :step="1"
       :name="name"
       placeholder="Введите"
       @change="handleChange"
@@ -23,6 +26,16 @@
     >
       {{ errorMessage || label }}
     </label>
+
+    <button
+      v-if="locked"
+      class="absolute right-4 top-1/2 -translate-y-1/2"
+      type="button"
+      disabled
+      @click.stop="toggleInputType"
+    >
+      <IconLock class="aspect-square h-6" />
+    </button>
   </div>
 </template>
 
@@ -32,13 +45,12 @@ import { v4 as uuidv4 } from 'uuid'
 const props = defineProps<{
   name: string
   label: string
-  rows: number
-  disableResize?: boolean
+  locked?: boolean
 }>()
 
 const inputID = uuidv4()
 
-const { name, label, rows } = toRefs(props)
+const { name, label, locked } = toRefs(props)
 
-const { value, handleBlur, handleChange, errorMessage } = useField<string>(name)
+const { value, handleBlur, handleChange, errorMessage } = useField(name)
 </script>

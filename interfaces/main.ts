@@ -26,3 +26,20 @@ export interface DishInBasket {
   weight: number
   count_in: number
 }
+
+export interface Address {
+  user_id: number
+  adres: string
+  code: string
+  comment: string
+  created_at: string
+  deleted_at: string | null
+  floor: number
+  full: string
+  house: string
+  id: number
+  latitude: number
+  longitude: number
+  podezd: string
+  updated_at: string
+}

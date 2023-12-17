@@ -1,21 +1,36 @@
 <template>
-  <div class="mt-2 flex h-full flex-col items-stretch">
+  <div class="flex h-full flex-col items-stretch pt-2">
     <div class="relative h-0 grow">
-      <div class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto py-2">
-        <div
-          v-for="i in 10"
-          :key="i"
-          class="flex items-center rounded-xl bg-white p-4 shadow-main"
+      <HeadlessRadioGroup
+        v-model="selectedAddress"
+        class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto py-2"
+      >
+        <HeadlessRadioGroupOption
+          v-for="address in data?.list"
+          :key="address.id"
+          v-slot="{ active, checked }"
+          as="template"
+          :value="address"
         >
-          <IconMapPoint class="h-5" />
-          <div class="ml-2 text-left">Москва, проспект Строителей 38, эт 2, кв 25</div>
-          <button
-            class="ml-auto rounded-full p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
+          <div
+            class="flex cursor-pointer items-center rounded-xl border-2 border-transparent bg-white p-4 shadow-main outline-none transition-colors"
+            :class="{
+              '!border-orange-200': checked,
+              'border-orange-100': active,
+            }"
           >
-            <IconEditPen class="h-4" />
-          </button>
-        </div>
-      </div>
+            <IconMapPoint class="h-5" />
+            <div class="ml-2 text-left text-sm">{{ transformAddress(address.adres) }}</div>
+            <button
+              class="ml-auto rounded-full p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
+              type="button"
+              @click="emit('edit', address)"
+            >
+              <IconEditPen class="h-4" />
+            </button>
+          </div>
+        </HeadlessRadioGroupOption>
+      </HeadlessRadioGroup>
 
       <div class="absolute left-0 right-0 top-0 h-2 bg-gradient-to-b from-whitegray to-transparent"></div>
 
@@ -25,10 +40,49 @@
     <div class="mt-2 flex gap-2">
       <button
         class="flex-1 rounded-xl bg-gray px-4 py-3 font-medium outline-none ring-gray ring-offset-2 transition-shadow focus:ring-2"
+        type="button"
+        @click="emit('new')"
       >
-        <span class="text-black opacity-70">Добавить адрес</span>
+        <span class="text-black opacity-70"> Добавить адрес </span>
       </button>
-      <SimpleButton class="flex-1 px-4 py-3 font-medium">Выбрать</SimpleButton>
+      <SimpleButton
+        class="flex-1 px-4 py-3 font-medium"
+        :disabled="!selectedAddress"
+        @click="selectDeliveryAddress()"
+      >
+        Выбрать
+      </SimpleButton>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import type { Address } from '~/interfaces/main'
+import { useLocationStore } from '~/store/location'
+import { nthIndex } from '~/utils'
+
+const emit = defineEmits(['edit', 'new', 'updateCoords'])
+
+const { data } = useAddresses((v) => v)
+
+const transformAddress = (address: string) => {
+  return address.slice(nthIndex(address, ',', 1) + 1).trim()
+}
+
+const locationStore = useLocationStore()
+const { location } = storeToRefs(locationStore)
+const selectedAddress = ref<Address>()
+
+watchEffect(() => {
+  if (selectedAddress.value) {
+    emit('updateCoords', [selectedAddress.value.longitude, selectedAddress.value.latitude])
+  }
+})
+
+const selectDeliveryAddress = () => {
+  if (selectedAddress.value) {
+    location.value = selectedAddress.value
+  }
+}
+</script>

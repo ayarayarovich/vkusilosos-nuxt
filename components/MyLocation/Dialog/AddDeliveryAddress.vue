@@ -9,7 +9,7 @@
         type="button"
         @click="emit('goBack')"
       >
-        <IconArrowRight class="h-6 rotate-180 invert" /> Изменить адрес
+        <IconArrowRight class="h-6 rotate-180 invert" /> Добавить адрес
       </button>
       <div>
         <InputAutocomplete
@@ -61,7 +61,7 @@
       <SimpleButton
         class="w-full px-4 py-4 text-sm font-medium uppercase"
         type="submit"
-        :disabled="isPendingUpdateAddress"
+        :disabled="isPendingAddAddress"
       >
         Сохранить
       </SimpleButton>
@@ -71,11 +71,6 @@
 
 <script setup lang="ts">
 import * as yup from 'yup'
-import type { Address } from '~/interfaces/main'
-
-const props = defineProps<{
-  address: Address
-}>()
 
 const emit = defineEmits(['updateCoords', 'goBack'])
 
@@ -95,19 +90,7 @@ const { handleSubmit } = useForm({
     floor: yup.string().label('Этаж'),
     house: yup.string().label('Номер квартиры'),
     comment: yup.string().label('Комментарий'),
-  }),
-  initialValues: computed(() => ({
-    adres: {
-      lat: props.address.latitude,
-      lon: props.address.longitude,
-      display_name: props.address.adres,
-    },
-    podezd: props.address.podezd,
-    code: props.address.code,
-    floor: props.address.floor,
-    house: props.address.house,
-    comment: props.address.comment,
-  })),
+  })
 })
 
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')
@@ -124,7 +107,7 @@ const query = ref('')
 const throttledQuery = refThrottled(query, 500, undefined, false)
 
 const { data, isLoading: isLoadingAddressSearch } = useAddressSearch(throttledQuery, (v) => v, true)
-const { mutateAsync: updateAddressAsync, isPending: isPendingUpdateAddress } = useUpdateAddress()
+const { mutateAsync, isPending: isPendingAddAddress } = useAddAddress()
 
 const onSubmit = handleSubmit((vals: any) => {
   let fullName = vals.adres.display_name
@@ -133,8 +116,6 @@ const onSubmit = handleSubmit((vals: any) => {
   if (vals.podezd) fullName += `, подъезд ${vals.podezd}`
 
   const body = {
-    id: props.address.id,
-
     podezd: vals.podezd,
     code: vals.code,
     floor: vals.floor,
@@ -145,6 +126,6 @@ const onSubmit = handleSubmit((vals: any) => {
     adres: vals.adres.display_name,
     full_name: fullName,
   }
-  updateAddressAsync(body).then(() => emit('goBack'))
+  mutateAsync(body).then(() => emit('goBack'))
 })
 </script>

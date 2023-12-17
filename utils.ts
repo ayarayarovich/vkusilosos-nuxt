@@ -7,3 +7,13 @@ export function pad(n: number, size: number) {
   while (num.length < size) num = '0' + num
   return num
 }
+
+export function nthIndex(str: string, pattern: string, n: number) {
+  const L = str.length
+  let i = -1
+  while (n-- && i++ < L) {
+    i = str.indexOf(pattern, i)
+    if (i < 0) break
+  }
+  return i
+}

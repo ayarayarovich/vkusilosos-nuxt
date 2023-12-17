@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2 flex h-full flex-col items-stretch gap-2">
+  <div class="pt-2 flex h-full flex-col items-stretch gap-2">
     <div class="relative h-0 grow">
       <div class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto scroll-smooth py-2">
         <button

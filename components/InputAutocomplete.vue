@@ -19,7 +19,7 @@
       />
       <label
         :for="inputID"
-        class="pointer-events-none absolute left-4 top-3 select-none text-xs text-[#777675] transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-xs"
+        class="pointer-events-none absolute left-4 top-5 will-change-auto -translate-y-2 select-none text-xs text-[#777675] transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-2 peer-focus:text-xs"
         :class="{
           'text-red': errorMessage,
         }"
@@ -29,11 +29,11 @@
 
       <HeadlessTransitionRoot
         enter="transition ease-out duration-100"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
+        enter-from="opacity-0 -translate-y-4"
+        enter-to="opacity-100 translate-y-0"
         leave="transition ease-in duration-100"
-        leave-to="opacity-0"
-        leave-from="opacity-100"
+        leave-from="opacity-100 translate-y-0"
+        leave-to="opacity-0 -translate-y-4"
         @after-leave="emit('update:query', '')"
       >
         <HeadlessComboboxOptions

@@ -9,9 +9,9 @@
       mode="out-in"
     >
       <span v-if="locationStore.location">
-        <span>{{ locationStore.location }}</span>
+        <span>{{ transformAddress(locationStore.location.adres) }}</span>
         <span class="mx-2">|</span>
-        <span class="text-[#999700]">~ {{ locationStore.deliveryTime }}</span>
+        <span class="text-[#999700]">~ {{ locationStore.deliveryTime || 'Нет данных' }}</span>
       </span>
       <span v-else>Выберите адрес</span>
     </Transition>
@@ -25,9 +25,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useLocationStore } from '~/store/location'
+import { nthIndex } from '~/utils'
 
 const locationStore = useLocationStore()
 const isModalOpen = ref(false)
+
+const transformAddress = (address: string) => {
+  return address.slice(nthIndex(address, ',', 1) + 1).trim()
+}
 
 const closeModal = () => (isModalOpen.value = false)
 </script>

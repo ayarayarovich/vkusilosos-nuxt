@@ -1,10 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
+import type { Address } from '~/interfaces/main'
+
 export const useLocationStore = defineStore(
   'location',
   () => {
-    const location = ref<string | null>(null)
+    const location = ref<Address>()
     const restaurantsLocations = ref([
       {
         city: 'Москва',
@@ -54,7 +56,7 @@ export const useLocationStore = defineStore(
     ])
     const reciptionWay = ref<'delivery' | 'restaurant'>('delivery')
 
-    const deliveryTime = ref<string | null>(null)
+    const deliveryTime = ref<string | null>()
 
     return { location, deliveryTime, restaurantsLocations, reciptionWay }
   },

@@ -1,5 +1,16 @@
 <template>
   <div class="flex h-full flex-col items-stretch">
+    <DesktopAddAddressDialog
+      v-if="isLargeScreen"
+      :show="showAddAddressDialog"
+      @close="showAddAddressDialog = false"
+    />
+    <MobileAddAddressDialog
+      v-else
+      :show="showAddAddressDialog"
+      @close="showAddAddressDialog = false"
+    />
+
     <button
       class="mx-8 mb-4 mt-10 flex items-center gap-2"
       @click="emit('go-back')"
@@ -8,17 +19,17 @@
       <h2 class="block text-xl font-medium leading-none">Адреса</h2>
     </button>
 
-    <div class="mx-4 mb-4 h-px bg-black opacity-10"></div>
+    <div class="mx-4 h-px bg-black opacity-10"></div>
 
     <Transition
       name="fade"
       mode="out-in"
     >
       <div
-        v-if="isEmpty"
+        v-if="data?.total === 0"
         class="flex h-0 grow items-center justify-center"
       >
-        <div>
+        <div class="p-8">
           <img
             src="~/assets/add-new-address.svg"
             alt=""
@@ -29,34 +40,27 @@
             новый адрес
           </strong>
           <p class="mb-8 text-center">Сохраните адрес, чтобы еще удобнее делать покупки</p>
-          <SimpleButton class="w-full px-8 py-4 font-medium uppercase"> Добавить адрес </SimpleButton>
+          <SimpleButton
+            class="w-full px-8 py-4 font-medium uppercase"
+            @click="showAddAddressDialog = true"
+          >
+            Добавить адрес
+          </SimpleButton>
         </div>
       </div>
 
       <div
         v-else
-        class="flex h-0 grow flex-col items-stretch"
+        class="mt-4 flex h-0 grow flex-col items-stretch"
       >
         <div class="relative mx-8 mb-4 h-0 grow">
           <div class="scrollbar-hide h-full overflow-y-auto py-4">
             <ul class="flex flex-col items-stretch gap-4">
               <li
-                v-for="index in 3"
-                :key="index"
-                class="flex items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-main"
+                v-for="address in data?.list"
+                :key="address.id"
               >
-                <div>
-                  <div class="text-sm opacity-50">Москва</div>
-                  <div>проспект Строителей 29, под 5, эт 2, кв 55</div>
-                </div>
-                <div class="flex h-6 shrink-0 items-center gap-1 md:gap-4">
-                  <ProfileDesktopDialogAddressesEditAddress />
-                  <button
-                    class="rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
-                  >
-                    <IconTrashbin class="h-full" />
-                  </button>
-                </div>
+                <ProfileAddress :address="address" />
               </li>
             </ul>
           </div>
@@ -66,7 +70,12 @@
         </div>
 
         <div class="mx-8 mb-8">
-          <ProfileDesktopDialogAddressesAddAddress />
+          <SimpleButton
+            class="w-full px-8 py-4"
+            @click="showAddAddressDialog = true"
+          >
+            Добавить адресс
+          </SimpleButton>
         </div>
       </div>
     </Transition>
@@ -76,5 +85,9 @@
 <script setup lang="ts">
 const emit = defineEmits(['go-back'])
 
-const isEmpty = ref(false)
+const { data } = useAddresses((v) => v)
+
+const showAddAddressDialog = ref(false)
+
+const isLargeScreen = useTailwindBreakpoint('lg')
 </script>
