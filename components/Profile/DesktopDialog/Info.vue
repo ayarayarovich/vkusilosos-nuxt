@@ -78,13 +78,14 @@
 
 <script setup lang="ts">
 import * as yup from 'yup'
+import { formatPhone } from '~/utils'
 
 const emit = defineEmits(['go-back'])
 
 const { data: user } = useUser((v) => {
   return {
     name: v.name,
-    phone: v.phone,
+    phone: formatPhone(v.phone),
     email: v.email,
     birthday: v.birthday,
   }
