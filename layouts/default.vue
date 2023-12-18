@@ -17,7 +17,9 @@
             <IconUserDark class="absolute left-0 top-0 h-full opacity-100 transition-opacity group-hover:opacity-0" />
             <IconUserColor class="absolute left-0 top-0 h-full opacity-0 transition-opacity group-hover:opacity-100" />
           </button>
-          <MyLocation />
+          <ClientOnly>
+            <MyLocation />
+          </ClientOnly>
         </div>
 
         <div class="flex shrink grow-0 justify-center">
