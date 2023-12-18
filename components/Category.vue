@@ -1,7 +1,10 @@
 <template>
   <section
     :id="'dish-category-' + props.category.id"
-    class="mb-8 mt-4 lg:mb-16 lg:mt-8"
+    class="mb-8 mt-4 lg:mb-16 lg:mt-8 hidden"
+    :class="{
+      '!block': !!dishesData?.total
+    }"
   >
     <div
       ref="containerEl"

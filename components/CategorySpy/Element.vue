@@ -1,7 +1,10 @@
 <template>
   <div
     ref="element"
-    class="shrink-0 pl-4"
+    class="shrink-0 pl-4 hidden"
+    :class="{
+      '!block': !!dishesData?.total
+    }"
   >
     <button
       class="accent-gradient-bg rounded-full"
@@ -26,6 +29,11 @@ import { useCategoryStore } from '~/store/category'
 const props = defineProps<{
   category: Category
 }>()
+
+const { data: dishesData, suspense } = useDishes(props.category.id)
+onServerPrefetch(async () => {
+  await suspense()
+})
 
 const categoryStore = useCategoryStore()
 const { currentCategoryID } = storeToRefs(categoryStore)
