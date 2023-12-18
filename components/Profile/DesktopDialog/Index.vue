@@ -41,7 +41,7 @@
               >
                 <HeadlessTabGroup vertical>
                   <div class="flex h-full w-full">
-                    <HeadlessTabList class="flex flex-col items-stretch bg-gray">
+                    <HeadlessTabList class="flex flex-col shrink-0 items-stretch bg-gray">
                       <div class="mx-6 mb-4 mt-10 flex items-center gap-2">
                         <IconUserDark class="h-8" />
                         <span class="text-xl font-medium">{{ formatPhone(user?.phone || '') }}</span>
