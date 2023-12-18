@@ -44,14 +44,14 @@
 
     <div>
       <button
-        class="mb-4 flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#21A049] px-8 py-3 text-base font-bold uppercase text-[#21A049]"
+        class="mb-4 flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#FC3F1D] px-8 py-3 text-sm font-bold uppercase text-[#FC3F1D]"
       >
-        <IconSber class="h-6" /> Войти по сбербанк ID
+        <IconYandex class="h-4" /> Войти по яндекс ID
       </button>
       <button
-        class="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#6B78EE] px-8 py-3 text-base font-bold uppercase text-[#6B78EE]"
+        class="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#6B78EE] px-8 py-3 text-sm font-bold uppercase text-[#6B78EE]"
       >
-        <IconVKBlue class="h-4" /> Войти через вконтакте
+        <IconVKBlue class="h-3" /> Войти через вконтакте
       </button>
     </div>
   </div>
