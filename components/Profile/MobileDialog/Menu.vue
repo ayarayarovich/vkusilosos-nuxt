@@ -45,6 +45,13 @@
       >
         Бонусная система
       </button>
+
+      <button
+        class="text-start text-lg font-medium text-black"
+        @click="emit('change-view', 'notifications')"
+      >
+        Уведомления
+      </button>
     </div>
 
     <div class="mt-16">

@@ -41,7 +41,7 @@
               >
                 <HeadlessTabGroup vertical>
                   <div class="flex h-full w-full">
-                    <HeadlessTabList class="flex flex-col shrink-0 items-stretch bg-gray">
+                    <HeadlessTabList class="flex shrink-0 flex-col items-stretch bg-gray">
                       <div class="mx-6 mb-4 mt-10 flex items-center gap-2">
                         <IconUserDark class="h-8" />
                         <span class="text-xl font-medium">{{ formatPhone(user?.phone || '') }}</span>
@@ -51,6 +51,7 @@
                       <ProfileDesktopDialogTab>Данные</ProfileDesktopDialogTab>
                       <ProfileDesktopDialogTab>Адреса</ProfileDesktopDialogTab>
                       <ProfileDesktopDialogTab>Бонусная система</ProfileDesktopDialogTab>
+                      <ProfileDesktopDialogTab>Уведомления</ProfileDesktopDialogTab>
                       <div class="mx-4 mt-auto h-px bg-[#252321] opacity-10"></div>
                       <ProfileDesktopDialogExit />
                     </HeadlessTabList>
@@ -66,6 +67,9 @@
                       </HeadlessTabPanel>
                       <HeadlessTabPanel class="h-full">
                         <ProfileDesktopDialogBonuses />
+                      </HeadlessTabPanel>
+                      <HeadlessTabPanel class="h-full">
+                        <ProfileDesktopDialogNotifications />
                       </HeadlessTabPanel>
                     </HeadlessTabPanels>
                   </div>

@@ -55,6 +55,10 @@
               v-else-if="currentView === 'orders-history'"
               @go-back="currentView = 'menu'"
             />
+            <ProfileMobileDialogNotifications
+              v-else-if="currentView === 'notifications'"
+              @go-back="currentView = 'menu'"
+            />
           </HeadlessDialogPanel>
         </HeadlessTransitionChild>
       </div>
