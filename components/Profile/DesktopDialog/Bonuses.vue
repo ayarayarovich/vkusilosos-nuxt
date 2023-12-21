@@ -13,10 +13,10 @@
 
     <div class="mx-4 h-px bg-black opacity-10"></div>
 
-    <div class="relative h-0 my-2 grow">
-      <div class="absolute z-10 top-0 h-8 w-full bg-gradient-to-b from-whitegray to-transparent"></div>
-      <div class="absolute z-10 bottom-0 h-8 w-full bg-gradient-to-t from-whitegray to-transparent"></div>
-      <div class="h-full py-8 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray">
+    <div class="relative my-2 h-0 grow">
+      <div class="absolute top-0 z-10 h-8 w-full bg-gradient-to-b from-whitegray to-transparent"></div>
+      <div class="absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-whitegray to-transparent"></div>
+      <div class="h-full overflow-y-scroll py-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray">
         <div class="mx-8 mb-8 flex justify-end">
           <div class="flex items-center gap-2 rounded-xl bg-white p-4 text-red shadow-main">
             <IconDangerTriangle class="h-6" /> 23.10.23 сгорит 35 бонуса
@@ -41,19 +41,30 @@
                   />
                 </div>
               </HeadlessDisclosureButton>
-              <HeadlessDisclosurePanel class="p-6 pt-0">
-                <p>
-                  Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                  операции, пропадают все бонусы.
-                </p>
-                <p>
-                  Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                  операции, пропадают все бонусы.
-                </p>
-                <p>
-                  Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                  операции, пропадают все бонусы.
-                </p>
+              <HeadlessDisclosurePanel static>
+                <div
+                  class="grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows]"
+                  :class="{
+                    '!grid-rows-[1fr]': open,
+                  }"
+                >
+                  <div class="min-h-0">
+                    <div class="p-6 pt-0">
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </HeadlessDisclosurePanel>
             </HeadlessDisclosure>
           </div>
@@ -75,21 +86,30 @@
                   />
                 </div>
               </HeadlessDisclosureButton>
-              <HeadlessDisclosurePanel class="p-6 pt-0">
-                <ul>
-                  <li>
-                    Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                    операции, пропадают все бонусы.
-                  </li>
-                  <li>
-                    Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                    операции, пропадают все бонусы.
-                  </li>
-                  <li>
-                    Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                    операции, пропадают все бонусы.
-                  </li>
-                </ul>
+              <HeadlessDisclosurePanel static>
+                <div
+                  class="grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows]"
+                  :class="{
+                    '!grid-rows-[1fr]': open,
+                  }"
+                >
+                  <div class="min-h-0">
+                    <div class="p-6 pt-0">
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </HeadlessDisclosurePanel>
             </HeadlessDisclosure>
           </div>
@@ -111,19 +131,30 @@
                   />
                 </div>
               </HeadlessDisclosureButton>
-              <HeadlessDisclosurePanel class="p-6 pt-0">
-                <p>
-                  Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                  операции, пропадают все бонусы.
-                </p>
-                <p>
-                  Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                  операции, пропадают все бонусы.
-                </p>
-                <p>
-                  Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                  операции, пропадают все бонусы.
-                </p>
+              <HeadlessDisclosurePanel static>
+                <div
+                  class="grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows]"
+                  :class="{
+                    '!grid-rows-[1fr]': open,
+                  }"
+                >
+                  <div class="min-h-0">
+                    <div class="p-6 pt-0">
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                      <p>
+                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
+                        операции, пропадают все бонусы.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </HeadlessDisclosurePanel>
             </HeadlessDisclosure>
           </div>
