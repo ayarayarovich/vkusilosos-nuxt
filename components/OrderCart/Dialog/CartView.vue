@@ -65,7 +65,7 @@
 
           <div class="flex items-center justify-between">
             <span>Начислим вкусоины</span>
-            <span>+ 62</span>
+            <span>+ {{ bonusesToGet }}</span>
           </div>
 
           <SimpleButton
@@ -111,9 +111,9 @@
       </div>
     </Transition>
 
-    <span class="absolute bottom-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden"
-      >Свайпай вправо, чтобы закрыть</span
-    >
+    <span class="absolute bottom-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden">
+      Свайпай вправо, чтобы закрыть
+    </span>
   </div>
 </template>
 
@@ -126,6 +126,13 @@ import type { DishInBasket } from '~/interfaces/main'
 const emit = defineEmits(['proccedToPayment'])
 
 const { data: basket } = useBasket((v) => v)
+const { data: bonusPercent } = useMain((v) => v.percent_order)
+const bonusesToGet = computed(() => {
+  if (bonusPercent.value && basket.value) {
+    return basket.value.total_price * bonusPercent.value
+  }
+  return 0
+})
 
 const pluralizedItemsInCartCountWord = computed(() => {
   if (basket.value?.total === 1) return 'товар'
