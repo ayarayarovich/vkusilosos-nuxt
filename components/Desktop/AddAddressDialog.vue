@@ -108,6 +108,7 @@
                     :zoom="17"
                     :controls="['zoomControl', 'geolocationControl']"
                     class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
+                    @click="updateCoords"
                   >
                     <YandexMarker
                       :coordinates="coordinates"
@@ -141,7 +142,7 @@ const props = defineProps<{
 const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
-const { handleSubmit } = useForm({
+const { handleSubmit, setFieldValue } = useForm({
   validationSchema: yup.object({
     adres: yup
       .object({
@@ -163,10 +164,26 @@ const { handleSubmit } = useForm({
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')
 const coordinates = computed(() => {
   if (adres.value) {
-    return [Number(adres.value.lon), Number(adres.value.lat)]
+    return [Number(adres.value.lat), Number(adres.value.lon)]
   }
   return [55.755864, 37.617698]
 })
+
+const axiosPrivate = usePrivateAxiosInstance()
+
+const updateCoords = (a: any) => {
+  const coords = a.get('coords')
+  axiosPrivate
+    .get('user/adres/search/geo', {
+      params: {
+        latitude: coords[0],
+        longitude: coords[1],
+      },
+    })
+    .then((res) => {
+      setFieldValue('adres', res.data)
+    })
+}
 
 const query = ref('')
 const throttledQuery = refThrottled(query, 500, undefined, false)

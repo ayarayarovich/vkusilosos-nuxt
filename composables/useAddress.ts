@@ -27,8 +27,7 @@ export const useAddresses = <SData>(select: (response: UseAddressesData) => SDat
         v.user_id = v.user_id || v.UserID
         delete v.UserID
       })
-
-      console.log(response.data)
+      
       return response.data as UseAddressesData
     },
     select,
@@ -59,6 +58,35 @@ export const useAddressSearch = <SData>(
       const response = await privateAxios.get<UseAddressSearchData>('user/adres/search', {
         params: {
           search: _search,
+        },
+      })
+
+      return response.data
+    },
+    select,
+    enabled: isEnabled,
+    placeholderData: (prev) => prev,
+  })
+}
+
+export const useAddressSearchByCoords = <SData>(
+  coords: MaybeRef<[number, number]>,
+  select: (response: UseAddressSearchData) => SData,
+  enabled: MaybeRef<boolean>
+) => {
+  const privateAxios = usePrivateAxiosInstance()
+  const userStore = useUserStore()
+
+  const isEnabled = computed(() => userStore.isAuthenticated && unref(enabled))
+
+  return useQuery({
+    queryKey: ['user', 'addresses', { coords }],
+    queryFn: async ({ queryKey }) => {
+      const _coords = (queryKey as any)[2].coords
+      const response = await privateAxios.get<UseAddressSearchData>('user/adres/search', {
+        params: {
+          latitude: _coords[0],
+          longitude: _coords[1]
         },
       })
 

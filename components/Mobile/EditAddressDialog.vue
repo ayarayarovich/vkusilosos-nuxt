@@ -195,7 +195,7 @@ const { handleSubmit } = useForm({
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')
 const coordinates = computed(() => {
   if (adres.value) {
-    return [Number(adres.value.lon), Number(adres.value.lat)]
+    return [Number(adres.value.lat), Number(adres.value.lon)]
   }
   return [55.755864, 37.617698]
 })

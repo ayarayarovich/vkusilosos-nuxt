@@ -76,7 +76,10 @@
                         name="fade"
                         mode="out-in"
                       >
-                        <MyLocationDialogRestaurants v-if="reciptionWay === 'restaurant'" />
+                        <MyLocationDialogRestaurants
+                          v-if="reciptionWay === 'restaurant'"
+                          @update-coords="coordinates = $event"
+                        />
                         <MyLocationDialogDelivery
                           v-else-if="reciptionWay === 'delivery'"
                           @edit="editAddress($event)"

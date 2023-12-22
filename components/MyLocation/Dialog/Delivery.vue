@@ -13,16 +13,16 @@
           :value="address"
         >
           <div
-            class="flex cursor-pointer items-center rounded-xl border-2 border-transparent bg-white p-4 shadow-main outline-none transition-colors"
+            class="flex cursor-pointer items-center gap-2 rounded-xl border-2 border-transparent bg-white p-4 shadow-main outline-none transition-colors"
             :class="{
               '!border-orange-200': checked,
               'border-orange-100': active,
             }"
           >
-            <IconMapPoint class="h-5" />
-            <div class="ml-2 text-left text-sm">{{ transformAddress(address.adres) }}</div>
+            <IconMapPoint class="h-5 shrink-0" />
+            <div class="text-left text-sm">{{ transformAddress(address.adres) }}</div>
             <button
-              class="ml-auto rounded-full p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
+              class="ml-auto shrink-0 rounded-full p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
               type="button"
               @click="emit('edit', address)"
             >
@@ -71,18 +71,30 @@ const transformAddress = (address: string) => {
 }
 
 const locationStore = useLocationStore()
-const { location } = storeToRefs(locationStore)
+const { adres } = storeToRefs(locationStore)
 const selectedAddress = ref<Address>()
 
 watchEffect(() => {
   if (selectedAddress.value) {
-    emit('updateCoords', [selectedAddress.value.longitude, selectedAddress.value.latitude])
+    emit('updateCoords', [selectedAddress.value.latitude, selectedAddress.value.longitude])
   }
 })
 
+watch(
+  [adres],
+  () => {
+    if (adres.value) {
+      selectedAddress.value = adres.value
+    }
+  },
+  {
+    immediate: true,
+  }
+)
+
 const selectDeliveryAddress = () => {
   if (selectedAddress.value) {
-    location.value = selectedAddress.value
+    adres.value = selectedAddress.value
   }
 }
 </script>

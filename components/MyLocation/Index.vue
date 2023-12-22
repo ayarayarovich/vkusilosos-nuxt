@@ -8,10 +8,13 @@
       name="fade"
       mode="out-in"
     >
-      <span v-if="locationStore.location">
-        <span>{{ transformAddress(locationStore.location.adres) }}</span>
+      <span v-if="locationStore.reciptionWay === 'delivery' && locationStore.adres">
+        <span>{{ transformAddress(locationStore.adres.adres) }}</span>
         <span class="mx-2">|</span>
         <span class="text-[#999700]">~ {{ locationStore.deliveryTime || 'Нет данных' }}</span>
+      </span>
+      <span v-else-if="locationStore.reciptionWay === 'restaurant' && locationStore.rest">
+        <span>{{ transformAddress(locationStore.rest.name) }}</span>
       </span>
       <span v-else>Выберите адрес</span>
     </Transition>
