@@ -8,8 +8,6 @@ onServerPrefetch(async () => {
   await suspenseMain()
   await suspenseCategories()
 })
-
-defineOgImage({})
 </script>
 
 <template>
@@ -21,7 +19,10 @@ defineOgImage({})
       />
     </div>
 
-    <div class="container mx-auto my-4 flex flex-col gap-4 px-4 lg:my-8 lg:flex-row lg:gap-8">
+    <div
+      v-once
+      class="container mx-auto my-4 flex flex-col gap-4 px-4 lg:my-8 lg:flex-row lg:gap-8"
+    >
       <div class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main">
         <IconWallet class="mr-4 inline h-10" />Оплата любым удобным способом
       </div>
@@ -72,14 +73,16 @@ defineOgImage({})
 
     <div v-if="categories">
       <Category
-        v-for="(category, index) in categories"
+        v-for="category in categories"
         :key="category.id"
-        :immediate="index < 3"
         :category="category"
       />
     </div>
 
-    <div class="container mx-auto my-24 hidden px-4 lg:block">
+    <div
+      v-once
+      class="container mx-auto my-24 hidden px-4 lg:block"
+    >
       <div class="relative w-full rounded-xl bg-white px-24 py-24 shadow-main">
         <img
           class="pointer-events-none absolute left-0 top-0 h-full w-full select-none rounded-xl"
@@ -142,7 +145,10 @@ defineOgImage({})
       </div>
     </div>
 
-    <div class="container mx-auto mb-24 px-4">
+    <div
+      v-once
+      class="container mx-auto mb-24 px-4"
+    >
       <h1 class="mb-4 text-xl font-medium">Наши точки</h1>
       <ClientOnly>
         <YandexMap
