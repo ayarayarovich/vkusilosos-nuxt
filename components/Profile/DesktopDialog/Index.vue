@@ -39,7 +39,11 @@
                 ref="dialogPanelEl"
                 class="relative h-full w-full"
               >
-                <HeadlessTabGroup vertical>
+                <HeadlessTabGroup
+                  vertical
+                  :selected-index="activeTabIndex"
+                  @change="activeTabIndex = $event"
+                >
                   <div class="flex h-full w-full">
                     <HeadlessTabList class="flex shrink-0 flex-col items-stretch bg-gray">
                       <div class="mx-6 mb-4 mt-10 flex items-center gap-2">
@@ -47,29 +51,22 @@
                         <span class="text-xl font-medium">{{ formatPhone(user?.phone || '') }}</span>
                       </div>
                       <div class="mx-4 mb-8 h-px bg-[#252321] opacity-10"></div>
-                      <ProfileDesktopDialogTab>История заказов</ProfileDesktopDialogTab>
-                      <ProfileDesktopDialogTab>Данные</ProfileDesktopDialogTab>
-                      <ProfileDesktopDialogTab>Адреса</ProfileDesktopDialogTab>
-                      <ProfileDesktopDialogTab>Бонусная система</ProfileDesktopDialogTab>
-                      <ProfileDesktopDialogTab>Уведомления</ProfileDesktopDialogTab>
+                      <ProfileDesktopDialogTab
+                        v-for="tab in tabs"
+                        :key="tab.name"
+                      >
+                        {{ tab.label }}
+                      </ProfileDesktopDialogTab>
                       <div class="mx-4 mt-auto h-px bg-[#252321] opacity-10"></div>
                       <ProfileDesktopDialogExit />
                     </HeadlessTabList>
                     <HeadlessTabPanels class="grow bg-whitegray">
-                      <HeadlessTabPanel class="h-full">
-                        <ProfileDesktopDialogOrdersHistory />
-                      </HeadlessTabPanel>
-                      <HeadlessTabPanel class="h-full">
-                        <ProfileDesktopDialogInfo />
-                      </HeadlessTabPanel>
-                      <HeadlessTabPanel class="h-full">
-                        <ProfileDesktopDialogAddresses />
-                      </HeadlessTabPanel>
-                      <HeadlessTabPanel class="h-full">
-                        <ProfileDesktopDialogBonuses />
-                      </HeadlessTabPanel>
-                      <HeadlessTabPanel class="h-full">
-                        <ProfileDesktopDialogNotifications />
+                      <HeadlessTabPanel
+                        v-for="tab in tabs"
+                        :key="tab.name"
+                        class="h-full"
+                      >
+                        <component :is="tab.component" />
                       </HeadlessTabPanel>
                     </HeadlessTabPanels>
                   </div>
@@ -84,11 +81,65 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useProfileDialogStore } from '~/store/profileDialog'
+import type { Component } from 'vue'
+import { storeToRefs } from 'pinia'
+import ProfileDesktopDialogAddresses from './Addresses.vue'
+import ProfileDesktopDialogBonuses from './Bonuses.vue'
+import ProfileDesktopDialogInfo from './Info.vue'
+import ProfileDesktopDialogNotifications from './Notifications.vue'
+import ProfileDesktopDialogOrdersHistory from './OrdersHistory/Index.vue'
+
+import { useProfileDialogStore, type ProfileDialogView } from '~/store/profileDialog'
 import { formatPhone } from '~/utils'
 
 const profileDialogStore = useProfileDialogStore()
+const { currentView, openCallCount } = storeToRefs(profileDialogStore)
+
+const tabs = shallowRef<
+  {
+    name: ProfileDialogView
+    label: string
+    component: Component
+  }[]
+>([
+  {
+    name: 'orders_history',
+    label: 'История заказов',
+    component: ProfileDesktopDialogOrdersHistory,
+  },
+  {
+    name: 'info',
+    label: 'Данные',
+    component: ProfileDesktopDialogInfo,
+  },
+  {
+    name: 'addresses',
+    label: 'Адреса',
+    component: ProfileDesktopDialogAddresses,
+  },
+  {
+    name: 'bonus_system',
+    label: 'Бонусная система',
+    component: ProfileDesktopDialogBonuses,
+  },
+  {
+    name: 'notifications',
+    label: 'Уведомления',
+    component: ProfileDesktopDialogNotifications,
+  },
+])
+
+const activeTabIndex = shallowRef(0)
+watch(
+  [currentView, openCallCount],
+  () => {
+    const index = tabs.value.findIndex((v) => v.name === currentView.value)
+    if (index !== -1) {
+      activeTabIndex.value = index
+    }
+  },
+  { immediate: true }
+)
 
 const { data: user } = useUser((v) => v)
 

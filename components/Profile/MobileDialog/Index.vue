@@ -36,28 +36,28 @@
             @click="profileDialogStore.close()"
           >
             <ProfileMobileDialogMenu
-              v-if="currentView === 'menu'"
-              @change-view="currentView = $event"
+              v-if="myCurrentView === 'menu'"
+              @change-view="myCurrentView = $event"
             />
             <ProfileMobileDialogInfo
-              v-else-if="currentView === 'info'"
-              @go-back="currentView = 'menu'"
+              v-else-if="myCurrentView === 'info'"
+              @go-back="myCurrentView = 'menu'"
             />
             <ProfileMobileDialogAddresses
-              v-else-if="currentView === 'addresses'"
-              @go-back="currentView = 'menu'"
+              v-else-if="myCurrentView === 'addresses'"
+              @go-back="myCurrentView = 'menu'"
             />
             <ProfileMobileDialogBonuses
-              v-else-if="currentView === 'bonus'"
-              @go-back="currentView = 'menu'"
+              v-else-if="myCurrentView === 'bonus_system'"
+              @go-back="myCurrentView = 'menu'"
             />
             <ProfileMobileDialogOrdersHistory
-              v-else-if="currentView === 'orders-history'"
-              @go-back="currentView = 'menu'"
+              v-else-if="myCurrentView === 'orders_history'"
+              @go-back="myCurrentView = 'menu'"
             />
             <ProfileMobileDialogNotifications
-              v-else-if="currentView === 'notifications'"
-              @go-back="currentView = 'menu'"
+              v-else-if="myCurrentView === 'notifications'"
+              @go-back="myCurrentView = 'menu'"
             />
           </HeadlessDialogPanel>
         </HeadlessTransitionChild>
@@ -67,15 +67,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useProfileDialogStore } from '~/store/profileDialog'
+import { storeToRefs } from 'pinia'
+import { useProfileDialogStore, type ProfileDialogView } from '~/store/profileDialog'
 
 const profileDialogStore = useProfileDialogStore()
+const { currentView, openCallCount } = storeToRefs(profileDialogStore)
 
-const currentView = ref<'menu' | 'info' | 'orders-history' | 'addresses' | 'bonus'>('menu')
+const myCurrentView = ref<ProfileDialogView | 'menu'>('menu')
+watch(
+  [currentView, openCallCount],
+  () => {
+    myCurrentView.value = currentView.value
+  }
+)
 
 const closeDialog = () => {
   profileDialogStore.close()
-  currentView.value = 'menu'
+  myCurrentView.value = 'menu'
 }
 </script>

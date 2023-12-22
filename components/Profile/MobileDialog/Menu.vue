@@ -19,7 +19,7 @@
     <div class="mx-4 my-8 flex flex-col items-stretch gap-4">
       <button
         class="text-start text-lg font-medium text-black"
-        @click="emit('change-view', 'orders-history')"
+        @click="emit('change-view', 'orders_history')"
       >
         История заказов
       </button>
@@ -41,7 +41,7 @@
 
       <button
         class="text-start text-lg font-medium text-black"
-        @click="emit('change-view', 'bonus')"
+        @click="emit('change-view', 'bonus_system')"
       >
         Бонусная система
       </button>

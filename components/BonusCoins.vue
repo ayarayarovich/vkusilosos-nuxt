@@ -1,8 +1,9 @@
 <template>
-  <RouterLink
+  <button
     v-if="isSuccess"
     class="group relative flex h-6 items-center rounded-xl bg-gradient-to-bl from-orange-600 to-orange-200 pl-2.5 pr-9 text-sm"
-    to="/bonus"
+    type="button"
+    @click="profileDialogStore.open('bonus_system')"
   >
     <span class="font-medium leading-none text-white">{{ data }}</span>
     <div class="absolute bottom-0 left-0 right-0 h-9 overflow-hidden rounded-xl">
@@ -17,9 +18,12 @@
         alt=""
       />
     </div>
-  </RouterLink>
+  </button>
 </template>
 
 <script setup lang="ts">
+import { useProfileDialogStore } from '~/store/profileDialog'
+
 const { data, isSuccess } = useUser((v) => v.bonuses)
+const profileDialogStore = useProfileDialogStore()
 </script>
