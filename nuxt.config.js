@@ -13,6 +13,9 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtseo/module',
   ],
+  build: {
+    transpile: ['vue-toastification']
+  },
   googleFonts: {
     families: {
       Ubuntu: [300, 400, 500, 700],
