@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useToast } from 'vue-toastification'
 import type { DishInBasket } from '~/interfaces/main'
 import { useUserStore } from '~/store/user'
+import MyToast from '~/components/MyToast.vue'
 
 interface GetResponse {
   total: number
@@ -44,13 +46,23 @@ export const useInvalidateBasket = () => {
 export const useAddToBasket = () => {
   const privateAxios = usePrivateAxiosInstance()
   const invalidate = useInvalidateBasket()
+  const toast = useToast()
 
   return useMutation({
     mutationFn: async (vars: any) => {
       const response = await privateAxios.post('user/basket', vars)
       return response
     },
-    onSuccess() {
+    onSuccess(_, vars: any) {
+      if (!vars.id) {
+        toast({
+          component: MyToast,
+          props: {
+            title: 'Товар добавлен в корзину:',
+            detail: `id: ${vars.dish_id}`,
+          },
+        })
+      }
       invalidate()
     },
   })

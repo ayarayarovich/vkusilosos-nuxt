@@ -57,7 +57,6 @@ body {
   @apply bg-whitegray;
 }
 
-
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -66,6 +65,20 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.Vue-Toastification__toast--default {
+  @apply rounded-2xl bg-white text-black !important;
+}
+
+.Vue-Toastification__toast {
+  @apply min-w-max max-w-full rounded-2xl !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .Vue-Toastification__container {
+    @apply p-8 !important;
+  }
 }
