@@ -10,10 +10,6 @@
       </button>
       <h3 class="ml-10 block text-sm font-medium text-black opacity-50 md:ml-0">
         Последние 20 заказов за последние 90 дней
-        <input
-          v-model="isEmpty"
-          type="checkbox"
-        />
       </h3>
     </div>
 
@@ -110,8 +106,6 @@ import { pad } from '~/utils'
 const emit = defineEmits(['go-back'])
 
 const { data: orders } = useOrders((v) => v)
-
-const isEmpty = computed(() => !orders.value?.total)
 
 const displayStatus = (s: string) => {
   const map = {

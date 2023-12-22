@@ -41,34 +41,32 @@
               >
                 <h1 class="mx-8 mb-4 text-start text-xl font-medium">Заказ № {{ order.id }}</h1>
                 <div class="mx-4 h-px bg-gray"></div>
-                <ul class="m-8 text-start text-sm">
-                  <template v-if="isSuccess">
-                    <template
-                      v-for="(p, index) in data?.list"
-                      :key="index"
-                    >
-                      <li class="flex items-center gap-2">
-                        <p class="shrink-0 grow-[4] basis-0">{{ p.name }}</p>
-                        <p class="shrink-0 grow-[2] basis-0 text-end">{{ p.count }} шт</p>
-                        <p class="shrink-0 grow-[2] basis-0 text-end">{{ p.price }} &#8381;</p>
-                      </li>
-                      <div class="my-2 h-px bg-gray last:hidden"></div>
-                    </template>
-                  </template>
 
-                  <template v-else>
-                    <template
-                      v-for="i in 3"
-                      :key="i"
-                    >
-                      <Skeleton
-                        height="1.25rem"
-                        width="100%"
-                      />
-                      <div class="my-2 h-px bg-gray last:hidden"></div>
-                    </template>
-                  </template>
-                </ul>
+                <div
+                  class="grid grid-rows-[0fr] overflow-hidden transition-all"
+                  :class="{
+                    '!grid-rows-[1fr]': isSuccess,
+                  }"
+                >
+                  <div class="min-h-0">
+                    <ul class="p-8 text-start text-sm">
+                      <template v-if="isSuccess">
+                        <template
+                          v-for="(p, index) in data?.list"
+                          :key="index"
+                        >
+                          <li class="flex items-center gap-2">
+                            <p class="shrink-0 grow-[4] basis-0">{{ p.name }}</p>
+                            <p class="shrink-0 grow-[2] basis-0 text-end">{{ p.count }} шт</p>
+                            <p class="shrink-0 grow-[2] basis-0 text-end">{{ p.price }} &#8381;</p>
+                          </li>
+                          <div class="my-2 h-px bg-gray last:hidden"></div>
+                        </template>
+                      </template>
+                    </ul>
+                  </div>
+                </div>
+
                 <div class="mx-4 mb-4 h-px bg-gray"></div>
                 <p class="mx-8 text-start text-xl font-medium">Итого: {{ order.price }} &#8381;</p>
               </div>
