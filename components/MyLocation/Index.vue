@@ -8,13 +8,13 @@
       name="fade"
       mode="out-in"
     >
-      <span v-if="locationStore.reciptionWay === 'delivery' && locationStore.adres">
-        <span>{{ transformAddress(locationStore.adres.adres) }}</span>
+      <span v-if="currentReciptionWay?.type === 'delivery'">
+        <span>{{ transformAddress(currentReciptionWay.adres) }}</span>
         <span class="mx-2">|</span>
-        <span class="text-[#999700]">~ {{ locationStore.deliveryTime || 'Нет данных' }}</span>
+        <span class="text-[#999700]">~ {{ 'Нет данных' }}</span>
       </span>
-      <span v-else-if="locationStore.reciptionWay === 'restaurant' && locationStore.rest">
-        <span>{{ transformAddress(locationStore.rest.name) }}</span>
+      <span v-else-if="currentReciptionWay?.type === 'restaurant'">
+        <span>{{ currentReciptionWay.name }}</span>
       </span>
       <span v-else>Выберите адрес</span>
     </Transition>
@@ -27,11 +27,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useLocationStore } from '~/store/location'
 import { nthIndex } from '~/utils'
 
-const locationStore = useLocationStore()
 const isModalOpen = ref(false)
+
+const currentReciptionWay = useCurrentReciptionWay()
 
 const transformAddress = (address: string) => {
   return address.slice(nthIndex(address, ',', 1) + 1).trim()

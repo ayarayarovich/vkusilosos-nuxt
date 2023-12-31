@@ -3,7 +3,7 @@
     ref="element"
     class="hidden shrink-0 pl-4"
     :class="{
-      '!block': !!dishesData?.total,
+      '!block': !!dishesData?.total && !!dishesData.dishes.length,
     }"
   >
     <button

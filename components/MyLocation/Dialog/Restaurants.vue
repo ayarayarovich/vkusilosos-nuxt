@@ -4,6 +4,7 @@
       <HeadlessRadioGroup
         v-model="selectedRestaurant"
         class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto scroll-smooth py-2"
+        :by="compareRests"
       >
         <HeadlessRadioGroupOption
           v-for="restaurant in restaurants"
@@ -49,29 +50,15 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useLocationStore } from '~/store/location'
-
-const emit = defineEmits(['updateCoords'])
-
-const locationStore = useLocationStore()
+const emit = defineEmits(['updateCoords', 'close'])
 
 const { data: restaurants } = useRestaurants((v) => v)
 
-const { rest } = storeToRefs(locationStore)
 const selectedRestaurant = ref<IRestaurant>()
 
-watch(
-  [rest],
-  () => {
-    if (rest.value) {
-      selectedRestaurant.value = rest.value
-    }
-  },
-  {
-    immediate: true,
-  }
-)
+const compareRests = (a?: IRestaurant, b?: IRestaurant) => {
+  return a?.id === b?.id
+}
 
 watchEffect(() => {
   if (selectedRestaurant.value) {
@@ -79,9 +66,28 @@ watchEffect(() => {
   }
 })
 
+const currentReciptionWay = useCurrentReciptionWay()
+watch(
+  [currentReciptionWay],
+  () => {
+    if (currentReciptionWay.value && currentReciptionWay.value.type === 'restaurant') {
+      selectedRestaurant.value = currentReciptionWay.value
+    }
+  },
+  {
+    immediate: true,
+  }
+)
+
+const setCurrentReciptionWay = useSetCurrentReciptionWay()
+
 const selectRestaurant = () => {
   if (selectedRestaurant.value) {
-    rest.value = selectedRestaurant.value
+    setCurrentReciptionWay({
+      type: 'restaurant',
+      ...selectedRestaurant.value,
+    })
+    emit('close')
   }
 }
 </script>

@@ -1,5 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useInvalidateDishes } from './useDishes'
+import { useInvalidateCategories } from './useCategories'
 import type { Address } from '~/interfaces/main'
+import { useLocationStore } from '~/store/location'
 import { useUserStore } from '~/store/user'
 
 interface UseAddressesData {
@@ -155,4 +158,73 @@ export const useDeleteAddress = () => {
       invalidate()
     },
   })
+}
+
+interface CurrentRestaurant extends IRestaurant {
+  type: 'restaurant'
+}
+
+interface CurrentDelivery extends Address {
+  type: 'delivery'
+}
+export const useCurrentReciptionWay = () => {
+  const locationStore = useLocationStore()
+  const { data: user } = useUser((v) => v)
+  const { data: addresses } = useAddresses((v) => v.list)
+  const { data: rests } = useRestaurants((v) => v)
+
+  return computed(() => {
+    if (locationStore.reciptionWay === 'delivery') {
+      if (user.value?.adres_id) {
+        const addr = addresses.value?.find((v) => v.id === user.value.adres_id)
+        if (addr) {
+          const retAddr: CurrentDelivery = {
+            type: 'delivery',
+            ...addr,
+          }
+          return retAddr
+        }
+      }
+    } else if (locationStore.reciptionWay === 'restaurant') {
+      if (user.value?.rest_id) {
+        const rest = rests.value?.find((v) => v.id === user.value.rest_id)
+        if (rest) {
+          const retRest: CurrentRestaurant = {
+            type: 'restaurant',
+            ...rest,
+          }
+          return retRest
+        }
+      }
+    }
+  })
+}
+
+export const useSetCurrentReciptionWay = () => {
+  const locationStore = useLocationStore()
+  const invalidateDishes = useInvalidateDishes()
+  const invalidateCategories = useInvalidateCategories()
+  const { mutateAsync } = useSetUser()
+
+  return (reciptionWay: CurrentRestaurant | CurrentDelivery) => {
+    if (reciptionWay.type === 'delivery') {
+      mutateAsync({
+        rest: 0,
+        adres: reciptionWay.id,
+      }).then(() => {
+        locationStore.reciptionWay = 'delivery'
+        invalidateCategories()
+        invalidateDishes()
+      })
+    } else if (reciptionWay.type === 'restaurant') {
+      mutateAsync({
+        adres: 0,
+        rest: reciptionWay.id,
+      }).then(() => {
+        locationStore.reciptionWay = 'restaurant'
+        invalidateCategories()
+        invalidateDishes()
+      })
+    }
+  }
 }

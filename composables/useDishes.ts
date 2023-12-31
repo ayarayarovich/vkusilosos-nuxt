@@ -1,6 +1,15 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { Dish, Tag, DishDetails } from '~/interfaces/dishes'
 
+export const useInvalidateDishes = () => {
+  const queryClient = useQueryClient()
+  return () => {
+    queryClient.invalidateQueries({
+      queryKey: ['dishes'],
+    })
+  }
+}
+
 export const useDishes = (categoryID: MaybeRefOrGetter<number>) => {
   interface Response {
     dishes: Dish[]
@@ -10,6 +19,7 @@ export const useDishes = (categoryID: MaybeRefOrGetter<number>) => {
   }
 
   const publicAxios = usePublicAxiosInstance()
+  const currentReciptionWay = useCurrentReciptionWay()
 
   return useQuery({
     queryKey: ['dishes', { categoryID }],
@@ -21,6 +31,8 @@ export const useDishes = (categoryID: MaybeRefOrGetter<number>) => {
           offset: 0,
           limit: 99999999,
           category: _categoryID,
+          adres_id: currentReciptionWay.value?.type === 'delivery' ? currentReciptionWay.value.id : undefined,
+          rest_id: currentReciptionWay.value?.type === 'restaurant' ? currentReciptionWay.value.id : undefined 
         },
       })
 
@@ -51,11 +63,3 @@ export const useDish = (dishID: MaybeRefOrGetter<number>, enabled: MaybeRefOrGet
   })
 }
 
-export const useInvalidateDishes = () => {
-  const queryClient = useQueryClient()
-  return () => {
-    queryClient.invalidateQueries({
-      queryKey: ['dishes'],
-    })
-  }
-}

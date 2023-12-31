@@ -29,6 +29,20 @@ export interface User {
   total_basket: number
 }
 
+export interface SetUser {
+  status_pushes?: boolean
+  get_pushes?: boolean
+  email_pushes?: boolean
+  sms_pushes?: boolean
+  birthday?: string
+  name?: string
+  adres?: number
+  rest?: number
+  email?: string
+  last_password?: string
+  new_password?: string
+}
+
 export interface Order {
   id: number
   price: number

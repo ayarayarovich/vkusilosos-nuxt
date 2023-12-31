@@ -19,7 +19,7 @@
       />
       <label
         :for="inputID"
-        class="pointer-events-none absolute left-4 top-5 will-change-auto -translate-y-2 select-none text-xs text-[#777675] transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-2 peer-focus:text-xs"
+        class="pointer-events-none absolute left-4 top-5 -translate-y-2 select-none text-xs text-[#777675] transition-all will-change-auto peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-2 peer-focus:text-xs"
         :class="{
           'text-red': errorMessage,
         }"

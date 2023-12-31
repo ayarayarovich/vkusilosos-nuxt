@@ -1,6 +1,12 @@
 <template>
   <div>
-    <p class="font-bold flex items-center gap-2"><img src="~/assets/check-mark.png" class="h-4 w-auto" /> {{ props.title }}</p>
+    <p class="flex items-center gap-2 font-bold">
+      <img
+        src="~/assets/check-mark.png"
+        class="h-4 w-auto"
+      />
+      {{ props.title }}
+    </p>
     <p>{{ props.detail }}</p>
   </div>
 </template>

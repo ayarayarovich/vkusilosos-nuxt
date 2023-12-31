@@ -52,19 +52,19 @@
                         <div
                           class="absolute bottom-0 left-0 top-0 w-1/2 rounded-lg bg-white shadow-main transition-transform"
                           :class="{
-                            'translate-x-0': reciptionWay == 'delivery',
-                            'translate-x-full': reciptionWay == 'restaurant',
+                            'translate-x-0': myReciptionWay == 'delivery',
+                            'translate-x-full': myReciptionWay == 'restaurant',
                           }"
                         ></div>
                         <button
                           class="hover isolate h-10 w-1/2 rounded-lg"
-                          @click="reciptionWay = 'delivery'"
+                          @click="myReciptionWay = 'delivery'"
                         >
                           Доставка
                         </button>
                         <button
                           class="isolate h-10 w-1/2 rounded-lg"
-                          @click="reciptionWay = 'restaurant'"
+                          @click="myReciptionWay = 'restaurant'"
                         >
                           В ресторане
                         </button>
@@ -77,14 +77,16 @@
                         mode="out-in"
                       >
                         <MyLocationDialogRestaurants
-                          v-if="reciptionWay === 'restaurant'"
+                          v-if="myReciptionWay === 'restaurant'"
                           @update-coords="coordinates = $event"
+                          @close="emit('close')"
                         />
                         <MyLocationDialogDelivery
-                          v-else-if="reciptionWay === 'delivery'"
+                          v-else-if="myReciptionWay === 'delivery'"
                           @edit="editAddress($event)"
                           @new="currentView = 'new'"
                           @update-coords="coordinates = $event"
+                          @close="emit('close')"
                         />
                       </Transition>
                     </div>
@@ -164,5 +166,19 @@ const close = () => {
 
 const locationStore = useLocationStore()
 const { reciptionWay } = storeToRefs(locationStore)
+
+const myReciptionWay = ref<'delivery' | 'restaurant'>('delivery')
+
+watch(
+  [reciptionWay],
+  () => {
+    if (reciptionWay.value) {
+      myReciptionWay.value = reciptionWay.value
+    }
+  },
+  {
+    immediate: true,
+  }
+)
 const dialogPanelEl = ref<HTMLElement>()
 </script>

@@ -4,6 +4,7 @@
       <HeadlessRadioGroup
         v-model="selectedAddress"
         class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto py-2"
+        :by="compareAddresses"
       >
         <HeadlessRadioGroupOption
           v-for="address in data?.list"
@@ -57,12 +58,10 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import type { Address } from '~/interfaces/main'
-import { useLocationStore } from '~/store/location'
 import { nthIndex } from '~/utils'
 
-const emit = defineEmits(['edit', 'new', 'updateCoords'])
+const emit = defineEmits(['edit', 'new', 'updateCoords', 'close'])
 
 const { data } = useAddresses((v) => v)
 
@@ -70,8 +69,8 @@ const transformAddress = (address: string) => {
   return address.slice(nthIndex(address, ',', 1) + 1).trim()
 }
 
-const locationStore = useLocationStore()
-const { adres } = storeToRefs(locationStore)
+const compareAddresses = (a?: Address, b?: Address) => a?.id === b?.id
+
 const selectedAddress = ref<Address>()
 
 watchEffect(() => {
@@ -80,11 +79,12 @@ watchEffect(() => {
   }
 })
 
+const currentReciptionWay = useCurrentReciptionWay()
 watch(
-  [adres],
+  [currentReciptionWay],
   () => {
-    if (adres.value) {
-      selectedAddress.value = adres.value
+    if (currentReciptionWay.value && currentReciptionWay.value.type === 'delivery') {
+      selectedAddress.value = currentReciptionWay.value
     }
   },
   {
@@ -92,9 +92,15 @@ watch(
   }
 )
 
+const setCurrentReciptionWay = useSetCurrentReciptionWay()
+
 const selectDeliveryAddress = () => {
   if (selectedAddress.value) {
-    adres.value = selectedAddress.value
+    setCurrentReciptionWay({
+      type: 'delivery',
+      ...selectedAddress.value,
+    })
+    emit('close')
   }
 }
 </script>

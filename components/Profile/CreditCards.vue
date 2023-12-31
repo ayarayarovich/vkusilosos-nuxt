@@ -28,7 +28,7 @@
             v-else-if="cart.type === 'mir'"
             class="aspect-[4/3] h-6 object-contain"
           />
-          <IconCreditCard
+          <IconCard
             v-else
             class="aspect-[4/3] h-6 object-contain"
           />

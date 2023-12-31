@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/vue-query'
-import type { User } from '~/interfaces/users'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import type { SetUser, User } from '~/interfaces/users'
 import { useUserStore } from '~/store/user'
 
 type GetResponse = User
@@ -17,4 +17,28 @@ export const useUser = <SData>(select: (response: GetResponse) => SData) => {
     select,
     enabled: userStore.isAuthenticated,
   })
+}
+
+export const useSetUser = () => {
+  const privateAxios = usePrivateAxiosInstance()
+  const invalidate = useInvalidateUser()
+
+  return useMutation({
+    mutationFn: async (data: SetUser) => {
+      const response = await privateAxios.post('user/me', data)
+      return response.data
+    },
+    onSuccess: invalidate
+  })
+}
+
+
+export const useInvalidateUser = () => {
+  const queryClient = useQueryClient()
+
+  return () => {
+    queryClient.invalidateQueries({
+      queryKey: ['user']
+    })
+  }
 }
