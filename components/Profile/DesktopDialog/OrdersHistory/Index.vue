@@ -20,7 +20,7 @@
       mode="out-in"
     >
       <div
-        v-if="false"
+        v-if="orders?.total"
         class="flex h-0 grow items-center justify-center p-8"
       >
         <div>

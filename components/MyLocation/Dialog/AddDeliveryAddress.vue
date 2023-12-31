@@ -90,7 +90,7 @@ const { handleSubmit } = useForm({
     floor: yup.string().label('Этаж'),
     house: yup.string().label('Номер квартиры'),
     comment: yup.string().label('Комментарий'),
-  })
+  }),
 })
 
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')

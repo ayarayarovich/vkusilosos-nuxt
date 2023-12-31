@@ -1,9 +1,9 @@
 <template>
   <section
     :id="'dish-category-' + props.category.id"
-    class="mb-8 mt-4 lg:mb-16 lg:mt-8 hidden"
+    class="mb-8 mt-4 hidden lg:mb-16 lg:mt-8"
     :class="{
-      '!block': !!dishesData?.total
+      '!block': !!dishesData?.total,
     }"
   >
     <div

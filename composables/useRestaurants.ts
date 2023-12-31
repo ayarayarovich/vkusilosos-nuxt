@@ -13,10 +13,7 @@ export interface IRestaurant {
 
 type UseRestaurantData = IRestaurant[]
 
-export const useRestaurants = <SData>(
-  select: (response: UseRestaurantData) => SData,
-  disabled?: MaybeRef<boolean>
-) => {
+export const useRestaurants = <SData>(select: (response: UseRestaurantData) => SData, disabled?: MaybeRef<boolean>) => {
   const publicAxios = usePublicAxiosInstance()
   const userStore = useUserStore()
 

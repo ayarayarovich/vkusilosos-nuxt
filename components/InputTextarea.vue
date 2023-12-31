@@ -4,10 +4,10 @@
       :id="inputID"
       v-model="value"
       :rows="rows"
-      class="peer w-full min-h-[6rem] select-none rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
+      class="peer min-h-[6rem] w-full select-none rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
       :class="{
         '!border-red': errorMessage,
-        'resize-none': props.disableResize
+        'resize-none': props.disableResize,
       }"
       :name="name"
       placeholder="Введите"

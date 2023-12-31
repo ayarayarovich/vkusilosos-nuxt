@@ -1,9 +1,9 @@
 <template>
   <div
     ref="element"
-    class="shrink-0 pl-4 hidden"
+    class="hidden shrink-0 pl-4"
     :class="{
-      '!block': !!dishesData?.total
+      '!block': !!dishesData?.total,
     }"
   >
     <button

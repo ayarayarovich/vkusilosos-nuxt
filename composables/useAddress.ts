@@ -27,7 +27,7 @@ export const useAddresses = <SData>(select: (response: UseAddressesData) => SDat
         v.user_id = v.user_id || v.UserID
         delete v.UserID
       })
-      
+
       return response.data as UseAddressesData
     },
     select,
@@ -86,7 +86,7 @@ export const useAddressSearchByCoords = <SData>(
       const response = await privateAxios.get<UseAddressSearchData>('user/adres/search', {
         params: {
           latitude: _coords[0],
-          longitude: _coords[1]
+          longitude: _coords[1],
         },
       })
 

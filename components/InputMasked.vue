@@ -52,7 +52,7 @@ const { label, name, locked } = toRefs(props)
 const { el, unmasked } = useIMask({
   mask: props.mask,
   lazy: false,
-  normalizeZeros: true
+  normalizeZeros: true,
 })
 
 watch([unmasked], () => {

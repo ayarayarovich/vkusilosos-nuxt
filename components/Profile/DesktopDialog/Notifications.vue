@@ -16,7 +16,7 @@
       <div class="absolute top-0 z-10 h-8 w-full bg-gradient-to-b from-whitegray to-transparent"></div>
       <div class="absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-whitegray to-transparent"></div>
       <form
-        class="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray h-full overflow-y-scroll px-8 py-8"
+        class="h-full overflow-y-scroll px-8 py-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray"
         @submit="onSubmit"
       >
         <div class="mb-16">

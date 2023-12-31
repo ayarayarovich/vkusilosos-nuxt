@@ -74,12 +74,9 @@ const profileDialogStore = useProfileDialogStore()
 const { currentView, openCallCount } = storeToRefs(profileDialogStore)
 
 const myCurrentView = ref<ProfileDialogView | 'menu'>('menu')
-watch(
-  [currentView, openCallCount],
-  () => {
-    myCurrentView.value = currentView.value
-  }
-)
+watch([currentView, openCallCount], () => {
+  myCurrentView.value = currentView.value
+})
 
 const closeDialog = () => {
   profileDialogStore.close()
