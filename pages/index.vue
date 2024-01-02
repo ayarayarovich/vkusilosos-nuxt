@@ -35,7 +35,7 @@ onServerPrefetch(async () => {
     </div>
 
     <div class="relative my-4 md:container md:mx-auto md:my-8">
-      <Stories />
+      <GoodStories />
     </div>
 
     <section class="my-8 lg:my-16">
