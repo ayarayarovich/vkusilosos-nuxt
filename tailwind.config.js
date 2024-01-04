@@ -3,7 +3,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
-  content: ['./app.vue', './pages/**/*.{vue,js,ts,jsx,tsx}', './layouts/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./app.vue', './pages/**/*.{vue,js,ts,jsx,tsx}', './layouts/**/*.{vue,js,ts,jsx,tsx}', './components/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     screens: {
       sm: '640px',

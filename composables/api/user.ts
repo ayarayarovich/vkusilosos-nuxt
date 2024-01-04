@@ -1,12 +1,39 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { SetUser, User } from '~/interfaces/users'
-import { useUserStore } from '~/store/user'
 
 type GetResponse = User
 
+export const useUserCredentials = () => {
+  const cookie = useCookie<{
+    accessToken: string
+    refreshToken: string
+    isAuthenticated: boolean
+  }>('user_credentials', {
+    sameSite: 'strict',
+    secure: false,
+    httpOnly: false,
+    watch: true,
+    default: () => ({
+      accessToken: '',
+      refreshToken: '',
+      isAuthenticated: false
+    })
+  })
+
+  const reset = () => {
+    cookie.value = {
+      accessToken: '',
+      refreshToken: '',
+      isAuthenticated: false
+    }
+  }
+
+  return {userCredentials: cookie, resetUserCredentials: reset}
+}
+
 export const useUser = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
 
   return useQuery({
     queryKey: ['user'],
@@ -15,7 +42,7 @@ export const useUser = <SData>(select: (response: GetResponse) => SData) => {
       return response.data
     },
     select,
-    enabled: userStore.isAuthenticated,
+    enabled: !!userCredentials.value,
   })
 }
 

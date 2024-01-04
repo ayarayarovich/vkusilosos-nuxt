@@ -1,4 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import type { MaybeRef } from "vue";
+import { useCurrentReciptionWay } from './addresses'
 import type { Dish, Tag, DishDetails } from '~/interfaces/dishes'
 
 export const useInvalidateDishes = () => {
@@ -10,7 +12,7 @@ export const useInvalidateDishes = () => {
   }
 }
 
-export const useDishes = (categoryID: MaybeRefOrGetter<number>) => {
+export const useDishes = (categoryID: MaybeRef<number>) => {
   interface Response {
     dishes: Dish[]
     tags: Tag[]
@@ -32,7 +34,7 @@ export const useDishes = (categoryID: MaybeRefOrGetter<number>) => {
           limit: 99999999,
           category: _categoryID,
           adres_id: currentReciptionWay.value?.type === 'delivery' ? currentReciptionWay.value.id : undefined,
-          rest_id: currentReciptionWay.value?.type === 'restaurant' ? currentReciptionWay.value.id : undefined 
+          rest_id: currentReciptionWay.value?.type === 'restaurant' ? currentReciptionWay.value.id : undefined
         },
       })
 

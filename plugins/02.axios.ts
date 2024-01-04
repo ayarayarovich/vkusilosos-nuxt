@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { useUserStore } from '~/store/user'
+import {useQueryClient} from "@tanstack/vue-query";
+import {useUserCredentials} from "~/composables/api/user";
 
 export default defineNuxtPlugin(() => {
   const { baseAPIURL: baseURL } = useAppConfig()
-  const pinia = usePinia()
+  const {userCredentials, resetUserCredentials} = useUserCredentials()
 
   const axiosPublic = axios.create({
     baseURL,
@@ -15,12 +16,12 @@ export default defineNuxtPlugin(() => {
 
   axiosPrivate.interceptors.request.use(
     (config) => {
-      const userStore = useUserStore(pinia)
-      if (userStore.isAuthenticated) {
+      // const {userCredentials, resetUserCredentials} = useUserCredentials()
+      if (userCredentials.value.isAuthenticated) {
         // eslint-disable-next-line dot-notation
-        config.headers['Authorization'] = userStore.accessToken
+        config.headers['Authorization'] = userCredentials.value.accessToken
       } else {
-        userStore.forgetCredentials()
+        resetUserCredentials()
       }
       return config
     },
@@ -30,24 +31,28 @@ export default defineNuxtPlugin(() => {
   axiosPrivate.interceptors.response.use(
     (res) => res,
     async (err) => {
-      const userStore = useUserStore(pinia)
+      // const {userCredentials, resetUserCredentials} = useUserCredentials()
+      const queryClient = useQueryClient()
 
       const originalConfig = err.config
       if (err.response) {
         if (
           (err.response.status === 403 || err.response.status === 401) &&
           !originalConfig._retry &&
-          userStore.refreshToken
+          userCredentials.value.isAuthenticated && userCredentials.value.refreshToken.length
         ) {
           originalConfig._retry = true
 
           try {
             const rs = await axiosPrivate.post('/api/refresh', {
-              refreshToken: userStore.refreshToken,
+              refreshToken: userCredentials.value.refreshToken,
             })
             const { accessToken, refreshToken } = rs.data
-            userStore.accessToken = accessToken
-            userStore.refreshToken = refreshToken
+            userCredentials.value = {
+              accessToken,
+              refreshToken,
+              isAuthenticated: true
+            }
 
             // eslint-disable-next-line dot-notation
             axiosPrivate.defaults.headers.common['Authorization'] = accessToken
@@ -55,11 +60,20 @@ export default defineNuxtPlugin(() => {
             return axiosPrivate(originalConfig)
           } catch (_error: any) {
             if (_error.response && _error.response.data) {
-              userStore.signOut()
+              resetUserCredentials()
+
+              queryClient.removeQueries({
+                queryKey: ['user'],
+              })
+              navigateTo('/login')
               return Promise.reject(_error.response.data)
             }
 
-            userStore.signOut()
+            resetUserCredentials()
+            queryClient.removeQueries({
+              queryKey: ['user'],
+            })
+            navigateTo('/login')
             return Promise.reject(_error)
           }
         }

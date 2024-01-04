@@ -1,9 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { useInvalidateDishes } from './useDishes'
-import { useInvalidateCategories } from './useCategories'
+// import { useInvalidateDishes } from './useDishes'
+// import { useInvalidateCategories } from './useCategories'
 import type { Address } from '~/interfaces/main'
 import { useLocationStore } from '~/store/location'
-import { useUserStore } from '~/store/user'
 
 interface UseAddressesData {
   list: Address[]
@@ -12,9 +11,9 @@ interface UseAddressesData {
 
 export const useAddresses = <SData>(select: (response: UseAddressesData) => SData, disabled?: MaybeRef<boolean>) => {
   const privateAxios = usePrivateAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
 
-  const isEnabled = computed(() => userStore.isAuthenticated && !unref(disabled))
+  const isEnabled = computed(() => userCredentials.value.isAuthenticated && !unref(disabled))
 
   return useQuery({
     queryKey: ['user', 'addresses'],
@@ -50,9 +49,10 @@ export const useAddressSearch = <SData>(
   enabled: MaybeRef<boolean>
 ) => {
   const privateAxios = usePrivateAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
 
-  const isEnabled = computed(() => userStore.isAuthenticated && unref(enabled))
+
+  const isEnabled = computed(() => userCredentials.value.isAuthenticated && unref(enabled))
 
   return useQuery({
     queryKey: ['user', 'addresses', { search }],
@@ -78,9 +78,9 @@ export const useAddressSearchByCoords = <SData>(
   enabled: MaybeRef<boolean>
 ) => {
   const privateAxios = usePrivateAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
 
-  const isEnabled = computed(() => userStore.isAuthenticated && unref(enabled))
+  const isEnabled = computed(() => userCredentials.value.isAuthenticated && unref(enabled))
 
   return useQuery({
     queryKey: ['user', 'addresses', { coords }],
@@ -167,7 +167,7 @@ interface CurrentRestaurant extends IRestaurant {
 interface CurrentDelivery extends Address {
   type: 'delivery'
 }
-export const useCurrentReciptionWay = () => {
+export function useCurrentReciptionWay() {
   const locationStore = useLocationStore()
   const { data: user } = useUser((v) => v)
   const { data: addresses } = useAddresses((v) => v.list)

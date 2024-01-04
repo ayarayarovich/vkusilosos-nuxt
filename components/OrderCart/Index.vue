@@ -16,7 +16,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const { data, isSuccess } = useBasket((v) => v.total_price)
+const { data, isSuccess, suspense } = useBasket((v) => v.total_price)
+onServerPrefetch(async () => {
+  await suspense()
+})
 
 const isOpen = ref(false)
 function closeDialog() {

@@ -1,7 +1,6 @@
 import { computed, unref } from 'vue'
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { Order } from '~/interfaces/users'
-import { useUserStore } from '~/store/user'
 
 interface GetResponse {
   active_orders: Order[]
@@ -11,7 +10,8 @@ interface GetResponse {
 
 export const useOrders = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
+
 
   return useQuery({
     queryKey: ['user', 'orders'],
@@ -25,7 +25,7 @@ export const useOrders = <SData>(select: (response: GetResponse) => SData) => {
       return response.data
     },
     select,
-    enabled: userStore.isAuthenticated,
+    enabled: userCredentials.value.isAuthenticated,
   })
 }
 
@@ -47,9 +47,10 @@ interface UseOrderConfig<SData> {
 
 export const useOrder = <SData>({ orderID, select, enabled }: UseOrderConfig<SData>) => {
   const privateAxios = usePrivateAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
 
-  const isEnabled = computed(() => unref(enabled) && userStore.isAuthenticated)
+
+  const isEnabled = computed(() => unref(enabled) && userCredentials.value.isAuthenticated)
 
   return useQuery({
     queryKey: ['user', 'orders', { orderID }],

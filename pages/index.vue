@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useCategories } from '~/composables/useCategories'
 
 const { data: recomendations, suspense: suspenseMain } = useMain((v) => v.recomendation)
 const { data: categories, suspense: suspenseCategories } = useCategories()

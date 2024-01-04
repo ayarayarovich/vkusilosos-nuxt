@@ -5,7 +5,6 @@
       <span>/</span>
       <RouterLink to="/blog">Блог</RouterLink>
     </div>
-    {{ data }}
     <div class="container mx-auto my-16 px-4">
       <div
         v-if="isSuccess"

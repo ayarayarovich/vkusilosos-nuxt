@@ -13,8 +13,13 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtseo/module',
   ],
+  imports: {
+    dirs: [
+      'composables/**'
+    ]
+  },
   build: {
-    transpile: ['vue-toastification']
+    transpile: ['vue-toastification'],
   },
   googleFonts: {
     families: {
@@ -23,9 +28,6 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     exposeConfig: true,
-  },
-  lodash: {
-    prefix: '_',
   },
   veeValidate: {
     // disable or enable auto imports
@@ -48,10 +50,6 @@ export default defineNuxtConfig({
     defaultLocale: 'ru',
     indexable: true,
     trailingSlash: false,
-  },
-  routeRules: {
-    '/': { swr: 60 },
-    '/blog/**': { swr: 60 },
   },
   css: ['~/assets/main.css'],
   devtools: {

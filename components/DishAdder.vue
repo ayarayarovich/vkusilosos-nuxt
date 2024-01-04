@@ -42,7 +42,8 @@
 
 <script setup lang="ts">
 import { useAuthDialogStore } from '~/store/authDialog'
-import { useUserStore } from '~/store/user'
+import {useUserCredentials} from "~/composables/api/user";
+
 
 const props = defineProps<{
   dishId: number
@@ -50,14 +51,14 @@ const props = defineProps<{
   alwaysButton?: boolean
 }>()
 
-const userStore = useUserStore()
+const {userCredentials} = useUserCredentials()
 const authDialogStore = useAuthDialogStore()
 const { mutate } = useAddToBasket()
 
 const count = ref(0)
 
 const addLocalCount = () => {
-  if (!userStore.isAuthenticated) {
+  if (!userCredentials.value.isAuthenticated) {
     authDialogStore.open()
     return
   }
@@ -70,7 +71,7 @@ const addLocalCount = () => {
   }
 }
 const removeLocalCount = () => {
-  if (!userStore.isAuthenticated) {
+  if (!userCredentials.value.isAuthenticated) {
     authDialogStore.open()
     return
   }
@@ -79,7 +80,7 @@ const removeLocalCount = () => {
   updatePosition(count.value)
 }
 
-const updatePosition = _Debounce((count: number) => {
+const updatePosition = useDebounceFn((count: number) => {
   if (dishInBasket.value) {
     mutate({
       id: dishInBasket.value.id,
@@ -90,7 +91,7 @@ const updatePosition = _Debounce((count: number) => {
 }, 1000)
 
 const addNewPosition = () => {
-  if (!userStore.isAuthenticated) {
+  if (!userCredentials.value.isAuthenticated) {
     authDialogStore.open()
     return
   }
@@ -119,7 +120,7 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-  if (!userStore.isAuthenticated) {
+  if (!userCredentials.value.isAuthenticated) {
     count.value = 0
   }
 })

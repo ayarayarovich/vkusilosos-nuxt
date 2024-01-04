@@ -78,7 +78,7 @@
 import * as yup from 'yup'
 import { useAuthDialogStore } from '~/store/authDialog'
 import { useProfileDialogStore } from '~/store/profileDialog'
-import { useUserStore } from '~/store/user'
+import {useUserCredentials} from "~/composables/api/user";
 
 const { handleSubmit, setErrors } = useForm({
   validationSchema: yup.object({
@@ -87,7 +87,7 @@ const { handleSubmit, setErrors } = useForm({
   }),
 })
 
-const userStore = useUserStore()
+const {userCredentials} = useUserCredentials()
 const authDialogStore = useAuthDialogStore()
 const profileDialogStore = useProfileDialogStore()
 
@@ -100,9 +100,11 @@ const signIn = handleSubmit((vals) => {
   publicAxios
     .post('auth/login', vals)
     .then((res) => {
-      userStore.accessToken = res.data.token
-      userStore.refreshToken = res.data.refreshToken
-      userStore.isAuthenticated = true
+      userCredentials.value = {
+        accessToken: res.data.token,
+        refreshToken: res.data.refreshToken,
+        isAuthenticated: true
+      }
 
       authDialogStore.close()
       profileDialogStore.open()
@@ -120,30 +122,3 @@ const signIn = handleSubmit((vals) => {
 
 const { changeView } = inject<any>('view')
 </script>
-
-<style scoped>
-.lds-dual-ring {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-}
-.lds-dual-ring:after {
-  content: ' ';
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-</style>

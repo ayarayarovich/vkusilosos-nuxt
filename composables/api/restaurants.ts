@@ -1,5 +1,4 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
-import { useUserStore } from '~/store/user'
 
 export interface IRestaurant {
   id: number
@@ -15,9 +14,10 @@ type UseRestaurantData = IRestaurant[]
 
 export const useRestaurants = <SData>(select: (response: UseRestaurantData) => SData, disabled?: MaybeRef<boolean>) => {
   const publicAxios = usePublicAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
 
-  const isEnabled = computed(() => userStore.isAuthenticated && !unref(disabled))
+
+  const isEnabled = computed(() => userCredentials.value.isAuthenticated && !unref(disabled))
 
   return useQuery({
     queryKey: ['user', 'restaurants'],

@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { Cart } from '~/interfaces/users'
-import { useUserStore } from '~/store/user'
 
 interface GetResponse {
   list: Cart[]
@@ -9,7 +8,8 @@ interface GetResponse {
 
 export const useCarts = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
+
 
   return useQuery({
     queryKey: ['user', 'carts'],
@@ -23,7 +23,7 @@ export const useCarts = <SData>(select: (response: GetResponse) => SData) => {
       return response.data
     },
     select,
-    enabled: userStore.isAuthenticated,
+    enabled: userCredentials.value.isAuthenticated,
   })
 }
 

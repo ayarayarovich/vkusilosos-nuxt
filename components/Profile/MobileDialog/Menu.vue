@@ -68,19 +68,18 @@
 
 <script setup lang="ts">
 import { useProfileDialogStore } from '~/store/profileDialog'
-import { useUserStore } from '~/store/user'
 import { formatPhone } from '~/utils'
 
 const emit = defineEmits(['close', 'change-view'])
 
-const userStore = useUserStore()
+const {resetUserCredentials} = useUserCredentials()
 const profileDialogStore = useProfileDialogStore()
 
 const { data: user } = useUser((v) => v)
 
 const signOut = () => {
   profileDialogStore.close()
-  userStore.signOut()
+  resetUserCredentials()
 }
 
 const draggingArea = ref()

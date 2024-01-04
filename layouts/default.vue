@@ -32,8 +32,8 @@
         </div>
 
         <div class="flex flex-1 items-center justify-end gap-2">
-          <OrderCart v-if="userStore.isAuthenticated" />
-          <BonusCoins v-if="userStore.isAuthenticated" />
+          <OrderCart v-if="userCredentials.isAuthenticated" />
+          <BonusCoins v-if="userCredentials.isAuthenticated" />
         </div>
       </div>
 
@@ -49,8 +49,8 @@
         </div>
 
         <div class="flex items-center justify-end gap-2">
-          <OrderCart v-if="userStore.isAuthenticated" />
-          <BonusCoins v-if="userStore.isAuthenticated" />
+          <OrderCart v-if="userCredentials.isAuthenticated" />
+          <BonusCoins v-if="userCredentials.isAuthenticated" />
           <button
             class="group relative inline-block aspect-square h-8"
             @click="profileDialogStore.open()"
@@ -147,9 +147,9 @@
           </div>
 
           <div class="flex flex-col items-start justify-between gap-2 leading-none">
-            <RouterLink to="/promo">АКЦИИ</RouterLink>
-            <RouterLink to="/delivery">УСЛОВИЯ ДОСТАВКИ</RouterLink>
-            <RouterLink to="/blog">БЛОГ</RouterLink>
+            <NuxtLink to="/promo">АКЦИИ</NuxtLink>
+            <NuxtLink to="/delivery">УСЛОВИЯ ДОСТАВКИ</NuxtLink>
+            <NuxtLink to="/blog">БЛОГ</NuxtLink>
             <LeaveFeedback />
             <WriteUs />
             <button
@@ -178,9 +178,9 @@
 
 <script setup lang="ts">
 import { useProfileDialogStore } from '~/store/profileDialog'
-import { useUserStore } from '~/store/user'
 
 const profileDialogStore = useProfileDialogStore()
 
-const userStore = useUserStore()
+const {userCredentials} = useUserCredentials()
+
 </script>

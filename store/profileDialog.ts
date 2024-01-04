@@ -1,12 +1,11 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useAuthDialogStore } from './authDialog'
-import { useUserStore } from './user'
 
 export type ProfileDialogView = 'orders_history' | 'info' | 'addresses' | 'bonus_system' | 'notifications'
 
 export const useProfileDialogStore = defineStore('profileDialog', () => {
-  const userStore = useUserStore()
+  const {userCredentials} = useUserCredentials()
   const authDialogStore = useAuthDialogStore()
   const currentView = ref<ProfileDialogView>('info')
 
@@ -17,7 +16,7 @@ export const useProfileDialogStore = defineStore('profileDialog', () => {
   const isOpen = ref(false)
 
   const open = (view?: ProfileDialogView) => {
-    if (userStore.isAuthenticated) {
+    if (userCredentials.value.isAuthenticated) {
       isOpen.value = true
       if (view) {
         currentView.value = view
