@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from "vue";
-import { useCurrentReciptionWay } from './addresses'
+import { useCurrentReceptionWay } from './addresses'
 import type { Dish, Tag, DishDetails } from '~/interfaces/dishes'
 
 export const useInvalidateDishes = () => {
@@ -21,25 +21,30 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
   }
 
   const publicAxios = usePublicAxiosInstance()
-  const currentReciptionWay = useCurrentReciptionWay()
+  const {data: currentReceptionWay, isSuccess} = useCurrentReceptionWay()
 
   return useQuery({
-    queryKey: ['dishes', { categoryID }],
+    queryKey: ['dishes', { categoryID, currentReceptionWay }],
     queryFn: async ({ queryKey }) => {
       const _categoryID = (queryKey[1] as any).categoryID
 
+      const params = {
+        offset: 0,
+        limit: 99999999,
+        category: _categoryID,
+        adres_id: currentReceptionWay.value?.type === 'delivery' ? currentReceptionWay.value.id : undefined,
+        rest_id: currentReceptionWay.value?.type === 'restaurant' ? currentReceptionWay.value.id : undefined
+      }
+
+      console.log(params)
+
       const response = await publicAxios.get<Response>('api/dishes', {
-        params: {
-          offset: 0,
-          limit: 99999999,
-          category: _categoryID,
-          adres_id: currentReciptionWay.value?.type === 'delivery' ? currentReciptionWay.value.id : undefined,
-          rest_id: currentReciptionWay.value?.type === 'restaurant' ? currentReciptionWay.value.id : undefined
-        },
+        params
       })
 
       return response.data
     },
+    enabled: isSuccess
   })
 }
 

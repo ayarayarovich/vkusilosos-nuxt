@@ -52,19 +52,19 @@
                         <div
                           class="absolute bottom-0 left-0 top-0 w-1/2 rounded-lg bg-white shadow-main transition-transform"
                           :class="{
-                            'translate-x-0': myReciptionWay == 'delivery',
-                            'translate-x-full': myReciptionWay == 'restaurant',
+                            'translate-x-0': myReceptionWay == 'delivery',
+                            'translate-x-full': myReceptionWay == 'restaurant',
                           }"
                         ></div>
                         <button
                           class="hover isolate h-10 w-1/2 rounded-lg"
-                          @click="myReciptionWay = 'delivery'"
+                          @click="myReceptionWay = 'delivery'"
                         >
                           Доставка
                         </button>
                         <button
                           class="isolate h-10 w-1/2 rounded-lg"
-                          @click="myReciptionWay = 'restaurant'"
+                          @click="myReceptionWay = 'restaurant'"
                         >
                           В ресторане
                         </button>
@@ -77,12 +77,12 @@
                         mode="out-in"
                       >
                         <MyLocationDialogRestaurants
-                          v-if="myReciptionWay === 'restaurant'"
+                          v-if="myReceptionWay === 'restaurant'"
                           @update-coords="coordinates = $event"
                           @close="emit('close')"
                         />
                         <MyLocationDialogDelivery
-                          v-else-if="myReciptionWay === 'delivery'"
+                          v-else-if="myReceptionWay === 'delivery'"
                           @edit="editAddress($event)"
                           @new="currentView = 'new'"
                           @update-coords="coordinates = $event"
@@ -164,16 +164,15 @@ const close = () => {
   }
 }
 
-const locationStore = useLocationStore()
-const { reciptionWay } = storeToRefs(locationStore)
+const {usersReceptionWay} = useUsersReceptionWay()
 
-const myReciptionWay = ref<'delivery' | 'restaurant'>('delivery')
+const myReceptionWay = ref<'delivery' | 'restaurant'>('delivery')
 
 watch(
-  [reciptionWay],
+  [usersReceptionWay],
   () => {
-    if (reciptionWay.value) {
-      myReciptionWay.value = reciptionWay.value
+    if (usersReceptionWay.value) {
+      myReceptionWay.value = usersReceptionWay.value
     }
   },
   {

@@ -14,11 +14,11 @@
       />
     </div>
     <OrderCartDialogSelectedAddress
-      name="reciption_way"
+      name="reception_way"
       class="mb-8 mt-4"
     />
 
-    <template v-if="locationStore.reciptionWay === 'delivery'">
+    <template v-if="locationStore.receptionWay === 'delivery'">
       <p class="mb-4">Когда доставить?</p>
       <OrderCartDialogSelectTime />
     </template>

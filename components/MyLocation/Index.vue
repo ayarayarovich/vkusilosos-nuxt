@@ -8,13 +8,13 @@
       name="fade"
       mode="out-in"
     >
-      <span v-if="currentReciptionWay?.type === 'delivery'">
-        <span>{{ transformAddress(currentReciptionWay.adres) }}</span>
+      <span v-if="currentReceptionWay?.type === 'delivery'">
+        <span>{{ transformAddress(currentReceptionWay.adres) }}</span>
         <span class="mx-2">|</span>
         <span class="text-[#999700]">~ {{ 'Нет данных' }}</span>
       </span>
-      <span v-else-if="currentReciptionWay?.type === 'restaurant'">
-        <span>{{ currentReciptionWay.name }}</span>
+      <span v-else-if="currentReceptionWay?.type === 'restaurant'">
+        <span>{{ currentReceptionWay.name }}</span>
       </span>
       <span v-else>Выберите адрес</span>
     </Transition>
@@ -31,7 +31,7 @@ import { nthIndex } from '~/utils'
 
 const isModalOpen = ref(false)
 
-const currentReciptionWay = useCurrentReciptionWay()
+const {data: currentReceptionWay} = useCurrentReceptionWay()
 
 const transformAddress = (address: string) => {
   return address.slice(nthIndex(address, ',', 1) + 1).trim()

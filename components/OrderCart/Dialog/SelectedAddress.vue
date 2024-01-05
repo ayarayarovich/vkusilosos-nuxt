@@ -1,8 +1,8 @@
 <template>
   <div class="relative">
     <MyLocationDialog
-      :show="showChangeReciptionWayDialog"
-      @close="showChangeReciptionWayDialog = false"
+      :show="showChangeReceptionWayDialog"
+      @close="showChangeReceptionWayDialog = false"
     />
 
     <div
@@ -19,8 +19,8 @@
       :for="inputID"
       class="pointer-events-none absolute left-4 top-3 select-none text-xs text-[#777675] transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-xs"
     >
-      <template v-if="reciptionWay?.type === 'restaurant'"> Ресторан </template>
-      <template v-else-if="reciptionWay?.type === 'delivery'"> Адрес </template>
+      <template v-if="receptionWay?.type === 'restaurant'"> Ресторан </template>
+      <template v-else-if="receptionWay?.type === 'delivery'"> Адрес </template>
       <template v-else> Выберите способ получения </template>
     </label>
 
@@ -28,7 +28,7 @@
       v-if="!locked"
       class="absolute right-4 top-1/2 -translate-y-1/2 rounded-lg p-2 outline-none transition-shadow focus:ring-2 focus:ring-orange-200 focus:ring-offset-2"
       type="button"
-      @click="showChangeReciptionWayDialog = true"
+      @click="showChangeReceptionWayDialog = true"
     >
       <IconEditPen class="aspect-square h-4" />
     </button>
@@ -50,23 +50,23 @@ const { name, locked } = toRefs(props)
 
 const { setValue } = useField(name)
 
-const showChangeReciptionWayDialog = ref(false)
+const showChangeReceptionWayDialog = ref(false)
 
-const reciptionWay = useCurrentReciptionWay()
+const {data: receptionWay} = useCurrentReceptionWay()
 
 const displayValue = computed(() => {
-  if (reciptionWay.value?.type === 'delivery') {
-    return transformAddress(reciptionWay.value.full)
-  } else if (reciptionWay.value?.type === 'restaurant') {
-    return reciptionWay.value.adres
+  if (receptionWay.value?.type === 'delivery') {
+    return transformAddress(receptionWay.value.full)
+  } else if (receptionWay.value?.type === 'restaurant') {
+    return receptionWay.value.adres
   }
 })
 
 watch(
-  [reciptionWay],
+  [receptionWay],
   () => {
-    if (reciptionWay.value) {
-      setValue(reciptionWay.value)
+    if (receptionWay.value) {
+      setValue(receptionWay.value)
     }
   },
   {

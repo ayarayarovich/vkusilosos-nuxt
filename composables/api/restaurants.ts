@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import type {AxiosInstance} from "axios";
 
 export interface IRestaurant {
   id: number
@@ -12,6 +13,17 @@ export interface IRestaurant {
 
 type UseRestaurantData = IRestaurant[]
 
+export const useRestaurantsQueryFn = async (publicAxios: AxiosInstance) => {
+  const response = await publicAxios.get<UseRestaurantData>('api/rests', {
+    params: {
+      offset: 0,
+      limit: 99999999,
+    },
+  })
+
+  return response.data
+}
+
 export const useRestaurants = <SData>(select: (response: UseRestaurantData) => SData, disabled?: MaybeRef<boolean>) => {
   const publicAxios = usePublicAxiosInstance()
   const {userCredentials} = useUserCredentials()
@@ -21,16 +33,7 @@ export const useRestaurants = <SData>(select: (response: UseRestaurantData) => S
 
   return useQuery({
     queryKey: ['user', 'restaurants'],
-    queryFn: async () => {
-      const response = await publicAxios.get<UseRestaurantData>('api/rests', {
-        params: {
-          offset: 0,
-          limit: 99999999,
-        },
-      })
-
-      return response.data
-    },
+    queryFn: () => useRestaurantsQueryFn(publicAxios),
     select,
     enabled: isEnabled,
   })

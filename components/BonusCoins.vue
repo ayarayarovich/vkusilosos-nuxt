@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import { useProfileDialogStore } from '~/store/profileDialog'
 
-const { data, isSuccess } = useUser((v) => v.bonuses)
 const profileDialogStore = useProfileDialogStore()
+const { data, isSuccess, suspense } = useUser((v) => v.bonuses)
+onServerPrefetch(suspense)
 </script>

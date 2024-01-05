@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { SetUser, User } from '~/interfaces/users'
+import type {AxiosInstance} from "axios";
 
 type GetResponse = User
 
@@ -10,7 +11,7 @@ export const useUserCredentials = () => {
     isAuthenticated: boolean
   }>('user_credentials', {
     sameSite: 'strict',
-    secure: false,
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: false,
     watch: true,
     default: () => ({
@@ -31,16 +32,18 @@ export const useUserCredentials = () => {
   return {userCredentials: cookie, resetUserCredentials: reset}
 }
 
+export const useUserQueryFn = async (privateAxios: AxiosInstance) => {
+  const response = await privateAxios.get<GetResponse>('user/me')
+  return response.data
+}
+
 export const useUser = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
   const {userCredentials} = useUserCredentials()
 
   return useQuery({
     queryKey: ['user'],
-    queryFn: async () => {
-      const response = await privateAxios.get<GetResponse>('user/me')
-      return response.data
-    },
+    queryFn: () => useUserQueryFn(privateAxios),
     select,
     enabled: !!userCredentials.value,
   })

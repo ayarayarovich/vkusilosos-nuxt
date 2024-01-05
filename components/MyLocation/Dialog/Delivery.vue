@@ -79,12 +79,12 @@ watchEffect(() => {
   }
 })
 
-const currentReciptionWay = useCurrentReciptionWay()
+const {data: currentReceptionWay} = useCurrentReceptionWay()
 watch(
-  [currentReciptionWay],
+  [currentReceptionWay],
   () => {
-    if (currentReciptionWay.value && currentReciptionWay.value.type === 'delivery') {
-      selectedAddress.value = currentReciptionWay.value
+    if (currentReceptionWay.value && currentReceptionWay.value.type === 'delivery') {
+      selectedAddress.value = currentReceptionWay.value
     }
   },
   {
@@ -92,11 +92,11 @@ watch(
   }
 )
 
-const setCurrentReciptionWay = useSetCurrentReciptionWay()
+const setCurrentReceptionWay = useSetCurrentReceptionWay()
 
 const selectDeliveryAddress = () => {
   if (selectedAddress.value) {
-    setCurrentReciptionWay({
+    setCurrentReceptionWay({
       type: 'delivery',
       ...selectedAddress.value,
     })

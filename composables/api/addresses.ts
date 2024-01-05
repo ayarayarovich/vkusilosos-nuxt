@@ -1,12 +1,31 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-// import { useInvalidateDishes } from './useDishes'
-// import { useInvalidateCategories } from './useCategories'
+import { useInvalidateDishes } from './dishes'
+import { useInvalidateCategories } from './categories'
 import type { Address } from '~/interfaces/main'
 import { useLocationStore } from '~/store/location'
+import type {AxiosInstance} from "axios";
+import {useUserQueryFn} from "~/composables/api/user";
+import {useRestaurantsQueryFn} from "~/composables/api/restaurants";
 
 interface UseAddressesData {
   list: Address[]
   total: number
+}
+
+export const useAddressesQueryFn = async (privateAxios: AxiosInstance) => {
+  const response = await privateAxios.get<any>('user/adres', {
+    params: {
+      offset: 0,
+      limit: 99999999,
+    },
+  })
+
+  response.data.list.forEach((v: any) => {
+    v.user_id = v.user_id || v.UserID
+    delete v.UserID
+  })
+
+  return response.data as UseAddressesData
 }
 
 export const useAddresses = <SData>(select: (response: UseAddressesData) => SData, disabled?: MaybeRef<boolean>) => {
@@ -17,21 +36,7 @@ export const useAddresses = <SData>(select: (response: UseAddressesData) => SDat
 
   return useQuery({
     queryKey: ['user', 'addresses'],
-    queryFn: async () => {
-      const response = await privateAxios.get<any>('user/adres', {
-        params: {
-          offset: 0,
-          limit: 99999999,
-        },
-      })
-
-      response.data.list.forEach((v: any) => {
-        v.user_id = v.user_id || v.UserID
-        delete v.UserID
-      })
-
-      return response.data as UseAddressesData
-    },
+    queryFn: () => useAddressesQueryFn(privateAxios),
     select,
     enabled: isEnabled,
   })
@@ -167,63 +172,99 @@ interface CurrentRestaurant extends IRestaurant {
 interface CurrentDelivery extends Address {
   type: 'delivery'
 }
-export function useCurrentReciptionWay() {
-  const locationStore = useLocationStore()
-  const { data: user } = useUser((v) => v)
-  const { data: addresses } = useAddresses((v) => v.list)
-  const { data: rests } = useRestaurants((v) => v)
+export const useUsersReceptionWay = () => {
+  const cookie = useCookie<'delivery' | 'restaurant' | null>('user_reception_way', {
+    watch: true,
+    default: () => null,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+  })
 
-  return computed(() => {
-    if (locationStore.reciptionWay === 'delivery') {
-      if (user.value?.adres_id) {
-        const addr = addresses.value?.find((v) => v.id === user.value.adres_id)
-        if (addr) {
-          const retAddr: CurrentDelivery = {
-            type: 'delivery',
-            ...addr,
+  const reset = () => {
+    cookie.value = null
+  }
+
+  return {usersReceptionWay: cookie, resetUsersReceptionWay: reset}
+}
+
+export const useCurrentReceptionWay = () => {
+  const {usersReceptionWay} = useUsersReceptionWay()
+  const publicAxios = usePublicAxiosInstance()
+  const privateAxios = usePrivateAxiosInstance()
+
+  return useQuery({
+    queryKey: ['user', 'reception_way', usersReceptionWay],
+    queryFn: async () => {
+      const user = useUserQueryFn(privateAxios)
+      const addresses = useAddressesQueryFn(privateAxios)
+      const restaurants = useRestaurantsQueryFn(publicAxios)
+
+      return Promise.all([user, addresses, restaurants]).then(([u, a, r]) => {
+        if (usersReceptionWay.value === 'delivery') {
+          if (u.adres_id) {
+            const addr = a.list.find((v) => v.id === u.adres_id)
+            if (addr) {
+              const retAddr: CurrentDelivery = {
+                type: 'delivery',
+                ...addr,
+              }
+              return retAddr
+            }
           }
-          return retAddr
-        }
-      }
-    } else if (locationStore.reciptionWay === 'restaurant') {
-      if (user.value?.rest_id) {
-        const rest = rests.value?.find((v) => v.id === user.value.rest_id)
-        if (rest) {
-          const retRest: CurrentRestaurant = {
-            type: 'restaurant',
-            ...rest,
+        } else if (usersReceptionWay.value === 'restaurant') {
+          if (u.rest_id) {
+            const rest = r.find((v) => v.id === u.rest_id)
+            if (rest) {
+              const retRest: CurrentRestaurant = {
+                type: 'restaurant',
+                ...rest,
+              }
+              return retRest
+            }
           }
-          return retRest
         }
-      }
+        return null
+      })
     }
   })
 }
 
-export const useSetCurrentReciptionWay = () => {
-  const locationStore = useLocationStore()
+export const useInvalidateCurrentReceptionWay = () => {
+  const queryClient = useQueryClient()
+  return () => {
+    queryClient.invalidateQueries({
+      queryKey: ['user', 'reception_way']
+    })
+  }
+}
+
+export const useSetCurrentReceptionWay = () => {
+  const {usersReceptionWay} = useUsersReceptionWay()
   const invalidateDishes = useInvalidateDishes()
   const invalidateCategories = useInvalidateCategories()
+  const invalidateReceptionWay = useInvalidateCurrentReceptionWay()
   const { mutateAsync } = useSetUser()
 
-  return (reciptionWay: CurrentRestaurant | CurrentDelivery) => {
-    if (reciptionWay.type === 'delivery') {
+  return (receptionWay: CurrentRestaurant | CurrentDelivery) => {
+    if (receptionWay.type === 'delivery') {
       mutateAsync({
         rest: 0,
-        adres: reciptionWay.id,
+        adres: receptionWay.id,
       }).then(() => {
-        locationStore.reciptionWay = 'delivery'
+        usersReceptionWay.value = 'delivery'
         invalidateCategories()
         invalidateDishes()
+        invalidateReceptionWay()
       })
-    } else if (reciptionWay.type === 'restaurant') {
+    } else if (receptionWay.type === 'restaurant') {
       mutateAsync({
         adres: 0,
-        rest: reciptionWay.id,
+        rest: receptionWay.id,
       }).then(() => {
-        locationStore.reciptionWay = 'restaurant'
+        usersReceptionWay.value = 'restaurant'
         invalidateCategories()
         invalidateDishes()
+        invalidateReceptionWay()
       })
     }
   }
