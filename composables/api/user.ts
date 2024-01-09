@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import type { AxiosInstance } from 'axios'
+import { useUsersReceptionWay } from './addresses'
 import type { SetUser, User } from '~/interfaces/users'
-import type {AxiosInstance} from "axios";
 
 type GetResponse = User
 
@@ -17,19 +18,33 @@ export const useUserCredentials = () => {
     default: () => ({
       accessToken: '',
       refreshToken: '',
-      isAuthenticated: false
-    })
+      isAuthenticated: false,
+    }),
   })
 
   const reset = () => {
     cookie.value = {
       accessToken: '',
       refreshToken: '',
-      isAuthenticated: false
+      isAuthenticated: false,
     }
   }
 
-  return {userCredentials: cookie, resetUserCredentials: reset}
+  return { userCredentials: cookie, resetUserCredentials: reset }
+}
+
+export const useSignOut = () => {
+  const { resetUserCredentials } = useUserCredentials()
+  const { resetUsersReceptionWay } = useUsersReceptionWay()
+  const queryClient = useQueryClient()
+
+  return () => {
+    resetUserCredentials()
+    resetUsersReceptionWay()
+    queryClient.removeQueries({
+      queryKey: ['user']
+    })
+  }
 }
 
 export const useUserQueryFn = async (privateAxios: AxiosInstance) => {
@@ -39,7 +54,7 @@ export const useUserQueryFn = async (privateAxios: AxiosInstance) => {
 
 export const useUser = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
-  const {userCredentials} = useUserCredentials()
+  const { userCredentials } = useUserCredentials()
 
   return useQuery({
     queryKey: ['user'],
@@ -58,17 +73,16 @@ export const useSetUser = () => {
       const response = await privateAxios.post('user/me', data)
       return response.data
     },
-    onSuccess: invalidate
+    onSuccess: invalidate,
   })
 }
-
 
 export const useInvalidateUser = () => {
   const queryClient = useQueryClient()
 
   return () => {
     queryClient.invalidateQueries({
-      queryKey: ['user']
+      queryKey: ['user'],
     })
   }
 }

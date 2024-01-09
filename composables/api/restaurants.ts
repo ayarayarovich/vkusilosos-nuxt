@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
-import type {AxiosInstance} from "axios";
+import type { AxiosInstance } from 'axios'
+import { useUserCredentials } from './user'
 
 export interface IRestaurant {
   id: number
@@ -26,8 +27,7 @@ export const useRestaurantsQueryFn = async (publicAxios: AxiosInstance) => {
 
 export const useRestaurants = <SData>(select: (response: UseRestaurantData) => SData, disabled?: MaybeRef<boolean>) => {
   const publicAxios = usePublicAxiosInstance()
-  const {userCredentials} = useUserCredentials()
-
+  const { userCredentials } = useUserCredentials()
 
   const isEnabled = computed(() => userCredentials.value.isAuthenticated && !unref(disabled))
 

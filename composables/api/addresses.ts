@@ -1,11 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import type { AxiosInstance } from 'axios'
 import { useInvalidateDishes } from './dishes'
 import { useInvalidateCategories } from './categories'
 import type { Address } from '~/interfaces/main'
-import { useLocationStore } from '~/store/location'
-import type {AxiosInstance} from "axios";
-import {useUserQueryFn} from "~/composables/api/user";
-import {useRestaurantsQueryFn} from "~/composables/api/restaurants";
+import { useUserQueryFn, useUserCredentials, useSetUser } from '~/composables/api/user'
+import { useRestaurantsQueryFn } from '~/composables/api/restaurants'
 
 interface UseAddressesData {
   list: Address[]
@@ -30,7 +29,7 @@ export const useAddressesQueryFn = async (privateAxios: AxiosInstance) => {
 
 export const useAddresses = <SData>(select: (response: UseAddressesData) => SData, disabled?: MaybeRef<boolean>) => {
   const privateAxios = usePrivateAxiosInstance()
-  const {userCredentials} = useUserCredentials()
+  const { userCredentials } = useUserCredentials()
 
   const isEnabled = computed(() => userCredentials.value.isAuthenticated && !unref(disabled))
 
@@ -54,8 +53,7 @@ export const useAddressSearch = <SData>(
   enabled: MaybeRef<boolean>
 ) => {
   const privateAxios = usePrivateAxiosInstance()
-  const {userCredentials} = useUserCredentials()
-
+  const { userCredentials } = useUserCredentials()
 
   const isEnabled = computed(() => userCredentials.value.isAuthenticated && unref(enabled))
 
@@ -83,7 +81,7 @@ export const useAddressSearchByCoords = <SData>(
   enabled: MaybeRef<boolean>
 ) => {
   const privateAxios = usePrivateAxiosInstance()
-  const {userCredentials} = useUserCredentials()
+  const { userCredentials } = useUserCredentials()
 
   const isEnabled = computed(() => userCredentials.value.isAuthenticated && unref(enabled))
 
@@ -184,48 +182,65 @@ export const useUsersReceptionWay = () => {
     cookie.value = null
   }
 
-  return {usersReceptionWay: cookie, resetUsersReceptionWay: reset}
+  return { usersReceptionWay: cookie, resetUsersReceptionWay: reset }
 }
 
 export const useCurrentReceptionWay = () => {
-  const {usersReceptionWay} = useUsersReceptionWay()
+  const { userCredentials } = useUserCredentials()
+  const { usersReceptionWay } = useUsersReceptionWay()
   const publicAxios = usePublicAxiosInstance()
   const privateAxios = usePrivateAxiosInstance()
 
-  return useQuery({
-    queryKey: ['user', 'reception_way', usersReceptionWay],
-    queryFn: async () => {
-      const user = useUserQueryFn(privateAxios)
-      const addresses = useAddressesQueryFn(privateAxios)
-      const restaurants = useRestaurantsQueryFn(publicAxios)
+  const authenticated = computed(() => userCredentials.value.isAuthenticated ? 'auth' : 'no-auth')
 
-      return Promise.all([user, addresses, restaurants]).then(([u, a, r]) => {
-        if (usersReceptionWay.value === 'delivery') {
-          if (u.adres_id) {
-            const addr = a.list.find((v) => v.id === u.adres_id)
-            if (addr) {
-              const retAddr: CurrentDelivery = {
-                type: 'delivery',
-                ...addr,
+  return useQuery({
+    queryKey: ['user', 'reception_way', usersReceptionWay, authenticated],
+    queryFn: async () => {
+      if (userCredentials.value.isAuthenticated) {
+        const user = useUserQueryFn(privateAxios)
+        const addresses = useAddressesQueryFn(privateAxios)
+        const restaurants = useRestaurantsQueryFn(publicAxios)
+
+        return await Promise.all([user, addresses, restaurants]).then(([u, a, r]) => {
+          if (usersReceptionWay.value === 'delivery') {
+            if (u.adres_id) {
+              const addr = a.list.find((v) => v.id === u.adres_id)
+              if (addr) {
+                const retAddr: CurrentDelivery = {
+                  type: 'delivery',
+                  ...addr,
+                }
+                return retAddr
               }
-              return retAddr
+            }
+          } else if (usersReceptionWay.value === 'restaurant') {
+            if (u.rest_id) {
+              const rest = r.find((v) => v.id === u.rest_id)
+              if (rest) {
+                const retRest: CurrentRestaurant = {
+                  type: 'restaurant',
+                  ...rest,
+                }
+                return retRest
+              }
             }
           }
-        } else if (usersReceptionWay.value === 'restaurant') {
-          if (u.rest_id) {
-            const rest = r.find((v) => v.id === u.rest_id)
-            if (rest) {
-              const retRest: CurrentRestaurant = {
-                type: 'restaurant',
-                ...rest,
-              }
-              return retRest
-            }
+          else {
+            return null
           }
+        })
+      }
+      else {
+        const restaurants = await useRestaurantsQueryFn(publicAxios)
+
+        const rest = restaurants[0]
+        const retRest: CurrentRestaurant = {
+          type :'restaurant',
+          ...rest
         }
-        return null
-      })
-    }
+        return retRest
+      }
+    },
   })
 }
 
@@ -233,13 +248,13 @@ export const useInvalidateCurrentReceptionWay = () => {
   const queryClient = useQueryClient()
   return () => {
     queryClient.invalidateQueries({
-      queryKey: ['user', 'reception_way']
+      queryKey: ['user', 'reception_way'],
     })
   }
 }
 
 export const useSetCurrentReceptionWay = () => {
-  const {usersReceptionWay} = useUsersReceptionWay()
+  const { usersReceptionWay } = useUsersReceptionWay()
   const invalidateDishes = useInvalidateDishes()
   const invalidateCategories = useInvalidateCategories()
   const invalidateReceptionWay = useInvalidateCurrentReceptionWay()
