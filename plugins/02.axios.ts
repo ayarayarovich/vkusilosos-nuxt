@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
     (config) => {
       if (userCredentials.value.isAuthenticated) {
         // eslint-disable-next-line dot-notation
-        config.headers['Authorization'] = userCredentials.value.accessToken
+        config.headers['Authorization'] = 'Bearer ' + userCredentials.value.accessToken
       } else {
         // resetUserCredentials()
         signOut()
@@ -54,7 +54,7 @@ export default defineNuxtPlugin(() => {
             }
 
             // eslint-disable-next-line dot-notation
-            axiosPrivate.defaults.headers.common['Authorization'] = accessToken
+            axiosPrivate.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken
 
             return axiosPrivate(originalConfig)
           } catch (_error: any) {
