@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const { data: recomendations, suspense: suspenseMain } = useMain((v) => v.recomendation)
 const { data: categories, suspense: suspenseCategories } = useCategories()
 
@@ -11,6 +10,11 @@ onServerPrefetch(async () => {
 
 <template>
   <main id="home">
+    <!-- для модалок с документами типо офферты и ты -->
+    <div class="absolute">
+      <NuxtPage />
+    </div>
+
     <div class="container mx-auto my-4 px-4 lg:my-8">
       <BannerSlider
         autoplay

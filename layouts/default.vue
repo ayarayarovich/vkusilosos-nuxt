@@ -18,7 +18,7 @@
             <IconUserColor class="absolute left-0 top-0 h-full opacity-0 transition-opacity group-hover:opacity-100" />
           </button>
           <ClientOnly>
-            <MyLocation />
+            <MyLocation v-if="userCredentials.isAuthenticated" />
           </ClientOnly>
         </div>
 
@@ -167,9 +167,9 @@
           class="container mx-auto flex flex-col items-center gap-2 text-xs font-medium text-white lg:flex-row lg:gap-8"
         >
           <span class="lg:mr-auto">&copy; 2023 «ВкусиЛосось». Все права защищены.</span>
-          <PublicOffer />
-          <UserAgreement />
-          <PrivacyPolicy />
+          <NuxtLink to="/public_offerta">Публичная оферта</NuxtLink>
+          <NuxtLink to="/user_agreement">Пользовательское соглашение</NuxtLink>
+          <NuxtLink to="/privacy_policy">Политика конфиденциальности</NuxtLink>
         </div>
       </div>
     </footer>
@@ -181,6 +181,5 @@ import { useProfileDialogStore } from '~/store/profileDialog'
 
 const profileDialogStore = useProfileDialogStore()
 
-const {userCredentials} = useUserCredentials()
-
+const { userCredentials } = useUserCredentials()
 </script>
