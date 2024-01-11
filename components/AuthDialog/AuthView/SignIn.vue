@@ -78,7 +78,7 @@
 import * as yup from 'yup'
 import { useAuthDialogStore } from '~/store/authDialog'
 import { useProfileDialogStore } from '~/store/profileDialog'
-import {useUserCredentials} from "~/composables/api/user";
+import { useUserCredentials } from '~/composables/api/user'
 
 const { handleSubmit, setErrors } = useForm({
   validationSchema: yup.object({
@@ -87,7 +87,7 @@ const { handleSubmit, setErrors } = useForm({
   }),
 })
 
-const {userCredentials} = useUserCredentials()
+const { userCredentials } = useUserCredentials()
 const authDialogStore = useAuthDialogStore()
 const profileDialogStore = useProfileDialogStore()
 
@@ -103,11 +103,12 @@ const signIn = handleSubmit((vals) => {
       userCredentials.value = {
         accessToken: res.data.token,
         refreshToken: res.data.refreshToken,
-        isAuthenticated: true
+        isAuthenticated: true,
       }
-
-      authDialogStore.close()
-      profileDialogStore.open()
+      setTimeout(() => {
+        authDialogStore.close()
+        profileDialogStore.open()
+      }, 500)
     })
     .catch(() => {
       setErrors({

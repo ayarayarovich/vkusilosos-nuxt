@@ -1,5 +1,7 @@
 <template>
   <div>
+    <MyLocationDialog :show="showLocationDialog" @close="closeLocationDialog" />
+
     <SimpleButton
       v-if="!props.hideButton && (count === 0 || props.alwaysButton)"
       class="h-full w-full rounded-xl text-[0.7rem] font-medium uppercase text-white lg:text-sm"
@@ -42,8 +44,7 @@
 
 <script setup lang="ts">
 import { useAuthDialogStore } from '~/store/authDialog'
-import {useUserCredentials} from "~/composables/api/user";
-
+import { useUserCredentials } from '~/composables/api/user'
 
 const props = defineProps<{
   dishId: number
@@ -51,15 +52,29 @@ const props = defineProps<{
   alwaysButton?: boolean
 }>()
 
-const {userCredentials} = useUserCredentials()
+const { userCredentials } = useUserCredentials()
+const { data: receptionWay } = useCurrentReceptionWay()
 const authDialogStore = useAuthDialogStore()
 const { mutate } = useAddToBasket()
+
+const showLocationDialog = ref(false)
+const openLocationDialog = () => {
+  showLocationDialog.value = true
+}
+const closeLocationDialog = () => {
+  showLocationDialog.value= false
+}
 
 const count = ref(0)
 
 const addLocalCount = () => {
   if (!userCredentials.value.isAuthenticated) {
     authDialogStore.open()
+    return
+  }
+
+  if (!receptionWay.value) {
+    openLocationDialog()
     return
   }
 
@@ -73,6 +88,11 @@ const addLocalCount = () => {
 const removeLocalCount = () => {
   if (!userCredentials.value.isAuthenticated) {
     authDialogStore.open()
+    return
+  }
+
+  if (!receptionWay.value) {
+    openLocationDialog()
     return
   }
 
@@ -93,6 +113,11 @@ const updatePosition = useDebounceFn((count: number) => {
 const addNewPosition = () => {
   if (!userCredentials.value.isAuthenticated) {
     authDialogStore.open()
+    return
+  }
+
+  if (!receptionWay.value) {
+    openLocationDialog()
     return
   }
 

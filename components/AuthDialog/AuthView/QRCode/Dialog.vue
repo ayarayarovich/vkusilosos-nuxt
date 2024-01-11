@@ -40,11 +40,21 @@
                 class="flex w-full transform flex-col items-start overflow-hidden rounded-2xl bg-white p-4"
               >
                 <div class="flex aspect-square h-56 items-center justify-center">
-                  <img
-                    class="aspect-square h-full"
-                    src="~/assets/sample-qr-code.png"
-                    alt=""
-                  />
+                  <Transition
+                    name="fade"
+                    mode="out-in"
+                  >
+                    <img
+                      v-if="isQRReady"
+                      class="aspect-square h-full"
+                      :src="options.src"
+                      alt=""
+                    />
+                    <LoadingIndicator
+                      v-else
+                      class="h-8 text-black"
+                    />
+                  </Transition>
                 </div>
               </div>
             </HeadlessDialogPanel>
@@ -57,6 +67,9 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
+import { useImage } from '@vueuse/core'
+import { useAuthDialogStore } from '~/store/authDialog';
+import { useProfileDialogStore } from '~/store/profileDialog';
 
 const props = defineProps<{
   show?: boolean
@@ -65,4 +78,40 @@ const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
 const dialogPanelEl = ref<HTMLElement>()
+
+const { data, isSuccess } = useQRCode(show)
+const token = computed(() => data.value?.data || '')
+const { data: checkData } = useCheckQRData(token, isSuccess)
+const { userCredentials } = useUserCredentials()
+const authDialogStore = useAuthDialogStore()
+const profileDialogStore = useProfileDialogStore()
+
+watchEffect(() => {
+  if (checkData.value?.token && checkData.value.refreshToken) {
+    userCredentials.value = {
+      accessToken: checkData.value.token,
+      refreshToken: checkData.value.refreshToken,
+      isAuthenticated: true
+    }
+    authDialogStore.close()
+    profileDialogStore.open()
+  }
+})
+
+const options = computed(() => {
+  if (data.value?.img) {
+    const segments = data.value.img.split('/')
+    const lastSegment = segments.pop() || segments.pop()
+
+    return {
+      src: 'https://api.losos.toolio.space/img/' + lastSegment,
+    }
+  }
+  return {
+    src: '',
+  }
+})
+const { isReady } = useImage(options)
+
+const isQRReady = computed(() => isSuccess.value && isReady.value)
 </script>

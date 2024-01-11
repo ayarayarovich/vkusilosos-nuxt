@@ -41,6 +41,7 @@
 
     <SimpleButton
       class="px-4 py-4 font-medium uppercase"
+      type="button"
       :disabled="!selectedRestaurant"
       @click="selectRestaurant"
     >
@@ -62,7 +63,7 @@ const compareRests = (a?: IRestaurant, b?: IRestaurant) => {
 
 watchEffect(() => {
   if (selectedRestaurant.value) {
-    emit('updateCoords', [selectedRestaurant.value.lat, selectedRestaurant.value.lng])
+    emit('updateCoords', [selectedRestaurant.value.lng, selectedRestaurant.value.lat])
   }
 })
 

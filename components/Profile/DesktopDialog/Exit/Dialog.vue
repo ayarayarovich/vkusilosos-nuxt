@@ -75,12 +75,12 @@ const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
 const profileDialogStore = useProfileDialogStore()
-const {resetUserCredentials} = useUserCredentials()
+const userSignOut = useSignOut()
 
 const signOut = () => {
   emit('close')
   profileDialogStore.close()
-  resetUserCredentials()
+  userSignOut()
 }
 
 const dialogPanelEl = ref<HTMLElement>()

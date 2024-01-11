@@ -52,6 +52,8 @@
       >
         Уведомления
       </button>
+
+      <MyLocation />
     </div>
 
     <div class="mt-16">

@@ -231,14 +231,7 @@ export const useCurrentReceptionWay = () => {
         })
       }
       else {
-        const restaurants = await useRestaurantsQueryFn(publicAxios)
-
-        const rest = restaurants[0]
-        const retRest: CurrentRestaurant = {
-          type :'restaurant',
-          ...rest
-        }
-        return retRest
+        return null
       }
     },
   })

@@ -1,15 +1,15 @@
 <template>
   <form
-    class="flex w-full flex-col items-stretch justify-between p-8"
+    class="flex w-full flex-col items-stretch justify-between p-4 lg:p-8"
     @submit="onSubmit"
   >
     <div class="flex shrink flex-col items-stretch gap-4">
       <button
-        class="mb-4 flex items-center gap-4 text-start text-xl font-medium text-black"
+        class="lg:mb-4 flex items-center gap-4 text-start text-base lg:text-xl font-medium text-black"
         type="button"
         @click="emit('goBack')"
       >
-        <IconArrowRight class="h-6 rotate-180 invert" /> Добавить адрес
+        <IconArrowRight class="h-4 lg:h-6 rotate-180 invert" /> Добавить адрес
       </button>
       <div>
         <InputAutocomplete
@@ -96,7 +96,7 @@ const { handleSubmit } = useForm({
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')
 const coordinates = computed(() => {
   if (adres.value) {
-    return [Number(adres.value.lat), Number(adres.value.lon)]
+    return [Number(adres.value.lon), Number(adres.value.lat)]
   }
   return [55.755864, 37.617698]
 })

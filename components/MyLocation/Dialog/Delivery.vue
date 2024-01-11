@@ -48,6 +48,7 @@
       </button>
       <SimpleButton
         class="flex-1 px-4 py-3 font-medium"
+        type="button"
         :disabled="!selectedAddress"
         @click="selectDeliveryAddress()"
       >
@@ -75,7 +76,7 @@ const selectedAddress = ref<Address>()
 
 watchEffect(() => {
   if (selectedAddress.value) {
-    emit('updateCoords', [selectedAddress.value.latitude, selectedAddress.value.longitude])
+    emit('updateCoords', [selectedAddress.value.longitude, selectedAddress.value.latitude])
   }
 })
 

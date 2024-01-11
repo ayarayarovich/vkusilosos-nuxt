@@ -37,14 +37,23 @@ export const useSignOut = () => {
   const { resetUserCredentials } = useUserCredentials()
   const { resetUsersReceptionWay } = useUsersReceptionWay()
   const queryClient = useQueryClient()
+  const privateAxios = usePrivateAxiosInstance()
 
-  return () => {
-    resetUserCredentials()
-    resetUsersReceptionWay()
-    queryClient.removeQueries({
-      queryKey: ['user']
-    })
-  }
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      const response = await privateAxios.get('auth/logout')
+      return response
+    },
+    onSuccess: () => {
+      resetUserCredentials()
+      resetUsersReceptionWay()
+      queryClient.removeQueries({
+        queryKey: ['user'],
+      })
+    },
+  })
+
+  return mutate
 }
 
 export const useUserQueryFn = async (privateAxios: AxiosInstance) => {

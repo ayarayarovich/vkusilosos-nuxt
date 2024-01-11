@@ -21,6 +21,7 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
   }
 
   const publicAxios = usePublicAxiosInstance()
+  const privateAxios = usePrivateAxiosInstance()
   const {data: currentReceptionWay, isSuccess} = useCurrentReceptionWay()
 
   return useQuery({
@@ -28,15 +29,28 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
     queryFn: async ({ queryKey }) => {
       const _categoryID = (queryKey[1] as any).categoryID
 
+      if (currentReceptionWay.value) {
+        const params = {
+          offset: 0,
+          limit: 99999999,
+          category: _categoryID,
+          adres_id: currentReceptionWay.value.type === 'delivery' ? currentReceptionWay.value.id : undefined,
+          rest_id: currentReceptionWay.value.type === 'restaurant' ? currentReceptionWay.value.id : undefined
+        }
+  
+        const response = await privateAxios.get<Response>('api/dishes', {
+          params
+        })
+  
+        return response.data
+      }
+
+
       const params = {
         offset: 0,
         limit: 99999999,
         category: _categoryID,
-        adres_id: currentReceptionWay.value?.type === 'delivery' ? currentReceptionWay.value.id : undefined,
-        rest_id: currentReceptionWay.value?.type === 'restaurant' ? currentReceptionWay.value.id : undefined
       }
-
-      console.log(params)
 
       const response = await publicAxios.get<Response>('api/dishes', {
         params

@@ -7,7 +7,7 @@
     <HeadlessDialog
       as="div"
       class="relative z-50"
-      @close="emit('close')"
+      @close="close()"
     >
       <HeadlessTransitionChild
         as="template"
@@ -73,6 +73,10 @@ const emit = defineEmits(['close'])
 const dialogPanelEl = ref()
 
 const stage = ref<'cart' | 'payment'>('cart')
+
+const close = () => {
+  emit('close')
+}
 
 useSwipe(dialogPanelEl, {
   onSwipeEnd(_, direction) {

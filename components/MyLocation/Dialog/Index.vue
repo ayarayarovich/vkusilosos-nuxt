@@ -24,7 +24,7 @@
       </HeadlessTransitionChild>
 
       <div class="fixed bottom-0 left-0 top-0 w-screen overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4 text-center">
+        <div class="flex h-full items-center justify-center text-center lg:h-auto lg:min-h-full lg:p-4">
           <HeadlessTransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -34,18 +34,47 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <HeadlessDialogPanel class="w-full max-w-5xl rounded-2xl shadow-xl transition-all">
+            <HeadlessDialogPanel class="h-full w-full max-w-5xl shadow-xl transition-all lg:h-auto">
               <div
                 ref="dialogPanelEl"
-                class="flex w-full transform items-stretch justify-between overflow-hidden rounded-2xl bg-whitegray"
+                class="flex h-full w-full transform flex-col items-stretch overflow-hidden bg-whitegray lg:h-auto lg:flex-row lg:rounded-2xl"
               >
+                <button
+                  class="p-4 lg:hidden flex items-center gap-2 text-lg font-medium"
+                  type="button"
+                  @click="close()"
+                >
+                  <IconArrowRight class="h-6 invert rotate-180"/>
+                  Выберите адрес
+                </button>
+
+                <ClientOnly>
+                  <YandexMap
+                    :coordinates="coordinates"
+                    :zoom="17"
+                    :controls="['zoomControl', 'geolocationControl']"
+                    class="aspect-square h-[12rem] shrink-0 overflow-hidden rounded-xl lg:order-3 lg:h-[36rem]"
+                  >
+                    <YandexMarker
+                      :coordinates="coordinates"
+                      :marker-id="1"
+                      :options="{
+                        iconLayout: 'default#image',
+                        iconImageSize: [34, 40],
+                        iconOffset: [0, 0],
+                        iconImageHref: '/map-marker.png',
+                      }"
+                    />
+                  </YandexMap>
+                </ClientOnly>
+
                 <Transition
                   name="fade"
                   mode="out-in"
                 >
                   <div
                     v-if="currentView === 'default'"
-                    class="flex w-full shrink flex-col items-stretch p-8"
+                    class="flex w-full flex-grow flex-col items-stretch p-4 lg:shrink lg:p-8"
                   >
                     <div class="rounded-xl bg-current bg-gray p-1.5 text-sm">
                       <div class="relative">
@@ -57,12 +86,14 @@
                           }"
                         ></div>
                         <button
+                          type="button"
                           class="hover isolate h-10 w-1/2 rounded-lg"
                           @click="myReceptionWay = 'delivery'"
                         >
                           Доставка
                         </button>
                         <button
+                          type="button"
                           class="isolate h-10 w-1/2 rounded-lg"
                           @click="myReceptionWay = 'restaurant'"
                         >
@@ -78,11 +109,13 @@
                       >
                         <MyLocationDialogRestaurants
                           v-if="myReceptionWay === 'restaurant'"
+                          class="flex-grow lg:shrink"
                           @update-coords="coordinates = $event"
                           @close="emit('close')"
                         />
                         <MyLocationDialogDelivery
-                          v-else-if="myReceptionWay === 'delivery'"
+                        v-else-if="myReceptionWay === 'delivery'"
+                          class="flex-grow lg:shrink"
                           @edit="editAddress($event)"
                           @new="currentView = 'new'"
                           @update-coords="coordinates = $event"
@@ -93,36 +126,18 @@
                   </div>
                   <MyLocationDialogEditDeliveryAddress
                     v-else-if="currentView === 'edit'"
+                    class="flex-grow lg:shrink"
                     :address="editingAddress"
                     @update-coords="coordinates = $event"
                     @go-back="currentView = 'default'"
                   />
                   <MyLocationDialogAddDeliveryAddress
                     v-else-if="currentView === 'new'"
+                    class="flex-grow lg:shrink"
                     @update-coords="coordinates = $event"
                     @go-back="currentView = 'default'"
                   />
                 </Transition>
-
-                <ClientOnly>
-                  <YandexMap
-                    :coordinates="coordinates"
-                    :zoom="17"
-                    :controls="['zoomControl', 'geolocationControl']"
-                    class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
-                  >
-                    <YandexMarker
-                      :coordinates="coordinates"
-                      :marker-id="1"
-                      :options="{
-                        iconLayout: 'default#image',
-                        iconImageSize: [34, 40],
-                        iconOffset: [0, 0],
-                        iconImageHref: '/map-marker.png',
-                      }"
-                    />
-                  </YandexMap>
-                </ClientOnly>
               </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
@@ -133,11 +148,9 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { ref, toRefs } from 'vue'
+import { ref } from 'vue'
 import { YandexMap, YandexMarker } from 'vue-yandex-maps'
 import type { Address } from '~/interfaces/main'
-import { useLocationStore } from '~/store/location'
 
 const props = defineProps<{
   show?: boolean
@@ -164,7 +177,7 @@ const close = () => {
   }
 }
 
-const {usersReceptionWay} = useUsersReceptionWay()
+const { usersReceptionWay } = useUsersReceptionWay()
 
 const myReceptionWay = ref<'delivery' | 'restaurant'>('delivery')
 
