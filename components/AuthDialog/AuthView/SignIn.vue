@@ -60,16 +60,8 @@
     </div>
 
     <div>
-      <button
-        class="mb-4 flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#FC3F1D] px-8 py-3 text-sm font-bold uppercase text-[#FC3F1D]"
-      >
-        <IconYandex class="h-4" /> Войти по яндекс ID
-      </button>
-      <button
-        class="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#6B78EE] px-8 py-3 text-sm font-bold uppercase text-[#6B78EE]"
-      >
-        <IconVKBlue class="h-3" /> Войти через вконтакте
-      </button>
+      <AuthDialogYandex />
+      <AuthDialogVk />
     </div>
   </div>
 </template>

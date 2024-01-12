@@ -1,23 +1,26 @@
 <template>
   <div class="flex h-full w-full flex-col items-stretch justify-between">
-    <div class="flex grow flex-col items-stretch justify-between pb-6">
+    <form
+      class="flex grow flex-col items-stretch justify-between pb-6"
+      @submit.prevent="submit"
+    >
       <div>
         <p class="mb-4">Напишите свой номер телефона, чтобы получить код по СМС для входа</p>
         <InputMasked
-          v-model="phone"
           mask="+{7} (000) 000-00-00"
           class="mb-4"
+          label="Номер телефона"
           name="phone"
-          @update="phone = $event"
         />
       </div>
 
       <SimpleButton
         class="mb-2 w-full px-8 py-5 font-bold uppercase"
-        @click="emit('proceed')"
-        >Получить код</SimpleButton
+        type="submit"
       >
-    </div>
+        Получить код
+      </SimpleButton>
+    </form>
 
     <div class="text-xs">
       <div class="h-px bg-gray"></div>
@@ -35,14 +38,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import * as yup from 'yup'
 
 const emit = defineEmits<{
-  (e: 'set-phone', phone: string): void
-  (e: 'proceed'): void
+  (e: 'next-stage', phone: string): void
 }>()
 
-const phone = ref('')
+interface Vals {
+  phone: string
+}
 
-watch([phone], () => emit('set-phone', phone.value))
+const { handleSubmit } = useForm<Vals>({
+  validationSchema: yup.object({
+    phone: yup.string().required().length(11, 'Номер телефона').label('Номер телефона'),
+  }),
+})
+
+const { mutate } = useSendOtp({
+  onCheckCode: (vals) => {
+    emit('next-stage', vals.phone)
+  },
+})
+
+const submit = handleSubmit((vals) => {
+  mutate(vals)
+})
 </script>

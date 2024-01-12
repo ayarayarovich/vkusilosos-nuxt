@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     'nuxt-lodash',
     '@nuxtjs/google-fonts',
+    'radix-vue/nuxt',
     '@nuxtseo/module',
   ],
   imports: {

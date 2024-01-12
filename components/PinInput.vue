@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <PinInputRoot
+      :id="inputID"
+      v-model="value"
+      otp
+      class="flex items-stretch gap-2 lg:gap-4"
+      @complete="handleComplete"
+    >
+      <PinInputInput
+        v-for="(id, index) in length"
+        :key="id"
+        :index="index"
+        class="w-full flex-1 shrink rounded-xl border-2 border-transparent p-4 text-center text-sm shadow-main outline-none transition-colors focus:border-orange-200"
+        :class="{
+          'bg-gray': index !== currentIndex,
+        }"
+      />
+    </PinInputRoot>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { v4 as uuidv4 } from 'uuid'
+
+const props = defineProps<{
+  name: string
+  length: number
+}>()
+
+const inputID = uuidv4()
+
+const { name, length } = toRefs(props)
+
+const value = ref<string[]>([])
+
+const { setValue } = useField<string>(name)
+
+const handleComplete = (e: string[]) => setValue(e.join(''))
+</script>

@@ -56,10 +56,12 @@ const { el, unmasked } = useIMask({
 })
 
 watch([unmasked], () => {
-  setValue(unmasked.value || undefined)
+  resetField({
+    value: unmasked.value || undefined
+  })
 })
 
-const { setValue, errorMessage, value } = useField<string | undefined>(name)
+const { errorMessage, value, resetField } = useField<string | undefined>(name)
 
 watch([value], () => {
   unmasked.value = value.value || ''

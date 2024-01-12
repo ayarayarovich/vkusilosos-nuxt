@@ -7,6 +7,23 @@
       </p>
     </div>
 
-    <SimpleButton class="mb-2 w-full px-8 py-5 font-bold uppercase"> Отправить повторно </SimpleButton>
+    <SimpleButton
+      class="mb-2 w-full px-8 py-5 font-bold uppercase"
+      @click="send"
+    >
+      Отправить повторно
+    </SimpleButton>
   </div>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  email: string
+}>()
+
+const { mutateAsync } = useSendRecovery()
+
+const send = () => {
+  mutateAsync({ email: props.email })
+}
+</script>

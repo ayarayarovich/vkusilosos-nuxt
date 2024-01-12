@@ -12,9 +12,9 @@
       >
         <AuthDialogPasswordRecoveryViewSendLink
           v-if="stage === 'send-link'"
-          @next-stage="stage = 'resend-link'"
+          @next-stage="nextStage"
         />
-        <AuthDialogPasswordRecoveryViewResendLink v-else-if="stage === 'resend-link'" />
+        <AuthDialogPasswordRecoveryViewResendLink v-else-if="stage === 'resend-link'" :email="email" />
       </Transition>
     </div>
     <div class="mx-4">
@@ -35,6 +35,13 @@
 import { ref } from 'vue'
 
 const { changeView } = inject<any>('view')
+
+const email = ref<string>()
+
+const nextStage = (_email: string) => {
+  email.value = _email
+  stage.value = 'resend-link'
+}
 
 const goBack = () => {
   stage.value = 'send-link'

@@ -6,10 +6,12 @@
     >
       <AuthDialogAuthViewSignUpEnterPhone
         v-if="currentStage === 'enter-phone'"
-        @proceed="currentStage = 'confirm-code'"
-        @set-phone="phone = $event"
+        @next-stage="nextStage"
       />
-      <AuthDialogAuthViewSignUpEnterCode v-else-if="currentStage === 'confirm-code'" />
+      <AuthDialogAuthViewSignUpEnterCode
+        v-else-if="currentStage === 'confirm-code'"
+        :phone="phone"
+      />
     </Transition>
   </div>
 </template>
@@ -18,6 +20,10 @@
 import { ref } from 'vue'
 
 const currentStage = ref<'enter-phone' | 'confirm-code'>('enter-phone')
-
 const phone = ref('')
+
+const nextStage = (_phone: string) => {
+  phone.value = _phone
+  currentStage.value = 'confirm-code'
+}
 </script>

@@ -86,6 +86,38 @@ export const useSetUser = () => {
   })
 }
 
+export const useSendRecovery = () => {
+  const publicAxios = usePublicAxiosInstance()
+
+  return useMutation({
+    mutationFn: async (vals: { email: string }) => {
+      const response = await publicAxios.post('auth/forgot', {
+        email: vals.email,
+      })
+      return response.data
+    },
+  })
+}
+
+interface UseSendOtpVals {
+  phone: string
+}
+export const useSendOtp = (config: { onCheckCode?: (v: UseSendOtpVals) => void }) => {
+  const privateAxios = usePrivateAxiosInstance()
+  return useMutation({
+    mutationFn: async (vals: UseSendOtpVals) => {
+      const response = await privateAxios.post<{ action: string }>('auth/registr', vals)
+      return response.data
+    },
+
+    onSuccess(data, vals) {
+      if (data.action === 'check code') {
+        if (config.onCheckCode) config.onCheckCode(vals)
+      }
+    },
+  })
+}
+
 export const useInvalidateUser = () => {
   const queryClient = useQueryClient()
 
