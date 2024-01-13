@@ -27,7 +27,7 @@
             class="flex items-center justify-between border-y border-black border-opacity-10 py-4"
           >
             <HeadlessSwitchLabel>Пуши</HeadlessSwitchLabel>
-            <InputSwitch name="push" />
+            <InputSwitch name="status_pushes" />
           </HeadlessSwitchGroup>
         </div>
 
@@ -39,21 +39,21 @@
             class="flex items-center justify-between border-y border-black border-opacity-10 py-4"
           >
             <HeadlessSwitchLabel>Пуши</HeadlessSwitchLabel>
-            <InputSwitch name="promo_push" />
+            <InputSwitch name="get_pushes" />
           </HeadlessSwitchGroup>
           <HeadlessSwitchGroup
             as="div"
             class="flex items-center justify-between border-b border-black border-opacity-10 py-4"
           >
             <HeadlessSwitchLabel>Письмо на почту</HeadlessSwitchLabel>
-            <InputSwitch name="promo_email" />
+            <InputSwitch name="email_pushes" />
           </HeadlessSwitchGroup>
           <HeadlessSwitchGroup
             as="div"
             class="flex items-center justify-between border-b border-black border-opacity-10 py-4"
           >
             <HeadlessSwitchLabel>Смс</HeadlessSwitchLabel>
-            <InputSwitch name="promo_sms" />
+            <InputSwitch name="sms_pushes" />
           </HeadlessSwitchGroup>
         </div>
       </form>
@@ -62,11 +62,32 @@
 </template>
 
 <script setup lang="ts">
+import * as yup from 'yup'
 const emit = defineEmits(['go-back'])
 
-const { handleSubmit } = useForm({})
+const { data: usersSettings } = useUser((r) => ({
+  email_pushes: r.email_pushes,
+  get_pushes: r.get_pushes,
+  sms_pushes: r.sms_pushes,
+  status_pushes: r.status_pushes,
+}))
 
-const onSubmit = handleSubmit((vals) => {
-  console.log(vals)
+const { mutate: setUser } = useSetUser()
+
+const { values } = useForm({
+  validationSchema: yup.object({
+    email_pushes: yup.boolean().label('Письмо на почту'),
+    get_pushes: yup.boolean().label('Пуши об акциях'),
+    sms_pushes: yup.boolean().label('СМС'),
+    status_pushes: yup.boolean().label('Пуши о статусе заказа'),
+  }),
+  initialValues: usersSettings
+})
+
+
+onBeforeUnmount(() => {
+  setUser({
+    ...values,
+  })
 })
 </script>

@@ -29,8 +29,7 @@
             name="name"
             label="Имя"
           />
-          <InputText
-            type="text"
+          <InputDatepicker
             name="birthday"
             label="Дата рождаения"
           />
@@ -42,7 +41,7 @@
 
         <div class="mb-8">
           <h3 class="mb-5 block text-xl font-medium">Изменить пароль</h3>
-          <div class="flex gap-4">
+          <div class="flex flex-col lg:flex-row gap-4">
             <InputPassword
               class="flex-1"
               name="password"
@@ -78,25 +77,38 @@
 
 <script setup lang="ts">
 import * as yup from 'yup'
+import { DateTime } from 'luxon'
 import { formatPhone } from '~/utils'
 
 const emit = defineEmits(['go-back'])
 
 const { data: user } = useUser((v) => {
+  const birthday = v.birthday.split(' ')[0] // 2005-09-04 04:00:00 +0400 MSD
   return {
     name: v.name,
     phone: formatPhone(v.phone),
     email: v.email,
-    birthday: v.birthday,
+    birthday: DateTime.fromFormat(birthday, "yyyy-mm-dd").toJSDate(),
   }
 })
 
-const { handleSubmit } = useForm({
+const {mutate: setUser} = useSetUser()
+
+const { values } = useForm({
   validationSchema: yup.object({
     name: yup.string().label('Имя'),
     email: yup.string().label('Электронная почта'),
     phone: yup.string().label('Телефон'),
+    birthday: yup.date().label('Дата')
   }),
   initialValues: user,
+})
+
+onUnmounted(() => {
+  setUser({
+    name: values.name,
+    email: values.email,
+    birthday: DateTime.fromJSDate(values.birthday).toFormat('yyyy/mm/dd'),
+  })
 })
 </script>
