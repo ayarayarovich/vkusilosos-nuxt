@@ -127,8 +127,10 @@ onUnmounted(() => {
     updates.birthday = DateTime.fromJSDate(values.birthday).toFormat('yyyy/mm/dd')
   }
 
-  updates.last_password = values.last_password
-  updates.new_password = values.new_password
+  if (values.last_password || values.new_password) {
+    updates.last_password = values.last_password
+    updates.new_password = values.new_password
+  }
 
   if (Object.keys(updates).length > 0) {
     setUser(updates)
