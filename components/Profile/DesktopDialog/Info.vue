@@ -44,13 +44,13 @@
           <div class="flex flex-col gap-4 lg:flex-row">
             <InputPassword
               class="flex-1"
-              name="password"
-              label="Пароль"
+              name="last_password"
+              label="Старый пароль"
             />
             <InputPassword
               class="flex-1"
-              name="passwordRepeat"
-              label="Повторите пароль"
+              name="new_password"
+              label="Новый пароль"
             />
           </div>
         </div>
@@ -101,8 +101,8 @@ const { values } = useForm<any>({
     email: yup.string().label('Электронная почта'),
     phone: yup.string().label('Телефон'),
     birthday: yup.date().label('Дата'),
-    password: yup.string().label('Пароль'),
-    passwordRepeat: yup.string().oneOf([yup.ref('password')], 'Пароли не совпадают'),
+    last_password: yup.string().label('Старый пароль'),
+    new_password: yup.string().label('Новый пароль'),
   }),
   initialValues: user,
 })
@@ -127,10 +127,8 @@ onUnmounted(() => {
     updates.birthday = DateTime.fromJSDate(values.birthday).toFormat('yyyy/mm/dd')
   }
 
-  if (values.password && values.password === values.passwordRepeat) {
-    updates.password = values.password
-    updates.passwordRepeat = values.passwordRepeat
-  }
+  updates.last_password = values.last_password
+  updates.new_password = values.new_password
 
   if (Object.keys(updates).length > 0) {
     setUser(updates)

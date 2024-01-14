@@ -45,6 +45,8 @@ useForm({
 
 const code = useFieldValue<string | undefined>('code')
 
+const fbToken = useFCMToken()
+
 const publicAxios = usePublicAxiosInstance()
 const { mutateAsync } = useMutation({
   mutationFn: async (vals: { phone: string; code: string }) => {
@@ -54,6 +56,7 @@ const { mutateAsync } = useMutation({
     }>('auth/verify', {
       login: vals.phone,
       code: vals.code,
+      fb_token: fbToken.value
     })
     return response.data
   },

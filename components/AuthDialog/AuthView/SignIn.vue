@@ -87,10 +87,15 @@ const publicAxios = usePublicAxiosInstance()
 
 const isLoading = ref(false)
 
+const fbToken = useFCMToken()
+
 const signIn = handleSubmit((vals) => {
   isLoading.value = true
   publicAxios
-    .post('auth/login', vals)
+    .post('auth/login', {
+      ...vals,
+      fb_token: fbToken.value
+    })
     .then((res) => {
       userCredentials.value = {
         accessToken: res.data.token,

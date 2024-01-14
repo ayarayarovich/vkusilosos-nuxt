@@ -127,3 +127,7 @@ export const useInvalidateUser = () => {
     })
   }
 }
+
+export const useFCMToken = () => {
+  return useState<string | undefined>('fbToken')
+}

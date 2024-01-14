@@ -12,12 +12,24 @@ export default defineNuxtConfig({
     'nuxt-lodash',
     '@nuxtjs/google-fonts',
     'radix-vue/nuxt',
+    'nuxt-vuefire',
     '@nuxtseo/module',
   ],
   imports: {
     dirs: [
       'composables/**'
     ]
+  },
+  vuefire: {
+    config: {
+      apiKey: "AIzaSyCzKrxX3WMvl4voOfbeCLdx4W6v4KK2pEs",
+      authDomain: "vkusilosos-c3bbf.firebaseapp.com",
+      projectId: "vkusilosos-c3bbf",
+      storageBucket: "vkusilosos-c3bbf.appspot.com",
+      messagingSenderId: "799735561746",
+      appId: "1:799735561746:web:8e3b229c6d16b7c5dba2cb",
+      measurementId: "G-NFEGSK0DMV"
+    },
   },
   build: {
     transpile: ['vue-toastification'],
