@@ -41,7 +41,7 @@
 
         <div class="mb-8">
           <h3 class="mb-5 block text-xl font-medium">Изменить пароль</h3>
-          <div class="flex flex-col lg:flex-row gap-4">
+          <div class="flex flex-col gap-4 lg:flex-row">
             <InputPassword
               class="flex-1"
               name="password"
@@ -78,6 +78,7 @@
 <script setup lang="ts">
 import * as yup from 'yup'
 import { DateTime } from 'luxon'
+import deepEqual from 'deep-equal'
 import { formatPhone } from '~/utils'
 
 const emit = defineEmits(['go-back'])
@@ -88,27 +89,51 @@ const { data: user } = useUser((v) => {
     name: v.name,
     phone: formatPhone(v.phone),
     email: v.email,
-    birthday: DateTime.fromFormat(birthday, "yyyy-mm-dd").toJSDate(),
+    birthday: DateTime.fromFormat(birthday, 'yyyy-mm-dd').toJSDate(),
   }
 })
 
-const {mutate: setUser} = useSetUser()
+const { mutate: setUser } = useSetUser()
 
-const { values } = useForm({
+const { values } = useForm<any>({
   validationSchema: yup.object({
     name: yup.string().label('Имя'),
     email: yup.string().label('Электронная почта'),
     phone: yup.string().label('Телефон'),
-    birthday: yup.date().label('Дата')
+    birthday: yup.date().label('Дата'),
+    password: yup.string().label('Пароль'),
+    passwordRepeat: yup.string().oneOf([yup.ref('password')], 'Пароли не совпадают'),
   }),
   initialValues: user,
 })
 
 onUnmounted(() => {
-  setUser({
+  const before = {
+    name: user.value?.name,
+    email: user.value?.email,
+    birthday: user.value?.birthday,
+  }
+  const after = {
     name: values.name,
     email: values.email,
-    birthday: DateTime.fromJSDate(values.birthday).toFormat('yyyy/mm/dd'),
-  })
+    birthday: values.birthday,
+  }
+
+  const updates: { [key: string]: any } = {}
+
+  if (!deepEqual(before, after)) {
+    updates.name = values.name
+    updates.email = values.email
+    updates.birthday = DateTime.fromJSDate(values.birthday).toFormat('yyyy/mm/dd')
+  }
+
+  if (values.password && values.password === values.passwordRepeat) {
+    updates.password = values.password
+    updates.passwordRepeat = values.passwordRepeat
+  }
+
+  if (Object.keys(updates).length > 0) {
+    setUser(updates)
+  }
 })
 </script>

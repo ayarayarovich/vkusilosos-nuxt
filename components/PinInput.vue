@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <PinInputRoot
-      :id="inputID"
-      v-model="value"
-      otp
-      class="flex items-stretch gap-2 lg:gap-4"
-      @complete="handleComplete"
-    >
-      <PinInputInput
-        v-for="(id, index) in length"
-        :key="id"
-        :index="index"
-        class="w-full flex-1 shrink rounded-xl border-2 border-transparent p-4 text-center text-sm shadow-main outline-none transition-colors focus:border-orange-200"
-        :class="{
-          'bg-gray': index !== currentIndex,
-        }"
-      />
-    </PinInputRoot>
-  </div>
+  <PinInputRoot
+    :id="inputID"
+    v-model="value"
+    otp
+    class="flex items-stretch gap-2 lg:gap-4"
+    @complete="handleComplete"
+  >
+    <PinInputInput
+      v-for="(id, index) in length"
+      :key="id"
+      :index="index"
+      class="w-full flex-1 shrink rounded-xl border-2 border-transparent p-4 text-center text-sm shadow-main outline-none transition-colors focus:border-orange-200"
+      :class="{
+        'bg-gray': index !== currentIndex,
+      }"
+    />
+  </PinInputRoot>
 </template>
 
 <script setup lang="ts">

@@ -13,7 +13,6 @@
         class="w-full select-none bg-white px-4 pb-3 pt-7 text-start text-base transition-colors"
         :class="{
           '!border-red': errorMessage,
-          '!pr-14': locked,
         }"
       >
         <span>
@@ -24,7 +23,6 @@
         </span>
       </p>
       <label
-        :for="inputID"
         class="pointer-events-none absolute left-4 top-3 select-none text-xs text-[#777675] transition-all"
         :class="{
           'text-red': errorMessage,
