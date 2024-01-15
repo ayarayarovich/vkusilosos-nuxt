@@ -48,25 +48,12 @@
                   <IconArrowRight class="h-6 rotate-180 invert md:hidden" /> Добавить адрес
                 </button>
 
-                <ClientOnly>
-                  <YandexMap
+                <div class="aspect-[15/8]">
+                  <MyYandexMap
                     :coordinates="coordinates"
-                    :zoom="17"
-                    :controls="['zoomControl', 'geolocationControl']"
-                    class="aspect-[15/8] overflow-hidden"
-                  >
-                    <YandexMarker
-                      :coordinates="coordinates"
-                      :marker-id="1"
-                      :options="{
-                        iconLayout: 'default#image',
-                        iconImageSize: [34, 40],
-                        iconOffset: [0, 0],
-                        iconImageHref: '/map-marker.png',
-                      }"
-                    />
-                  </YandexMap>
-                </ClientOnly>
+                    @update-coords-drag="updateCoords"
+                  />
+                </div>
 
                 <form
                   class="flex w-full grow flex-col items-stretch justify-between p-4"
@@ -140,8 +127,8 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
-import { YandexMap, YandexMarker } from 'vue-yandex-maps'
 import * as yup from 'yup'
+import type { MyCoords } from '~/interfaces/common'
 
 const props = defineProps<{
   show?: boolean
@@ -149,7 +136,7 @@ const props = defineProps<{
 const { show } = toRefs(props)
 const emit = defineEmits(['close'])
 
-const { handleSubmit } = useForm({
+const { handleSubmit, setFieldValue } = useForm({
   validationSchema: yup.object({
     adres: yup
       .object({
@@ -173,7 +160,7 @@ const coordinates = computed(() => {
   if (adres.value) {
     return [Number(adres.value.lat), Number(adres.value.lon)]
   }
-  return [55.755864, 37.617698]
+  return [37.617698, 55.755864]
 })
 
 const query = ref('')
@@ -183,6 +170,20 @@ const { data, isLoading: isLoadingAddressSearch } = useAddressSearch(throttledQu
 const { mutateAsync, isPending: isPendingAddAddress } = useAddAddress()
 
 const dialogPanelEl = ref<HTMLElement>()
+
+const axiosPrivate = usePrivateAxiosInstance()
+const updateCoords = (c: MyCoords) => {
+  axiosPrivate
+    .get('user/adres/search/geo', {
+      params: {
+        latitude: c.Lat,
+        longitude: c.Lng,
+      },
+    })
+    .then((res) => {
+      setFieldValue('adres', res.data)
+    })
+}
 
 const onSubmit = handleSubmit((vals: any) => {
   let fullName = vals.adres.display_name

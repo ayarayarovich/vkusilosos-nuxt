@@ -5,11 +5,11 @@
   >
     <div class="flex shrink flex-col items-stretch gap-4">
       <button
-        class="lg:mb-4 flex items-center gap-4 text-start text-base lg:text-xl font-medium text-black"
+        class="flex items-center gap-4 text-start text-base font-medium text-black lg:mb-4 lg:text-xl"
         type="button"
         @click="emit('goBack')"
       >
-        <IconArrowRight class="h-4 lg:h-6 rotate-180 invert" /> Добавить адрес
+        <IconArrowRight class="h-4 rotate-180 invert lg:h-6" /> Добавить адрес
       </button>
       <div>
         <InputAutocomplete
@@ -98,7 +98,7 @@ const coordinates = computed(() => {
   if (adres.value) {
     return [Number(adres.value.lon), Number(adres.value.lat)]
   }
-  return [55.755864, 37.617698]
+  return [37.617698, 55.755864]
 })
 
 watchEffect(() => emit('updateCoords', coordinates.value))

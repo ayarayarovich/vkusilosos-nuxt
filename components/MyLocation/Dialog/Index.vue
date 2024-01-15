@@ -40,33 +40,17 @@
                 class="flex h-full w-full transform flex-col items-stretch overflow-hidden bg-whitegray lg:h-auto lg:flex-row lg:rounded-2xl"
               >
                 <button
-                  class="p-4 lg:hidden flex items-center gap-2 text-lg font-medium"
+                  class="flex items-center gap-2 p-4 text-lg font-medium lg:hidden"
                   type="button"
                   @click="close()"
                 >
-                  <IconArrowRight class="h-6 invert rotate-180"/>
+                  <IconArrowRight class="h-6 rotate-180 invert" />
                   Выберите адрес
                 </button>
 
-                <ClientOnly>
-                  <YandexMap
-                    :coordinates="coordinates"
-                    :zoom="17"
-                    :controls="['zoomControl', 'geolocationControl']"
-                    class="aspect-square h-[12rem] shrink-0 overflow-hidden rounded-xl lg:order-3 lg:h-[36rem]"
-                  >
-                    <YandexMarker
-                      :coordinates="coordinates"
-                      :marker-id="1"
-                      :options="{
-                        iconLayout: 'default#image',
-                        iconImageSize: [34, 40],
-                        iconOffset: [0, 0],
-                        iconImageHref: '/map-marker.png',
-                      }"
-                    />
-                  </YandexMap>
-                </ClientOnly>
+                <div class="aspect-square h-[12rem] shrink-0 overflow-hidden rounded-xl lg:order-3 lg:h-[36rem]">
+                  <MyYandexMap :coordinates="coordinates" />
+                </div>
 
                 <Transition
                   name="fade"
@@ -114,7 +98,7 @@
                           @close="emit('close')"
                         />
                         <MyLocationDialogDelivery
-                        v-else-if="myReceptionWay === 'delivery'"
+                          v-else-if="myReceptionWay === 'delivery'"
                           class="flex-grow lg:shrink"
                           @edit="editAddress($event)"
                           @new="currentView = 'new'"
@@ -149,7 +133,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { YandexMap, YandexMarker } from 'vue-yandex-maps'
+import type { LngLat } from '@yandex/ymaps3-types'
 import type { Address } from '~/interfaces/main'
 
 const props = defineProps<{
@@ -166,7 +150,7 @@ const editAddress = (address: Address) => {
   currentView.value = 'edit'
 }
 
-const coordinates = ref([55.755864, 37.617698])
+const coordinates = ref<LngLat>([37.617698, 55.755864])
 
 const close = () => {
   emit('close')

@@ -39,89 +39,75 @@
                 ref="dialogPanelEl"
                 class="flex w-full transform items-stretch justify-between overflow-hidden rounded-2xl bg-whitegray"
               >
-                <ClientOnly>
-                  <form
-                    class="flex w-full flex-col items-stretch justify-between p-8"
-                    @submit="onSubmit"
-                  >
-                    <div class="flex shrink flex-col items-stretch gap-4">
-                      <h1 class="mb-4 text-start text-xl font-medium text-black">Добавить адрес</h1>
-                      <div>
-                        <InputAutocomplete
-                          v-model:query="query"
-                          name="adres"
-                          class="z-20"
-                          label="Город, улица и дом"
-                          :options="data || []"
-                          :is-loading="isLoadingAddressSearch"
-                          :display-value="(option: any) => option.display_name"
-                        />
-                      </div>
-
-                      <div class="flex gap-4">
-                        <InputText
-                          class="flex-1"
-                          name="podezd"
-                          label="Подьезд"
-                        />
-                        <InputText
-                          class="flex-1"
-                          name="code"
-                          label="Код двери"
-                        />
-                      </div>
-
-                      <div class="flex gap-4">
-                        <InputNumber
-                          class="flex-1"
-                          name="floor"
-                          label="Этаж"
-                        />
-                        <InputText
-                          class="flex-1"
-                          name="house"
-                          label="Номер квартиры"
-                        />
-                      </div>
-
-                      <InputTextarea
-                        name="comment"
-                        label="Комментарий"
-                        :rows="3"
-                        disable-resize
+                <form
+                  class="flex w-full flex-col items-stretch justify-between p-8"
+                  @submit="onSubmit"
+                >
+                  <div class="flex shrink flex-col items-stretch gap-4">
+                    <h1 class="mb-4 text-start text-xl font-medium text-black">Добавить адрес</h1>
+                    <div>
+                      <InputAutocomplete
+                        v-model:query="query"
+                        name="adres"
+                        class="z-20"
+                        label="Город, улица и дом"
+                        :options="data || []"
+                        :is-loading="isLoadingAddressSearch"
+                        :display-value="(option: any) => option.display_name"
                       />
                     </div>
 
-                    <div>
-                      <SimpleButton
-                        class="w-full px-4 py-4 text-sm font-medium uppercase"
-                        type="submit"
-                        :disabled="isPendingAddAddress"
-                      >
-                        Сохранить
-                      </SimpleButton>
+                    <div class="flex gap-4">
+                      <InputText
+                        class="flex-1"
+                        name="podezd"
+                        label="Подьезд"
+                      />
+                      <InputText
+                        class="flex-1"
+                        name="code"
+                        label="Код двери"
+                      />
                     </div>
-                  </form>
 
-                  <YandexMap
-                    :coordinates="coordinates"
-                    :zoom="17"
-                    :controls="['zoomControl', 'geolocationControl']"
-                    class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
-                    @click="updateCoords"
-                  >
-                    <YandexMarker
-                      :coordinates="coordinates"
-                      :marker-id="1"
-                      :options="{
-                        iconLayout: 'default#image',
-                        iconImageSize: [34, 40],
-                        iconOffset: [0, 0],
-                        iconImageHref: '/map-marker.png',
-                      }"
+                    <div class="flex gap-4">
+                      <InputNumber
+                        class="flex-1"
+                        name="floor"
+                        label="Этаж"
+                      />
+                      <InputText
+                        class="flex-1"
+                        name="house"
+                        label="Номер квартиры"
+                      />
+                    </div>
+
+                    <InputTextarea
+                      name="comment"
+                      label="Комментарий"
+                      :rows="3"
+                      disable-resize
                     />
-                  </YandexMap>
-                </ClientOnly>
+                  </div>
+
+                  <div>
+                    <SimpleButton
+                      class="w-full px-4 py-4 text-sm font-medium uppercase"
+                      type="submit"
+                      :disabled="isPendingAddAddress"
+                    >
+                      Сохранить
+                    </SimpleButton>
+                  </div>
+                </form>
+
+                <div class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl">
+                  <MyYandexMap
+                    :coordinates="coordinates"
+                    @update-coords-drag="updateCoords"
+                  />
+                </div>
               </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
@@ -133,8 +119,8 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
-import { YandexMap, YandexMarker } from 'vue-yandex-maps'
 import * as yup from 'yup'
+import type { MyCoords } from '~/interfaces/common'
 
 const props = defineProps<{
   show?: boolean
@@ -164,20 +150,19 @@ const { handleSubmit, setFieldValue } = useForm({
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')
 const coordinates = computed(() => {
   if (adres.value) {
-    return [Number(adres.value.lat), Number(adres.value.lon)]
+    return [Number(adres.value.lon), Number(adres.value.lat)]
   }
-  return [55.755864, 37.617698]
+  return [37.617698, 55.755864]
 })
 
 const axiosPrivate = usePrivateAxiosInstance()
 
-const updateCoords = (a: any) => {
-  const coords = a.get('coords')
+const updateCoords = (c: MyCoords) => {
   axiosPrivate
     .get('user/adres/search/geo', {
       params: {
-        latitude: coords[0],
-        longitude: coords[1],
+        latitude: c.Lat,
+        longitude: c.Lng,
       },
     })
     .then((res) => {
