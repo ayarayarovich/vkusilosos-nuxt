@@ -110,23 +110,10 @@
                     </div>
                   </form>
 
-                  <YandexMap
-                    :coordinates="coordinates"
-                    :zoom="17"
-                    :controls="['zoomControl', 'geolocationControl']"
-                    class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl"
-                  >
-                    <YandexMarker
-                      :coordinates="coordinates"
-                      :marker-id="1"
-                      :options="{
-                        iconLayout: 'default#image',
-                        iconImageSize: [34, 40],
-                        iconOffset: [0, 0],
-                        iconImageHref: '/map-marker.png',
-                      }"
-                    />
-                  </YandexMap>
+                  <div class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl">
+                    
+                    <MyYandexMap :coordinates="coordinates" />
+                  </div>
                 </ClientOnly>
               </div>
             </HeadlessDialogPanel>
@@ -140,7 +127,6 @@
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
 import * as yup from 'yup'
-import { YandexMap, YandexMarker } from 'vue-yandex-maps'
 import type { Address } from '~/interfaces/main'
 
 const props = defineProps<{
@@ -187,9 +173,9 @@ const { handleSubmit } = useForm({
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')
 const coordinates = computed(() => {
   if (adres.value) {
-    return [Number(adres.value.lat), Number(adres.value.lon)]
+    return [Number(adres.value.lon), Number(adres.value.lat)]
   }
-  return [55.755864, 37.617698]
+  return [37.617698, 55.755864]
 })
 
 const query = ref('')

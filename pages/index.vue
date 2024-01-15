@@ -153,18 +153,9 @@ onServerPrefetch(async () => {
       class="container mx-auto mb-24 px-4"
     >
       <h1 class="mb-4 text-xl font-medium">Наши точки</h1>
-      <ClientOnly>
-        <YandexMap
-          :coordinates="[55.755864, 37.617698]"
-          :zoom="13"
-          class="h-96 w-full overflow-hidden rounded-xl"
-        >
-          <YandexMarker
-            :coordinates="[45.019627, 39.031206]"
-            :marker-id="1"
-          />
-        </YandexMap>
-      </ClientOnly>
+      <div class="h-96 w-full overflow-hidden rounded-xl">
+        <MyYandexMap :coordinates="[37.617698, 55.755864]" />
+      </div>
     </div>
   </main>
 </template>

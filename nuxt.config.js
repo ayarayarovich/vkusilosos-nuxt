@@ -11,12 +11,18 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     'nuxt-lodash',
     '@nuxtjs/google-fonts',
+    'vue-yandex-maps/nuxt',
     '@nuxtseo/module',
   ],
   imports: {
     dirs: [
       'composables/**'
     ]
+  },
+  yandexMaps: {
+    apikey: 'fd2d52ec-de88-404a-bf62-fd53f92a72ca',
+    lang: 'ru_RU',
+    strictMode: true,
   },
   build: {
     transpile: ['vue-toastification'],

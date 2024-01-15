@@ -48,25 +48,9 @@
                   <IconArrowRight class="h-6 rotate-180 invert md:hidden" /> Изменить адрес
                 </button>
 
-                <ClientOnly>
-                  <YandexMap
-                    :coordinates="coordinates"
-                    :zoom="17"
-                    :controls="['zoomControl', 'geolocationControl']"
-                    class="aspect-[15/8] overflow-hidden"
-                  >
-                    <YandexMarker
-                      :coordinates="coordinates"
-                      :marker-id="1"
-                      :options="{
-                        iconLayout: 'default#image',
-                        iconImageSize: [34, 40],
-                        iconOffset: [0, 0],
-                        iconImageHref: '/map-marker.png',
-                      }"
-                    />
-                  </YandexMap>
-                </ClientOnly>
+                <div class="aspect-[15/8]">
+                  <MyYandexMap :coordinates="coordinates" />
+                </div>
 
                 <form
                   class="flex w-full grow flex-col items-stretch justify-between p-4"
@@ -148,7 +132,6 @@
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
 import * as yup from 'yup'
-import { YandexMap, YandexMarker } from 'vue-yandex-maps'
 import type { Address } from '~/interfaces/main'
 
 const props = defineProps<{
@@ -197,7 +180,7 @@ const coordinates = computed(() => {
   if (adres.value) {
     return [Number(adres.value.lat), Number(adres.value.lon)]
   }
-  return [55.755864, 37.617698]
+  return [37.617698, 55.755864]
 })
 
 const query = ref('')

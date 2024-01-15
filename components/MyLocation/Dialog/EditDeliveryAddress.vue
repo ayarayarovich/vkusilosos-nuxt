@@ -115,7 +115,7 @@ const coordinates = computed(() => {
   if (adres.value) {
     return [Number(adres.value.lon), Number(adres.value.lat)]
   }
-  return [55.755864, 37.617698]
+  return [37.617698, 55.755864]
 })
 
 watchEffect(() => emit('updateCoords', coordinates.value))
