@@ -11,10 +11,12 @@
       <span v-if="currentReceptionWay?.type === 'delivery'">
         <span>{{ transformAddress(currentReceptionWay.adres) }}</span>
         <span class="mx-2">|</span>
-        <span class="text-[#999700]">~ {{ 'Нет данных' }}</span>
+        <span class="text-[#999700]">~ {{ '30 минут' }}</span>
       </span>
       <span v-else-if="currentReceptionWay?.type === 'restaurant'">
         <span>{{ currentReceptionWay.name }}</span>
+        <span class="mx-2">|</span>
+        <span class="text-[#999700]">~ {{ '30 минут' }}</span>
       </span>
       <span v-else>Выберите адрес</span>
     </Transition>
