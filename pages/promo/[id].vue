@@ -36,7 +36,7 @@
                 {{ article?.name }}
               </h1>
               <p class="text-sm text-black opacity-50">
-                {{ displayDate }}
+                {{ displayDateStart }} - {{ displayDateEnd }}
               </p>
             </div>
 
@@ -64,9 +64,16 @@ const {
   return v
 })
 
-const displayDate = computed(() => {
+const displayDateStart = computed(() => {
   if (article.value?.start) {
     return DateTime.fromISO(article.value?.start).toFormat('dd.mm.yy')
+  }
+  return ''
+})
+
+const displayDateEnd = computed(() => {
+  if (article.value?.end) {
+    return DateTime.fromISO(article.value?.end).toFormat('dd.mm.yy')
   }
   return ''
 })
