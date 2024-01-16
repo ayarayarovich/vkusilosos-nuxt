@@ -30,7 +30,6 @@
       class="absolute right-4 top-1/2 -translate-y-1/2"
       type="button"
       disabled
-      @click.stop="toggleInputType"
     >
       <IconLock class="aspect-square h-6" />
     </button>
