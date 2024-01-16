@@ -91,23 +91,51 @@
           </div>
           <div class="flex flex-col gap-2 text-sm font-normal">
             <a
-              href="tel:+74951472999"
+              v-if="siteInfo?.phone"
+              :href="`tel:${siteInfo.phone}`"
               class="flex items-center gap-2"
-              ><IconPhoneCalling class="inline h-8" /> +7 (495) 147 - 29 - 99</a
             >
+              <IconPhoneCalling class="inline h-8" /> {{ formatPhone(siteInfo.phone) }}
+            </a>
             <a
-              href="mailto:vkusilosos@gmail.com"
+              v-if="siteInfo?.email"
+              :href="`mailto:${siteInfo.email}`"
               class="flex items-center gap-2"
-              ><IconMail class="inline h-8" /> vkusilosos@gmail.com</a
             >
+              <IconMail class="inline h-8" /> {{ siteInfo.email }}
+            </a>
           </div>
           <div class="flex flex-col gap-4 text-sm font-normal uppercase">
             <div>мы в соцсетях</div>
             <div class="flex items-center gap-4">
-              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><IconYouTube class="h-8" /></a>
-              <a href="#"><IconVK class="h-8" /></a>
-              <a href="#"><IconWhatsApp class="h-8" /></a>
-              <a href="#"><IconViber class="h-8" /></a>
+              <a
+                v-if="siteInfo?.youtube"
+                :href="siteInfo.youtube"
+                target="_blank"
+              >
+                <IconYouTube class="h-8" />
+              </a>
+              <a
+                v-if="siteInfo?.vk"
+                :href="siteInfo.vk"
+                target="_blank"
+              >
+                <IconVK class="h-8" />
+              </a>
+              <a
+                v-if="siteInfo?.whatsapp"
+                :href="siteInfo.whatsapp"
+                target="_blank"
+              >
+                <IconWhatsApp class="h-8" />
+              </a>
+              <a
+                v-if="siteInfo?.viber"
+                :href="siteInfo.viber"
+                target="_blank"
+              >
+                <IconViber class="h-8" />
+              </a>
             </div>
           </div>
         </div>
@@ -123,25 +151,51 @@
             />
             <div class="flex flex-col gap-2 text-sm font-normal">
               <a
-                href="tel:+74951472999"
+                v-if="siteInfo?.phone"
+                :href="`tel:${siteInfo.phone}`"
                 class="flex items-center gap-2"
               >
-                <IconPhoneCalling class="inline h-4" /> +7 (495) 147 - 29 - 99
+                <IconPhoneCalling class="inline h-4" /> {{ formatPhone(siteInfo.phone) }}
               </a>
               <a
-                href="mailto:vkusilosos@gmail.com"
+                v-if="siteInfo?.email"
+                :href="`mailto:${siteInfo.email}`"
                 class="flex items-center gap-2"
               >
-                <IconMail class="inline h-4" /> vkusilosos@gmail.com
+                <IconMail class="inline h-4" /> {{ siteInfo.email }}
               </a>
             </div>
             <div class="flex flex-col gap-2 text-sm font-normal uppercase">
               <div>мы в соцсетях</div>
               <div class="flex items-center gap-2">
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><IconYouTube class="h-8" /></a>
-                <a href="#"><IconVK class="h-8" /></a>
-                <a href="#"><IconWhatsApp class="h-8" /></a>
-                <a href="#"><IconViber class="h-8" /></a>
+                <a
+                  v-if="siteInfo?.youtube"
+                  :href="siteInfo.youtube"
+                  target="_blank"
+                >
+                  <IconYouTube class="h-8" />
+                </a>
+                <a
+                  v-if="siteInfo?.vk"
+                  :href="siteInfo.vk"
+                  target="_blank"
+                >
+                  <IconVK class="h-8" />
+                </a>
+                <a
+                  v-if="siteInfo?.whatsapp"
+                  :href="siteInfo.whatsapp"
+                  target="_blank"
+                >
+                  <IconWhatsApp class="h-8" />
+                </a>
+                <a
+                  v-if="siteInfo?.viber"
+                  :href="siteInfo.viber"
+                  target="_blank"
+                >
+                  <IconViber class="h-8" />
+                </a>
               </div>
             </div>
           </div>
@@ -178,8 +232,15 @@
 
 <script setup lang="ts">
 import { useProfileDialogStore } from '~/store/profileDialog'
+import { formatPhone } from '~/utils'
 
 const profileDialogStore = useProfileDialogStore()
 
 const { userCredentials } = useUserCredentials()
+
+const { data: siteInfo, suspense } = useSiteInfo((v) => v)
+
+onServerPrefetch(async () => {
+  await suspense()
+})
 </script>
