@@ -38,6 +38,35 @@ export const useBlogs = (config: QueryConfig) => {
 
       return response.data
     },
+    placeholderData: (prev: any) => prev,
+  })
+}
+
+interface UseBlogResponse {
+  start: string
+  end: string
+  id: number
+  img: string
+  name: string
+  text: string
+}
+export const useBlog = <SData>(id: MaybeRef<string>, select: (response: UseBlogResponse) => SData) => {
+  const publicAxios = usePublicAxiosInstance()
+
+  return useQuery({
+    queryKey: ['blogs', { id }],
+    queryFn: async ({ queryKey }) => {
+      const id = (queryKey[1] as any).id as string
+
+      const response = await publicAxios.get<UseBlogResponse>('api/blog', {
+        params: {
+          id,
+        },
+      })
+
+      return response.data
+    },
+    select,
   })
 }
 
