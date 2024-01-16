@@ -2,6 +2,8 @@ import { defineNuxtPlugin } from 'nuxt/app'
 import { getMessaging, getToken } from 'firebase/messaging'
 
 export default defineNuxtPlugin(() => {
+  const token = useState<string | undefined>('fbToken')
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('firebase-messaging-sw.js')
@@ -15,6 +17,7 @@ export default defineNuxtPlugin(() => {
   } else {
     // happens when the app isn't served over HTTPS or if the browser doesn't support service workers
     console.warn('Service Worker not available')
+    return
   }
 
   const firebaseApp = useFirebaseApp()
@@ -23,8 +26,6 @@ export default defineNuxtPlugin(() => {
   // messaging.onMessage((payload) => {
   //   console.log('Message received. ', payload);
   // });
-
-  const token = useState<string | undefined>('fbToken')
 
   Notification.requestPermission().then((result) => {
     if (result === 'granted') {
