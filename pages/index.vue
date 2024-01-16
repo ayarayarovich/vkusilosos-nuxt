@@ -1,6 +1,14 @@
 <script setup lang="ts">
+import type { MyCoords } from '~/interfaces/common'
+
 const { data: recomendations, suspense: suspenseMain } = useMain((v) => v.recomendation)
 const { data: categories, suspense: suspenseCategories } = useCategories()
+const { data: restCoordinates } = useRestaurants((v) => {
+  return v.map<MyCoords>((r) => ({
+    Lat: r.lat,
+    Lng: r.lng,
+  }))
+})
 
 onServerPrefetch(async () => {
   await suspenseMain()
@@ -154,7 +162,11 @@ onServerPrefetch(async () => {
     >
       <h1 class="mb-4 text-xl font-medium">Наши точки</h1>
       <div class="h-96 w-full overflow-hidden rounded-xl">
-        <MyYandexMap :coordinates="[37.617698, 55.755864]" />
+        <MyYandexMap
+          :coordinates="[37.617698, 55.755864]"
+          :markers="restCoordinates"
+          :zoom="9"
+        />
       </div>
     </div>
   </main>

@@ -50,6 +50,7 @@
 
                 <div class="aspect-[15/8]">
                   <MyYandexMap
+                    show-center-marker
                     :coordinates="coordinates"
                     @update-coords-drag="updateCoords"
                   />

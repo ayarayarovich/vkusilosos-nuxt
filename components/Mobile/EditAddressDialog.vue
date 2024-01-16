@@ -49,7 +49,10 @@
                 </button>
 
                 <div class="aspect-[15/8]">
-                  <MyYandexMap :coordinates="coordinates" />
+                  <MyYandexMap
+                    show-center-marker
+                    :coordinates="coordinates"
+                  />
                 </div>
 
                 <form

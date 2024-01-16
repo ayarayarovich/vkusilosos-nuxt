@@ -104,6 +104,7 @@
 
                 <div class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl">
                   <MyYandexMap
+                    show-center-marker
                     :coordinates="coordinates"
                     @update-coords-drag="updateCoords"
                   />

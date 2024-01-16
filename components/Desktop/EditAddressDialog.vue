@@ -111,8 +111,10 @@
                   </form>
 
                   <div class="aspect-square h-[36rem] shrink-0 overflow-hidden rounded-xl">
-                    
-                    <MyYandexMap :coordinates="coordinates" />
+                    <MyYandexMap
+                      :coordinates="coordinates"
+                      show-center-marker
+                    />
                   </div>
                 </ClientOnly>
               </div>

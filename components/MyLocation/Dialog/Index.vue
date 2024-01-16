@@ -49,7 +49,10 @@
                 </button>
 
                 <div class="aspect-square h-[12rem] shrink-0 overflow-hidden rounded-xl lg:order-3 lg:h-[36rem]">
-                  <MyYandexMap :coordinates="coordinates" />
+                  <MyYandexMap
+                    :coordinates="coordinates"
+                    show-center-marker
+                  />
                 </div>
 
                 <Transition
