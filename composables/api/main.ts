@@ -38,7 +38,6 @@ export const useSiteInfo = <SData>(select: (response: UseSiteInfoResponse) => SD
     queryKey: ['site-info'],
     queryFn: async () => {
       const response = await publicAxios.get<UseSiteInfoResponse>('api/info')
-      console.log(response.data)
       return response.data
     },
     select,
