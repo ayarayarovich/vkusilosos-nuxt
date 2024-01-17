@@ -33,7 +33,7 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <HeadlessDialogPanel class="w-full max-w-2xl rounded-2xl shadow-xl transition-all">
+            <HeadlessDialogPanel class="w-full max-w-4xl rounded-2xl shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
                 class="document w-full rounded-2xl bg-whitegray pb-8 text-start"
