@@ -43,7 +43,7 @@ export const useDeleteCart = () => {
 
   return useMutation({
     mutationFn: async (vars: any) => {
-      const response = await privateAxios.delete('user/carts', {
+      const response = await privateAxios.delete('user/cart', {
         params: {
           id: vars.id,
         },
