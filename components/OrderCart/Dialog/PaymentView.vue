@@ -9,21 +9,19 @@
             <div
               class="absolute bottom-0 left-0 top-0 w-1/2 rounded-lg bg-white shadow-main transition-transform"
               :class="{
-                'translate-x-0': receptionWay === 'delivery',
-                'translate-x-full': receptionWay === 'restaurant',
+                'translate-x-0': receptionWay?.type === 'delivery',
+                'translate-x-full': receptionWay?.type === 'restaurant',
               }"
             ></div>
             <button
               class="hover isolate h-10 w-1/2 rounded-lg"
               disabled
-              @click="receptionWay = 'delivery'"
             >
               Доставка
             </button>
             <button
               class="isolate h-10 w-1/2 rounded-lg"
               disabled
-              @click="receptionWay = 'restaurant'"
             >
               В ресторане
             </button>
@@ -116,15 +114,12 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useLocationStore } from '~/store/location'
 
 const emit = defineEmits(['backToCart'])
 
-const selectedPayType = ref()
+const { data: receptionWay } = useCurrentReceptionWay()
 
-const locationStore = useLocationStore()
-const { receptionWay } = storeToRefs(locationStore)
+const selectedPayType = ref()
 
 const { data: cards } = useUser((v) => v.carts)
 </script>
