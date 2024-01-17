@@ -4,6 +4,8 @@ import type { Banner, Story } from '~/interfaces/main'
 
 interface UseMainResponse {
   banners: Banner[]
+  deliver_price: number
+  from_deliver: number
   percent_order: number
   recomendation: Dish[]
   stories: Story[]

@@ -13,7 +13,7 @@
           <AnimatedNumber :number="basket?.total_price || 0" /> &#8381;
         </strong>
 
-        <p class="mt-2 px-4 opacity-50">Бесплатная доставка</p>
+        <p class="mt-2 px-4 opacity-50">{{ displayDeliveryCost }}</p>
         <div class="relative my-4 flex w-full grow flex-col items-stretch py-4">
           <div
             class="absolute left-0 right-0 top-0 z-50 h-4 bg-gradient-to-t from-[rgba(253,253,253,0)] to-[rgba(253,253,253,1)]"
@@ -92,7 +92,7 @@
           />
           <strong class="mt-2 text-base font-bold uppercase lg:text-xl"> ой, кажется, Корзина пуста </strong>
           <p class="mt-4 text-sm">Ваша корзина пуста, откройте «Меню» и выберите понравившийся товар</p>
-          <p class="mt-2 text-sm">Мы доставим ваш заказ от 699 ₽</p>
+          <p class="mt-2 text-sm">Мы доставим ваш заказ от {{ main?.from_deliver }} ₽</p>
 
           <img
             src="/upset-cup.svg"
@@ -126,10 +126,10 @@ import type { DishInBasket } from '~/interfaces/main'
 const emit = defineEmits(['proccedToPayment'])
 
 const { data: basket } = useBasket((v) => v)
-const { data: bonusPercent } = useMain((v) => v.percent_order)
+const { data: main } = useMain((v) => v)
 const bonusesToGet = computed(() => {
-  if (bonusPercent.value && basket.value) {
-    return basket.value.total_price * bonusPercent.value
+  if (main.value?.percent_order && basket.value) {
+    return basket.value.total_price * main.value.percent_order
   }
   return 0
 })
@@ -140,6 +140,17 @@ const pluralizedItemsInCartCountWord = computed(() => {
   if (basket.value?.total === 3) return 'товара'
   if (basket.value?.total === 4) return 'товара'
   return 'товаров'
+})
+
+const displayDeliveryCost = computed(() => {
+  if (main.value && basket.value) {
+    if (basket.value.total_price > main.value.from_deliver) {
+      return 'Бесплатная доставка'
+    } else {
+      return `Стоимость доставки ${main.value.deliver_price} ₽`
+    }
+  }
+  return 'Нет данных'
 })
 
 const { mutate } = useAddToBasket()
