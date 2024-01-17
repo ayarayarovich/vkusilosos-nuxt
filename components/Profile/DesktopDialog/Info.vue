@@ -59,12 +59,9 @@
         <div class="mb-8">
           <h3 class="mb-5 block text-xl font-medium">Подписки</h3>
           <div class="flex items-center gap-2">
-            <input
-              id="personal-recomendations-checkbox"
-              type="checkbox"
-            />
-
-            <label for="personal-recomendations-checkbox"> Получать персональные предложения и акции </label>
+            <label class="flex items-center gap-2">
+              <InputCheckbox name="personal-recomendations" /> <span class="select-none cursor-pointer">Получать персональные предложения и акции</span>
+            </label>
             <Tooltip> Согласен на получение от ООО “Вкуси Лосось” рекламных предложений </Tooltip>
           </div>
         </div>

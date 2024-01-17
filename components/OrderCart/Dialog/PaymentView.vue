@@ -66,12 +66,9 @@
                   <input class="w-[15ch] rounded-xl bg-black bg-opacity-10 px-4 py-3 pr-8 text-end outline-none" />
                   <span class="absolute right-4 top-1/2 -translate-y-1/2 text-black text-opacity-50"> ₽ </span>
                 </div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="sdacha"
-                  />
-                  Без сдачи
+                <label class="flex items-center gap-2">
+                  <InputCheckbox name="sdacha" />
+                  <span class="cursor-pointer select-none"> Без сдачи </span>
                 </label>
               </div>
             </div>
