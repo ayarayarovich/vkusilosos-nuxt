@@ -23,7 +23,7 @@
       </div>
     </div>
     <img
-      class="mt-4 h-28 w-auto object-contain drop-shadow-lg transition-opacity duration-1000 sm:h-36 md:h-40 lg:h-40 xl:h-48"
+      class="mt-4 h-28 w-auto object-contain drop-shadow-lg transition-opacity duration-1000 sm:h-36 md:h-40 lg:h-32 lg:max-lg:mt-0 xl:h-48"
       :src="dish.img"
       alt=""
     />
