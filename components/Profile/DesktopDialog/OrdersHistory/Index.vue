@@ -40,58 +40,64 @@
 
       <div
         v-else
-        class="mt-8 flex h-0 grow flex-col items-stretch gap-8 text-xs md:mt-16 md:gap-16 md:text-base"
+        class="h-0 grow relative my-2"
       >
-        <ul
-          v-if="orders?.active_orders.length"
-          class="flex flex-col gap-4"
+        <div class="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-whitegray to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-whitegray to-transparent"></div>
+        <div
+          class="pt-8 flex h-full flex-col items-stretch gap-8 overflow-y-auto text-xs md:pt-16 md:gap-16 md:text-base"
         >
-          <li
-            v-for="o in orders.active_orders"
-            :key="o.id"
-            class="mx-4 rounded-xl bg-white p-4 shadow-main lg:mx-8"
+          <ul
+            v-if="orders?.active_orders.length"
+            class="flex flex-col gap-4"
           >
-            <div class="mb-4 flex items-center justify-between">
-              <div>Активный заказ</div>
-              <div class="text-[#999700]">{{ displayStatus(o.status) }}</div>
-            </div>
-            <div class="flex w-full">
-              <div class="shrink-0 grow-[1] basis-0">{{ o.id }}</div>
-              <div class="shrink-0 grow-[2] basis-0">{{ formatDate(o.created_at) }}</div>
-              <div class="shrink-0 grow-[1] basis-0">{{ o.price }} &#8381;</div>
-              <div class="shrink grow-0 basis-0">
-                <ProfileDesktopDialogOrdersHistoryReceipt :order="o" />
+            <li
+              v-for="o in orders.active_orders"
+              :key="o.id"
+              class="mx-4 rounded-xl bg-white p-4 shadow-main lg:mx-8"
+            >
+              <div class="mb-4 flex items-center justify-between">
+                <div>Активный заказ</div>
+                <div class="text-[#999700]">{{ displayStatus(o.status) }}</div>
               </div>
-            </div>
-          </li>
-        </ul>
+              <div class="flex w-full">
+                <div class="shrink-0 grow-[1] basis-0">{{ o.id }}</div>
+                <div class="shrink-0 grow-[2] basis-0">{{ formatDate(o.created_at) }}</div>
+                <div class="shrink-0 grow-[1] basis-0">{{ o.price }} &#8381;</div>
+                <div class="shrink grow-0 basis-0">
+                  <ProfileDesktopDialogOrdersHistoryReceipt :order="o" />
+                </div>
+              </div>
+            </li>
+          </ul>
 
-        <div class="grow px-4 pb-8 lg:px-8">
-          <div class="flex h-full flex-col items-stretch">
-            <div class="mb-2 flex w-full rounded-xl bg-gray px-4 py-2">
-              <div class="shrink-0 grow-[1] basis-0">№</div>
-              <div class="shrink-0 grow-[2] basis-0">Время заказа</div>
-              <div class="shrink-0 grow-[1] basis-0">Сумма</div>
-              <div class="shrink grow-0 basis-[10ch]">Чек</div>
-            </div>
+          <div class="grow px-4 pb-8 lg:px-8">
+            <div class="flex h-full flex-col items-stretch">
+              <div class="mb-2 flex w-full rounded-xl bg-gray px-4 py-2">
+                <div class="shrink-0 grow-[1] basis-0">№</div>
+                <div class="shrink-0 grow-[2] basis-0">Время заказа</div>
+                <div class="shrink-0 grow-[1] basis-0">Сумма</div>
+                <div class="shrink grow-0 basis-[10ch]">Чек</div>
+              </div>
 
-            <div class="relative h-0 flex-auto">
-              <div class="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-white to-transparent"></div>
-              <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white to-transparent"></div>
-              <ul class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto scroll-smooth py-4">
-                <li
-                  v-for="o in orders?.last_orders"
-                  :key="o.id"
-                  class="flex w-full rounded-xl bg-white px-4 py-2 shadow-main"
-                >
-                  <div class="shrink-0 grow-[1] basis-0">{{ o.id }}</div>
-                  <div class="shrink-0 grow-[2] basis-0">{{ formatDate(o.created_at) }}</div>
-                  <div class="shrink-0 grow-[1] basis-0">{{ o.price }} &#8381;</div>
-                  <div class="shrink grow-0 basis-0">
-                    <ProfileDesktopDialogOrdersHistoryReceipt :order="o" />
-                  </div>
-                </li>
-              </ul>
+              <div class="relative h-0 flex-auto">
+                <div class="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-white to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white to-transparent"></div>
+                <ul class="scrollbar-hide flex h-full flex-col items-stretch gap-2 overflow-y-auto scroll-smooth py-4">
+                  <li
+                    v-for="o in orders?.last_orders"
+                    :key="o.id"
+                    class="flex w-full rounded-xl bg-white px-4 py-2 shadow-main"
+                  >
+                    <div class="shrink-0 grow-[1] basis-0">{{ o.id }}</div>
+                    <div class="shrink-0 grow-[2] basis-0">{{ formatDate(o.created_at) }}</div>
+                    <div class="shrink-0 grow-[1] basis-0">{{ o.price }} &#8381;</div>
+                    <div class="shrink grow-0 basis-0">
+                      <ProfileDesktopDialogOrdersHistoryReceipt :order="o" />
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
