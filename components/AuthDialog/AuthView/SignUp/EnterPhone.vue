@@ -26,12 +26,12 @@
       <div class="h-px bg-gray"></div>
       <div class="py-8 text-center">
         Авторизуясь на сайте, я соглашаюсь с
-        <RouterLink
-          to="#"
+        <NuxtLink
+          to="/user_agreement"
           class="text-orange-200"
         >
           условиями использования
-        </RouterLink>
+        </NuxtLink>
       </div>
     </div>
   </div>
