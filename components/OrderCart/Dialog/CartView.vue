@@ -6,7 +6,7 @@
     >
       <div
         v-if="basket && basket.total > 0"
-        class="relative flex h-full w-full transform flex-col items-start overflow-hidden bg-white py-8"
+        class="relative flex h-full w-full transform flex-col items-start overflow-y-auto bg-white py-8"
       >
         <strong class="px-4 text-2xl font-medium">
           {{ basket?.total || 0 }} {{ pluralizedItemsInCartCountWord }} на
@@ -14,7 +14,7 @@
         </strong>
 
         <p class="mt-2 px-4 opacity-50">{{ displayDeliveryCost }}</p>
-        <div class="relative my-4 flex w-full grow flex-col items-stretch py-4">
+        <div class="relative my-4 flex min-h-96 w-full grow flex-col items-stretch py-4">
           <div
             class="absolute left-0 right-0 top-0 z-50 h-4 bg-gradient-to-t from-[rgba(253,253,253,0)] to-[rgba(253,253,253,1)]"
           ></div>
@@ -57,7 +57,40 @@
           </ul>
         </div>
 
-        <div class="w-full px-4 pt-8 font-medium shadow-main">
+        <div
+          v-if="filteredAdditions && filteredAdditions.length > 0"
+          class="my-3 w-full"
+        >
+          <p class="my-2 px-4 text-lg">Добавить к заказу?</p>
+
+          <div class="relative w-full">
+            <div class="absolute bottom-0 left-0 top-0 w-4 bg-gradient-to-r from-whitegray to-transparent"></div>
+            <div class="absolute bottom-0 right-0 top-0 w-4 bg-gradient-to-l from-whitegray to-transparent"></div>
+            <div class="flex items-stretch gap-4 overflow-y-auto px-4 py-4">
+              <OrderCartDialogAddition
+                v-for="add in filteredAdditions"
+                :key="add.id"
+                v-bind="add"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full px-4 pt-4 font-medium shadow-elevated">
+          <OrderCartDialogInputPromocode
+            name="promo"
+            class="mb-4"
+            placeholder="Промокод"
+          />
+
+          <label class="mb-8 flex items-center justify-between gap-4">
+            <div>
+              <div>Вкусоины</div>
+              <div class="text-sm font-normal text-black/50">У вас {{ user?.bonuses || 0 }} бонусов - спишем всё</div>
+            </div>
+            <InputSwitch name="use_coins" />
+          </label>
+
           <div class="flex items-center justify-between">
             <span>{{ basket?.total }} {{ pluralizedItemsInCartCountWord }}</span>
             <span><AnimatedNumber :number="basket?.total_price || 0" /> &#8381;</span>
@@ -71,6 +104,7 @@
           <SimpleButton
             :disabled="basket?.total == 0"
             class="mt-8 w-full px-4 py-4 text-xs uppercase"
+            type="button"
             @click="emit('proccedToPayment')"
           >
             Перейти к оформлению <IconArrowRight class="inline h-4" />
@@ -125,13 +159,23 @@ import type { DishInBasket } from '~/interfaces/main'
 
 const emit = defineEmits(['proccedToPayment'])
 
+const { data: user } = useUser((v) => v)
 const { data: basket } = useBasket((v) => v)
 const { data: main } = useMain((v) => v)
+const { data: additions } = useAdditions((v) => v)
 const bonusesToGet = computed(() => {
   if (main.value?.percent_order && basket.value) {
-    return basket.value.total_price * main.value.percent_order
+    return Math.floor((basket.value.total_price * main.value.percent_order) / 100)
   }
   return 0
+})
+
+const filteredAdditions = computed(() => {
+  if (basket.value && additions.value) {
+    return additions.value.filter((a) => basket.value.list.find((b) => b.dish_id === a.id) === undefined)
+  }
+
+  return additions.value
 })
 
 const pluralizedItemsInCartCountWord = computed(() => {

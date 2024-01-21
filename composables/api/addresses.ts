@@ -191,7 +191,7 @@ export const useCurrentReceptionWay = () => {
   const publicAxios = usePublicAxiosInstance()
   const privateAxios = usePrivateAxiosInstance()
 
-  const authenticated = computed(() => userCredentials.value.isAuthenticated ? 'auth' : 'no-auth')
+  const authenticated = computed(() => (userCredentials.value.isAuthenticated ? 'auth' : 'no-auth'))
 
   return useQuery({
     queryKey: ['user', 'reception_way', usersReceptionWay, authenticated],
@@ -211,7 +211,11 @@ export const useCurrentReceptionWay = () => {
                   ...addr,
                 }
                 return retAddr
+              } else {
+                return null
               }
+            } else {
+              return null
             }
           } else if (usersReceptionWay.value === 'restaurant') {
             if (u.rest_id) {
@@ -222,15 +226,17 @@ export const useCurrentReceptionWay = () => {
                   ...rest,
                 }
                 return retRest
+              } else {
+                return null
               }
+            } else {
+              return null
             }
-          }
-          else {
+          } else {
             return null
           }
         })
-      }
-      else {
+      } else {
         return null
       }
     },

@@ -35,9 +35,10 @@
             leave-to="opacity-0 translate-x-full"
           >
             <HeadlessDialogPanel class="absolute right-0 h-full w-full max-w-3xl bg-whitegray shadow-xl transition-all">
-              <div
+              <form
                 ref="dialogPanelEl"
                 class="h-full w-full"
+                @submit="onSubmit"
               >
                 <Transition
                   name="fade"
@@ -52,7 +53,7 @@
                     @back-to-cart="stage = 'cart'"
                   />
                 </Transition>
-              </div>
+              </form>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
         </div>
@@ -62,7 +63,11 @@
 </template>
 
 <script setup lang="ts">
+import { DateTime } from 'luxon'
 import { ref, toRefs } from 'vue'
+import * as yup from 'yup'
+import { useProfileDialogStore } from '~/store/profileDialog'
+import { formatPhone } from '~/utils'
 
 const props = defineProps<{
   show?: boolean
@@ -77,6 +82,78 @@ const stage = ref<'cart' | 'payment'>('cart')
 const close = () => {
   emit('close')
 }
+
+const { data: user } = useUser((v) => v)
+
+const validationSchema = computed(() => {
+  if (stage.value === 'cart') {
+    return yup.object({
+      cart_id: yup.number().required(),
+      promo: yup.string().label('Промокод'),
+      use_coins: yup.boolean().label('Вкусоины'),
+    })
+  } else if (stage.value === 'payment') {
+    return yup.object({
+      name: yup.string().label('Имя'),
+      phone: yup.string().label('Телефон'),
+      cashback: yup
+        .number()
+        .label('Сдача')
+        .when(['no_cashback', 'cart_id'], {
+          is: (noCashback: boolean, cartId: number) => !noCashback && cartId === -2,
+          then: (schema) => schema.required(),
+        }),
+      no_cashback: yup.boolean(),
+    })
+  }
+})
+
+const { handleSubmit } = useForm({
+  validationSchema,
+  initialValues: computed(() => ({
+    name: user.value?.name,
+    phone: formatPhone(user.value?.phone || ''),
+    cart_id: 0,
+    no_cashback: true,
+    time_deliver: 'soon',
+    use_coins: false,
+  })),
+  keepValuesOnUnmount: true,
+})
+
+const { mutateAsync } = useCreateOrder()
+const invalidateOrders = useInvalidateOrders()
+
+const profileDialogStore = useProfileDialogStore()
+
+const onSubmit = handleSubmit((v: any) => {
+  if (v.time_deliver === 'soon') {
+    v.time_deliver = DateTime.now().plus({ minutes: 30 }).toFormat('yyyy-dd-LL HH:mm:ss ZZZ ZZZZ')
+  }
+
+  if (v.no_cashback) {
+    v.cashback = 0
+  }
+
+  const ph: string = v.phone
+  v.phone = ph.replace(/\D/g, '')
+
+  delete v.no_cashback
+  delete v.reception_way
+
+  mutateAsync(v).then((response) => {
+    if (response.link) {
+      navigateTo(response.link, {
+        external: true,
+      })
+    }
+    if (response.action === 'success') {
+      invalidateOrders()
+      emit('close')
+      profileDialogStore.open('orders_history')
+    }
+  })
+})
 
 useSwipe(dialogPanelEl, {
   onSwipeEnd(_, direction) {

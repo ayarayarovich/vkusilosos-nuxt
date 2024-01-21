@@ -18,7 +18,7 @@
       class="mb-8 mt-4"
     />
 
-    <p class="mb-4">Когда доставить?</p>
+    <p class="mb-4">Когда заберете заказ?</p>
     <OrderCartDialogSelectTime />
   </form>
 </template>

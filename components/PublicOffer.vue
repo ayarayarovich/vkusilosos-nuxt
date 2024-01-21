@@ -43,6 +43,7 @@
                 >
                   <span>Публичная оферта</span>
                   <button
+                    type="button"
                     class="shrink-0"
                     @click="close()"
                   >

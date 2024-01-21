@@ -32,7 +32,9 @@
         </div>
 
         <div class="flex flex-1 items-center justify-end gap-2">
-          <OrderCart v-if="userCredentials.isAuthenticated" />
+          <ClientOnly>
+            <OrderCart v-if="userCredentials.isAuthenticated" />
+          </ClientOnly>
           <BonusCoins v-if="userCredentials.isAuthenticated" />
         </div>
       </div>
@@ -49,7 +51,9 @@
         </div>
 
         <div class="flex items-center justify-end gap-2">
-          <OrderCart v-if="userCredentials.isAuthenticated" />
+          <ClientOnly>
+            <OrderCart v-if="userCredentials.isAuthenticated" />
+          </ClientOnly>
           <BonusCoins v-if="userCredentials.isAuthenticated" />
           <button
             class="group relative inline-block aspect-square h-8"

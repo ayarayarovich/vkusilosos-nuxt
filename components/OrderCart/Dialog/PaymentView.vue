@@ -23,7 +23,7 @@
               class="isolate h-10 w-1/2 rounded-lg"
               disabled
             >
-              В ресторане
+              Самовывоз
             </button>
           </div>
         </div>
@@ -32,8 +32,12 @@
           <div class="absolute left-0 right-0 top-0 z-10 h-4 bg-gradient-to-b from-whitegray to-transparent"></div>
           <div class="absolute bottom-0 left-0 right-0 z-10 h-4 bg-gradient-to-t from-whitegray to-transparent"></div>
           <div class="h-full overflow-y-auto py-4">
-            <Transition>
-              <OrderCartDialogDelivery />
+            <Transition
+              name="fade"
+              mode="out-in"
+            >
+              <OrderCartDialogDelivery v-if="receptionWay?.type === 'delivery'" />
+              <OrderCartDialogDelivery v-else-if="receptionWay?.type === 'restaurant'" />
             </Transition>
           </div>
         </div>
@@ -45,7 +49,7 @@
 
       <HeadlessRadioGroup v-model="selectedPayType">
         <OrderCartDialogRadioButton
-          value="cash"
+          :value="-2"
           label="Наличными"
         >
           <IconBlackWallet />
@@ -53,19 +57,34 @@
         <div
           class="mb-2 grid grid-cols-1 grid-rows-[0fr] overflow-hidden transition-[grid-template-rows]"
           :class="{
-            'grid-rows-[1fr]': selectedPayType === 'cash',
+            'grid-rows-[1fr]': selectedPayType === -2,
           }"
         >
           <div class="min-h-0">
             <div class="ml-8 py-2">
               <p class="mb-2 text-sm text-black text-opacity-50">С какой суммы подготовить сдачу?</p>
               <div class="flex items-center gap-4">
-                <div class="relative w-fit">
-                  <input class="w-[15ch] rounded-xl bg-black bg-opacity-10 px-4 py-3 pr-8 text-end outline-none" />
-                  <span class="absolute right-4 top-1/2 -translate-y-1/2 text-black text-opacity-50"> ₽ </span>
+                <div
+                  class="relative w-fit transition-opacity"
+                  :class="{
+                    'opacity-50': noCashback,
+                  }"
+                >
+                  <input
+                    v-model="cashback"
+                    type="number"
+                    class="w-[15ch] rounded-xl border border-transparent bg-black bg-opacity-10 px-4 py-3 pr-8 text-end outline-none transition-colors"
+                    :class="{
+                      '!border-red': !!cashbackError,
+                    }"
+                    :disabled="noCashback"
+                  />
+                  <span class="absolute right-4 top-1/2 -translate-y-1/2 select-none text-black text-opacity-50">
+                    ₽
+                  </span>
                 </div>
                 <label class="flex items-center gap-2">
-                  <InputCheckbox name="sdacha" />
+                  <InputCheckbox name="no_cashback" />
                   <span class="cursor-pointer select-none"> Без сдачи </span>
                 </label>
               </div>
@@ -74,8 +93,15 @@
         </div>
         <OrderCartDialogRadioButton
           class="mb-2"
-          value="card_when_recieve"
+          :value="-1"
           label="Картой при получении"
+        >
+          <IconCard />
+        </OrderCartDialogRadioButton>
+        <OrderCartDialogRadioButton
+          class="mb-2"
+          :value="0"
+          label="Картой на сайте"
         >
           <IconCard />
         </OrderCartDialogRadioButton>
@@ -83,7 +109,7 @@
           v-for="card in cards"
           :key="card.id"
           class="mb-2"
-          value="visa"
+          :value="card.id"
           :label="card.cart"
         >
           <CreditCardIcon
@@ -96,12 +122,16 @@
       <div class="mt-8 flex w-full gap-4 font-medium">
         <button
           class="flex grow items-center justify-center rounded-xl bg-gray px-2 py-4 text-xs uppercase leading-none"
+          type="button"
           @click="emit('backToCart')"
         >
           Назад в корзину
         </button>
-        <SimpleButton class="grow px-4 py-4 text-xs uppercase">
-          Оформить заказ на {{ totalCost }} &#8381;
+        <SimpleButton
+          class="grow px-4 py-4 text-xs uppercase"
+          type="submit"
+        >
+          Оформить заказ на {{ basket?.total_price }} &#8381;
           <IconArrowRight class="inline h-4" />
         </SimpleButton>
       </div>
@@ -114,12 +144,16 @@
 </template>
 
 <script setup lang="ts">
-
 const emit = defineEmits(['backToCart'])
 
 const { data: receptionWay } = useCurrentReceptionWay()
 
-const selectedPayType = ref()
-
 const { data: cards } = useUser((v) => v.carts)
+
+const { data: basket } = useBasket((v) => v)
+
+const noCashback = useFieldValue<boolean | undefined>('no_cashback')
+
+const { value: selectedPayType } = useField<number | undefined>('cart_id')
+const { value: cashback, errorMessage: cashbackError } = useField<number | undefined>('cashback')
 </script>

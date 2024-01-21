@@ -17,3 +17,7 @@ export function nthIndex(str: string, pattern: string, n: number) {
   }
   return i
 }
+
+export function getFirstNItems<T>(items: T[], n: number) {
+  return items.slice(0, n)
+}

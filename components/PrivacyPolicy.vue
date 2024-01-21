@@ -44,6 +44,7 @@
                   <span>Политика конфиденциальности в отношении обработки персональных данных</span>
                   <button
                     class="shrink-0"
+                    type="button"
                     @click="close()"
                   >
                     <IconClose class="h-8" />

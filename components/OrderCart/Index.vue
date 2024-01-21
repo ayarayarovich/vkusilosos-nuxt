@@ -1,10 +1,10 @@
 <template>
   <button
-    v-if="isSuccess"
     class="flex items-center gap-1 rounded-xl p-2 text-sm font-light"
     @click="isOpen = true"
   >
-    <IconCart class="inline h-8" /> <AnimatedNumber :number="data" />
+    {{ data }}
+    <IconCart class="inline h-8" /> <AnimatedNumber :number="data || 0" />
     <span class="font-medium">&#8381;</span>
   </button>
   <OrderCartDialog
@@ -16,10 +16,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const { data, isSuccess, suspense } = useBasket((v) => v.total_price)
-onServerPrefetch(async () => {
-  await suspense()
-})
+const { data } = useBasket((v) => v.total_price)
 
 const isOpen = ref(false)
 function closeDialog() {

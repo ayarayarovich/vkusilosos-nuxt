@@ -11,8 +11,7 @@ interface GetResponse {
 
 export const useBasket = <SData>(select: (response: GetResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
-  const {userCredentials} = useUserCredentials()
-
+  const { userCredentials } = useUserCredentials()
 
   return useQuery({
     queryKey: ['user', 'basket'],
@@ -25,6 +24,10 @@ export const useBasket = <SData>(select: (response: GetResponse) => SData) => {
       })
 
       response.data.list = response.data.list || []
+
+      if (!response.data.total_price) {
+        response.data.total_price = response.data.list.reduce((acc, b) => acc + b.price * b.count, 0)
+      }
 
       return response.data
     },

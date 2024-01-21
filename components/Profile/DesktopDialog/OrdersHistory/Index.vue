@@ -1,5 +1,9 @@
 <template>
   <div class="flex h-full flex-col items-stretch">
+    <MyLocationDialog
+      :show="showMyLocationDialog"
+      @close="closeMyLocationDialog"
+    />
     <div class="mx-8 mb-4 mt-10 flex flex-col items-start">
       <button
         class="flex items-center gap-2"
@@ -34,18 +38,23 @@
             что-то вкусное
           </strong>
           <p class="mb-8 text-center">Укажите адрес доставки на карте и выберете ресторан</p>
-          <SimpleButton class="w-full px-8 py-4 font-medium uppercase"> Выбрать ресторан </SimpleButton>
+          <SimpleButton
+            class="w-full px-8 py-4 font-medium uppercase"
+            @click="showMyLocationDialog = true"
+          >
+            Выбрать ресторан
+          </SimpleButton>
         </div>
       </div>
 
       <div
         v-else
-        class="h-0 grow relative my-2"
+        class="relative my-2 h-0 grow"
       >
-        <div class="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-whitegray to-transparent"></div>
+        <div class="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-whitegray to-transparent"></div>
         <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-whitegray to-transparent"></div>
         <div
-          class="pt-8 flex h-full flex-col items-stretch gap-8 overflow-y-auto text-xs md:pt-16 md:gap-16 md:text-base"
+          class="flex h-full flex-col items-stretch gap-8 overflow-y-auto pt-8 text-xs md:gap-16 md:pt-16 md:text-base"
         >
           <ul
             v-if="orders?.active_orders.length"
@@ -141,5 +150,10 @@ const formatDate = (d: string) => {
   const minutes = pad(date.getMinutes(), 2)
 
   return `${day}.${month}.${year}, ${hour}:${minutes}`
+}
+
+const showMyLocationDialog = ref(false)
+const closeMyLocationDialog = () => {
+  showMyLocationDialog.value = false
 }
 </script>

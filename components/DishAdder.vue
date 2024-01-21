@@ -1,10 +1,14 @@
 <template>
   <div>
-    <MyLocationDialog :show="showLocationDialog" @close="closeLocationDialog" />
+    <MyLocationDialog
+      :show="showLocationDialog"
+      @close="closeLocationDialog"
+    />
 
     <SimpleButton
       v-if="!props.hideButton && (count === 0 || props.alwaysButton)"
       class="h-full w-full rounded-xl text-[0.7rem] font-medium uppercase text-white lg:text-sm"
+      type="button"
       @click="buttonAction()"
     >
       <slot> В корзину </slot>
@@ -17,6 +21,7 @@
         class="outer-bg-color flex h-full w-full items-center justify-center rounded-xl border-2 border-transparent bg-clip-padding"
       >
         <button
+          type="button"
           class="flex aspect-square h-full items-center justify-center rounded-full px-2 text-black"
           @click.stop="removeLocalCount()"
         >
@@ -28,6 +33,7 @@
         </button>
         <span class="mx-1 inline-block min-w-[2ch] text-center text-black lg:mx-2">{{ count }}</span>
         <button
+          type="button"
           class="flex aspect-square h-full items-center justify-center rounded-full px-2 text-black"
           @click.stop="addLocalCount()"
         >
@@ -62,7 +68,7 @@ const openLocationDialog = () => {
   showLocationDialog.value = true
 }
 const closeLocationDialog = () => {
-  showLocationDialog.value= false
+  showLocationDialog.value = false
 }
 
 const count = ref(0)

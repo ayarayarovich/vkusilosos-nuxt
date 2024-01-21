@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
-import type { MaybeRef } from "vue";
+import type { MaybeRef } from 'vue'
 import { useCurrentReceptionWay } from './addresses'
 import type { Dish, Tag, DishDetails } from '~/interfaces/dishes'
 
@@ -22,7 +22,7 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
 
   const publicAxios = usePublicAxiosInstance()
   const privateAxios = usePrivateAxiosInstance()
-  const {data: currentReceptionWay, isSuccess} = useCurrentReceptionWay()
+  const { data: currentReceptionWay, isSuccess } = useCurrentReceptionWay()
 
   return useQuery({
     queryKey: ['dishes', { categoryID, currentReceptionWay }],
@@ -35,16 +35,15 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
           limit: 99999999,
           category: _categoryID,
           adres_id: currentReceptionWay.value.type === 'delivery' ? currentReceptionWay.value.id : undefined,
-          rest_id: currentReceptionWay.value.type === 'restaurant' ? currentReceptionWay.value.id : undefined
+          rest_id: currentReceptionWay.value.type === 'restaurant' ? currentReceptionWay.value.id : undefined,
         }
-  
+
         const response = await privateAxios.get<Response>('api/dishes', {
-          params
+          params,
         })
-  
+
         return response.data
       }
-
 
       const params = {
         offset: 0,
@@ -53,12 +52,12 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
       }
 
       const response = await publicAxios.get<Response>('api/dishes', {
-        params
+        params,
       })
 
       return response.data
     },
-    enabled: isSuccess
+    enabled: isSuccess,
   })
 }
 
@@ -84,3 +83,25 @@ export const useDish = (dishID: MaybeRefOrGetter<number>, enabled: MaybeRefOrGet
   })
 }
 
+export interface Addition {
+  id: number
+  name: string
+  img: string
+  price: number
+  weight: number
+  count: number
+}
+
+type UseAdditionsResponse = Addition[]
+
+export const useAdditions = <SData>(select: (response: UseAdditionsResponse) => SData) => {
+  const publicAxios = usePublicAxiosInstance()
+  return useQuery({
+    queryKey: ['additions'],
+    queryFn: async () => {
+      const response = await publicAxios.get<UseAdditionsResponse>('api/adds')
+      return response.data
+    },
+    select,
+  })
+}
