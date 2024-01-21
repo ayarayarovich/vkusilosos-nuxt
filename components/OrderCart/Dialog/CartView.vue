@@ -38,7 +38,10 @@
                     <p class="text-black">{{ position.name }}</p>
                     <p class="text-sm text-black opacity-50">{{ position.weight }} гр</p>
                   </div>
-                  <button @click="removeAll(position)">
+                  <button
+                    type="button"
+                    @click="removeAll(position)"
+                  >
                     <IconClose class="h-6" />
                   </button>
                 </div>

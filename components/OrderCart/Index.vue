@@ -3,7 +3,6 @@
     class="flex items-center gap-1 rounded-xl p-2 text-sm font-light"
     @click="isOpen = true"
   >
-    {{ data }}
     <IconCart class="inline h-8" /> <AnimatedNumber :number="data || 0" />
     <span class="font-medium">&#8381;</span>
   </button>
