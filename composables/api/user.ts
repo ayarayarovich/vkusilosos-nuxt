@@ -11,10 +11,11 @@ export const useUserCredentials = () => {
     refreshToken: string
     isAuthenticated: boolean
   }>('user_credentials', {
-    sameSite: 'strict',
+    sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
     httpOnly: false,
     watch: true,
+    maxAge: 30 * 24 * 60 * 60,
     default: () => ({
       accessToken: '',
       refreshToken: '',

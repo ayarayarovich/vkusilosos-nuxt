@@ -174,7 +174,8 @@ export const useUsersReceptionWay = () => {
   const cookie = useCookie<'delivery' | 'restaurant' | null>('user_reception_way', {
     watch: true,
     default: () => null,
-    sameSite: 'strict',
+    sameSite: 'lax',
+    maxAge: 30 * 24 * 60 * 60,
     secure: process.env.NODE_ENV === 'production',
   })
 
