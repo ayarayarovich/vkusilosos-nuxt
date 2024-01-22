@@ -164,7 +164,7 @@ const close = () => {
   }
 }
 
-const { usersReceptionWay } = useUsersReceptionWay()
+const { data: usersReceptionWay } = useCurrentReceptionWay()
 
 const myReceptionWay = ref<'delivery' | 'restaurant'>('delivery')
 
@@ -172,7 +172,7 @@ watch(
   [usersReceptionWay],
   () => {
     if (usersReceptionWay.value) {
-      myReceptionWay.value = usersReceptionWay.value
+      myReceptionWay.value = usersReceptionWay.value.type
     }
   },
   {

@@ -171,32 +171,16 @@ interface CurrentRestaurant extends IRestaurant {
 interface CurrentDelivery extends Address {
   type: 'delivery'
 }
-export const useUsersReceptionWay = () => {
-  const cookie = useCookie<'delivery' | 'restaurant' | null>('user_reception_way', {
-    watch: true,
-    default: () => null,
-    sameSite: 'lax',
-    maxAge: 30 * 24 * 60 * 60,
-    secure: process.env.NODE_ENV === 'production',
-  })
-
-  const reset = () => {
-    cookie.value = null
-  }
-
-  return { usersReceptionWay: cookie, resetUsersReceptionWay: reset }
-}
 
 export const useCurrentReceptionWay = () => {
   const { userCredentials } = useUserCredentials()
-  const { usersReceptionWay } = useUsersReceptionWay()
   const publicAxios = usePublicAxiosInstance()
   const privateAxios = usePrivateAxiosInstance()
 
   const authenticated = computed(() => (userCredentials.value.isAuthenticated ? 'auth' : 'no-auth'))
 
   return useQuery({
-    queryKey: ['user', 'reception_way', usersReceptionWay, authenticated],
+    queryKey: ['user', 'reception_way', authenticated],
     queryFn: async () => {
       if (userCredentials.value.isAuthenticated) {
         const user = useUserQueryFn(privateAxios)
@@ -204,33 +188,25 @@ export const useCurrentReceptionWay = () => {
         const restaurants = useRestaurantsQueryFn(publicAxios)
 
         return await Promise.all([user, addresses, restaurants]).then(([u, a, r]) => {
-          if (usersReceptionWay.value === 'delivery') {
-            if (u.adres_id) {
-              const addr = a.list.find((v) => v.id === u.adres_id)
-              if (addr) {
-                const retAddr: CurrentDelivery = {
-                  type: 'delivery',
-                  ...addr,
-                }
-                return retAddr
-              } else {
-                return null
+          if (u.adres_id && !u.rest_id) {
+            const addr = a.list.find((v) => v.id === u.adres_id)
+            if (addr) {
+              const retAddr: CurrentDelivery = {
+                type: 'delivery',
+                ...addr,
               }
+              return retAddr
             } else {
               return null
             }
-          } else if (usersReceptionWay.value === 'restaurant') {
-            if (u.rest_id) {
-              const rest = r.find((v) => v.id === u.rest_id)
-              if (rest) {
-                const retRest: CurrentRestaurant = {
-                  type: 'restaurant',
-                  ...rest,
-                }
-                return retRest
-              } else {
-                return null
+          } else if (!u.adres_id && u.rest_id) {
+            const rest = r.find((v) => v.id === u.rest_id)
+            if (rest) {
+              const retRest: CurrentRestaurant = {
+                type: 'restaurant',
+                ...rest,
               }
+              return retRest
             } else {
               return null
             }
@@ -255,7 +231,6 @@ export const useInvalidateCurrentReceptionWay = () => {
 }
 
 export const useSetCurrentReceptionWay = () => {
-  const { usersReceptionWay } = useUsersReceptionWay()
   const invalidateDishes = useInvalidateDishes()
   const invalidateCategories = useInvalidateCategories()
   const invalidateReceptionWay = useInvalidateCurrentReceptionWay()
@@ -268,7 +243,6 @@ export const useSetCurrentReceptionWay = () => {
         rest: 0,
         adres: receptionWay.id,
       }).then(() => {
-        usersReceptionWay.value = 'delivery'
         invalidateReceptionWay()
         invalidateCategories()
         invalidateDishes()
@@ -279,7 +253,6 @@ export const useSetCurrentReceptionWay = () => {
         adres: 0,
         rest: receptionWay.id,
       }).then(() => {
-        usersReceptionWay.value = 'restaurant'
         invalidateReceptionWay()
         invalidateCategories()
         invalidateDishes()

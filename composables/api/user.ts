@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { AxiosInstance } from 'axios'
-import { useUsersReceptionWay } from './addresses'
 import type { SetUser, User } from '~/interfaces/users'
 
 type GetResponse = User
@@ -36,7 +35,6 @@ export const useUserCredentials = () => {
 
 export const useSignOut = () => {
   const { resetUserCredentials } = useUserCredentials()
-  const { resetUsersReceptionWay } = useUsersReceptionWay()
   const queryClient = useQueryClient()
   const privateAxios = usePrivateAxiosInstance()
 
@@ -47,7 +45,6 @@ export const useSignOut = () => {
     },
     onSuccess: () => {
       resetUserCredentials()
-      resetUsersReceptionWay()
       queryClient.removeQueries({
         queryKey: ['user'],
       })
