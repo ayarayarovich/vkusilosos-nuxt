@@ -27,7 +27,12 @@
       :src="dish.img"
       alt=""
     />
-    <h2 class="mb-auto mt-4 text-center">{{ dish.name }}</h2>
+    <NuxtLink
+      :to="`dishes/${dish.id}`"
+      class="mb-auto mt-4 text-center"
+    >
+      {{ dish.name }}
+    </NuxtLink>
     <div
       class="mt-8 flex justify-between self-stretch"
       :class="dish.size === 2 ? 'flex-row items-center gap-8' : 'flex-col items-stretch gap-4'"

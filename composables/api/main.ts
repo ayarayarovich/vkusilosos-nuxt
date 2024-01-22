@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/vue-query'
+import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { Dish } from '~/interfaces/dishes'
 import type { Banner, Story } from '~/interfaces/main'
 
@@ -22,6 +22,15 @@ export const useMain = <SData>(select: (response: UseMainResponse) => SData) => 
     },
     select,
   })
+}
+
+export const useInvalidateMain = () => {
+  const queryClient = useQueryClient()
+  return () => {
+    queryClient.invalidateQueries({
+      queryKey: ['main'],
+    })
+  }
 }
 
 interface UseSiteInfoResponse {

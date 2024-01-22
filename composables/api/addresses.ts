@@ -3,6 +3,7 @@ import type { AxiosInstance } from 'axios'
 import { useInvalidateDishes } from './dishes'
 import { useInvalidateCategories } from './categories'
 import { useInvalidateBasket } from './basket'
+import { useInvalidateMain } from './main'
 import type { Address } from '~/interfaces/main'
 import { useUserQueryFn, useUserCredentials, useSetUser } from '~/composables/api/user'
 import { useRestaurantsQueryFn } from '~/composables/api/restaurants'
@@ -235,6 +236,7 @@ export const useSetCurrentReceptionWay = () => {
   const invalidateCategories = useInvalidateCategories()
   const invalidateReceptionWay = useInvalidateCurrentReceptionWay()
   const invalidateBasket = useInvalidateBasket()
+  const invalidateMain = useInvalidateMain()
   const { mutateAsync } = useSetUser()
 
   return (receptionWay: CurrentRestaurant | CurrentDelivery) => {
@@ -244,6 +246,7 @@ export const useSetCurrentReceptionWay = () => {
         adres: receptionWay.id,
       }).then(() => {
         invalidateReceptionWay()
+        invalidateMain()
         invalidateCategories()
         invalidateDishes()
         invalidateBasket()
@@ -254,6 +257,7 @@ export const useSetCurrentReceptionWay = () => {
         rest: receptionWay.id,
       }).then(() => {
         invalidateReceptionWay()
+        invalidateMain()
         invalidateCategories()
         invalidateDishes()
         invalidateBasket()
