@@ -35,6 +35,11 @@
             leave-to="opacity-0 translate-x-full"
           >
             <HeadlessDialogPanel class="absolute right-0 h-full w-full max-w-3xl bg-whitegray shadow-xl transition-all">
+              <MessageDialog
+                message="К сожалению, сюда доставка не осуществляется"
+                :show="showNotDeliveringMessage"
+                @close="showNotDeliveringMessage = false"
+              />
               <form
                 ref="dialogPanelEl"
                 class="h-full w-full"
@@ -126,6 +131,8 @@ const invalidateOrders = useInvalidateOrders()
 
 const profileDialogStore = useProfileDialogStore()
 
+const showNotDeliveringMessage = ref(false)
+
 const onSubmit = handleSubmit((v: any) => {
   if (v.time_deliver === 'soon') {
     v.time_deliver = DateTime.now().plus({ minutes: 30 }).toFormat('yyyy-dd-LL HH:mm:ss ZZZ ZZZZ')
@@ -151,6 +158,8 @@ const onSubmit = handleSubmit((v: any) => {
       invalidateOrders()
       emit('close')
       profileDialogStore.open('orders_history')
+    } else if (response.action === 'not found adres') {
+      showNotDeliveringMessage.value = true
     }
   })
 })
