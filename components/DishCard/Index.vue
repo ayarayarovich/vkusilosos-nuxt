@@ -43,6 +43,7 @@
       >
         <DishAdder
           :dish-id="dish.id"
+          :dish-name="dish.name"
           class="h-full w-full"
         />
       </div>

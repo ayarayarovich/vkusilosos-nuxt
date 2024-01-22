@@ -54,6 +54,7 @@ import { useUserCredentials } from '~/composables/api/user'
 
 const props = defineProps<{
   dishId: number
+  dishName: string
   hideButton?: boolean
   alwaysButton?: boolean
 }>()
@@ -111,6 +112,7 @@ const updatePosition = useDebounceFn((count: number) => {
     mutate({
       id: dishInBasket.value.id,
       dish_id: dishInBasket.value.dish_id,
+      dish_name: dishInBasket.value.name,
       count,
     })
   }
@@ -129,6 +131,7 @@ const addNewPosition = () => {
 
   mutate({
     dish_id: props.dishId,
+    dish_name: props.dishName,
     count: 1,
   })
 }

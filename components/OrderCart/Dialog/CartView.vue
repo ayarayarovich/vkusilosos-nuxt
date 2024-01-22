@@ -52,6 +52,7 @@
                       class="h-8 w-28 md:w-32"
                       hide-button
                       :dish-id="position.dish_id"
+                      :dish-name="position.name"
                     />
                   </div>
                 </div>
@@ -207,6 +208,7 @@ const removeAll = (position: DishInBasket) => {
     id: position.id,
     count: 0,
     dish_id: position.dish_id,
+    dish_name: position.name,
   })
 }
 

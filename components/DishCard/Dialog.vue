@@ -96,11 +96,13 @@
                       class="h-9 w-24 text-black lg:h-10 lg:w-32"
                       hide-button
                       :dish-id="dish.id"
+                      :dish-name="dish.name"
                     />
                     <DishAdder
                       class="h-9 grow text-black lg:h-10"
                       always-button
                       :dish-id="dish.id"
+                      :dish-name="dish.name"
                     >
                       В корзину за {{ dish.price }} &#8381;
                     </DishAdder>

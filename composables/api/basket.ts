@@ -52,17 +52,21 @@ export const useAddToBasket = () => {
   const toast = useToast()
 
   return useMutation({
-    mutationFn: async (vars: any) => {
-      const response = await privateAxios.post('user/basket', vars)
+    mutationFn: async (vars: { id?: number; count: number; dish_id: number; dish_name: string }) => {
+      const response = await privateAxios.post('user/basket', {
+        id: vars.id,
+        count: vars.count,
+        dish_id: vars.dish_id,
+      })
       return response
     },
-    onSuccess(_, vars: any) {
+    onSuccess(_, vars) {
       if (!vars.id) {
         toast({
           component: MyToast,
           props: {
             title: 'Товар добавлен в корзину:',
-            detail: `id: ${vars.dish_id}`,
+            detail: vars.dish_name,
           },
         })
       }

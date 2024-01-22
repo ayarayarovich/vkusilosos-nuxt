@@ -27,6 +27,7 @@ const addToBasket = () => {
   mutate({
     count: 1,
     dish_id: props.id,
+    dish_name: props.name,
   })
 }
 </script>
