@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { AxiosInstance } from 'axios'
 import { useInvalidateDishes } from './dishes'
 import { useInvalidateCategories } from './categories'
+import { useInvalidateBasket } from './basket'
 import type { Address } from '~/interfaces/main'
 import { useUserQueryFn, useUserCredentials, useSetUser } from '~/composables/api/user'
 import { useRestaurantsQueryFn } from '~/composables/api/restaurants'
@@ -258,6 +259,7 @@ export const useSetCurrentReceptionWay = () => {
   const invalidateDishes = useInvalidateDishes()
   const invalidateCategories = useInvalidateCategories()
   const invalidateReceptionWay = useInvalidateCurrentReceptionWay()
+  const invalidateBasket = useInvalidateBasket()
   const { mutateAsync } = useSetUser()
 
   return (receptionWay: CurrentRestaurant | CurrentDelivery) => {
@@ -267,9 +269,10 @@ export const useSetCurrentReceptionWay = () => {
         adres: receptionWay.id,
       }).then(() => {
         usersReceptionWay.value = 'delivery'
+        invalidateReceptionWay()
         invalidateCategories()
         invalidateDishes()
-        invalidateReceptionWay()
+        invalidateBasket()
       })
     } else if (receptionWay.type === 'restaurant') {
       mutateAsync({
@@ -277,9 +280,10 @@ export const useSetCurrentReceptionWay = () => {
         rest: receptionWay.id,
       }).then(() => {
         usersReceptionWay.value = 'restaurant'
+        invalidateReceptionWay()
         invalidateCategories()
         invalidateDishes()
-        invalidateReceptionWay()
+        invalidateBasket()
       })
     }
   }
