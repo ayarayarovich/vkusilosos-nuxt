@@ -1,6 +1,14 @@
 <template>
   <div class="h-full w-full overflow-hidden rounded-xl">
     <div class="relative h-full w-full">
+      <div class="absolute h-px w-px opacity-0">
+        <img
+          v-for="item in props.story_items"
+          :key="item.id"
+          :src="item.img"
+          alt=""
+        />
+      </div>
       <div
         class="absolute bottom-0 left-0 top-0 w-1/2"
         @click="goToPreviousNarrativeSlide()"
