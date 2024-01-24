@@ -117,23 +117,26 @@
 
 <script setup lang="ts">
 import { pad } from '~/utils'
+import { useProfileDialogStore } from '~/store/profileDialog'
 
 const emit = defineEmits(['go-back'])
 
 const { data: orders } = useOrders((v) => v)
 
+const profileDialogStore = useProfileDialogStore()
+
 const displayStatus = (s: string) => {
   const map = {
-    accepted: 'Выполнен',
-    delivered: 'Доставлен',
-    waitAdmin: 'Ожидает подтверждения',
-    rejectedByUser: 'Отменён клиентом',
-    rejectedByAdmin: 'Отменён админом',
-    rejected: 'Отменён',
-    waitPay: 'Ожидает оплаты',
-    cooking: 'Готовится',
-    process: 'В процессе',
-    deliver: 'В пути',
+    'accepted': 'Выполнен',
+    'delivered': 'Доставлен',
+    'waitAdmin': 'Ожидает подтверждения',
+    'rejectedByUser': 'Отменён клиентом',
+    'rejectedByAdmin': 'Отменён админом',
+    'rejected': 'Отменён',
+    'wait pay': 'Ожидает оплаты',
+    'cooking': 'Готовится',
+    'process': 'В процессе',
+    'deliver': 'В пути',
   } as any
 
   return map[s]
@@ -155,5 +158,6 @@ const formatDate = (d: string) => {
 const showMyLocationDialog = ref(false)
 const closeMyLocationDialog = () => {
   showMyLocationDialog.value = false
+  profileDialogStore.close()
 }
 </script>
