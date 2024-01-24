@@ -1,5 +1,9 @@
 <template>
   <div class="relative flex h-full w-full transform flex-col items-stretch overflow-hidden bg-whitegray pt-8">
+    <MyLocationDialog
+      :show="showMyLocationDialog"
+      @close="closeMyLocationDialog"
+    />
     <div class="flex grow flex-col items-stretch px-4">
       <strong class="mb-4 text-2xl font-medium">Оформление заказа</strong>
 
@@ -15,13 +19,15 @@
             ></div>
             <button
               class="hover isolate h-10 w-1/2 rounded-lg"
-              disabled
+              type="button"
+              @click="showMyLocationDialog = true"
             >
               Доставка
             </button>
             <button
               class="isolate h-10 w-1/2 rounded-lg"
-              disabled
+              type="button"
+              @click="showMyLocationDialog = true"
             >
               Самовывоз
             </button>
@@ -144,6 +150,8 @@
 </template>
 
 <script setup lang="ts">
+import { tr } from 'yup-locales'
+
 const emit = defineEmits(['backToCart'])
 
 const { data: receptionWay } = useCurrentReceptionWay()
@@ -156,4 +164,9 @@ const noCashback = useFieldValue<boolean | undefined>('no_cashback')
 
 const { value: selectedPayType } = useField<number | undefined>('cart_id')
 const { value: cashback, errorMessage: cashbackError } = useField<number | undefined>('cashback')
+
+const showMyLocationDialog = ref(false)
+const closeMyLocationDialog = () => {
+  showMyLocationDialog.value = false
+}
 </script>
