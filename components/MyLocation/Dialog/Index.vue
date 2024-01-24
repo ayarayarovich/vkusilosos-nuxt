@@ -84,7 +84,7 @@
                           class="isolate h-10 w-1/2 rounded-lg"
                           @click="myReceptionWay = 'restaurant'"
                         >
-                          В ресторане
+                          Самовывоз
                         </button>
                       </div>
                     </div>
