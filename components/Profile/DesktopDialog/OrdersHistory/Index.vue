@@ -42,7 +42,7 @@
             class="w-full px-8 py-4 font-medium uppercase"
             @click="showMyLocationDialog = true"
           >
-            Выбрать ресторан
+            Выбрать адрес
           </SimpleButton>
         </div>
       </div>
