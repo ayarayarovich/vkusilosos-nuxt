@@ -88,8 +88,6 @@ const close = () => {
   emit('close')
 }
 
-const { data: user } = useUser((v) => v)
-
 const validationSchema = computed(() => {
   if (stage.value === 'cart') {
     return yup.object({
@@ -113,11 +111,9 @@ const validationSchema = computed(() => {
   }
 })
 
-const { handleSubmit } = useForm({
+const { handleSubmit, resetForm } = useForm<any>({
   validationSchema,
   initialValues: computed(() => ({
-    name: user.value?.name,
-    phone: formatPhone(user.value?.phone || ''),
     cart_id: 0,
     no_cashback: true,
     time_deliver: 'soon',
@@ -125,6 +121,25 @@ const { handleSubmit } = useForm({
   })),
   keepValuesOnUnmount: true,
 })
+
+const { data: user } = useUser((v) => v)
+
+watch(
+  [user],
+  () => {
+    if (user.value) {
+      resetForm({
+        values: {
+          name: user.value.name,
+          phone: formatPhone(user.value.phone || ''),
+        },
+      })
+    }
+  },
+  {
+    immediate: true,
+  }
+)
 
 const { mutateAsync } = useCreateOrder()
 const invalidateOrders = useInvalidateOrders()
