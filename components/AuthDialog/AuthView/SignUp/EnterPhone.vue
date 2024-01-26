@@ -6,8 +6,7 @@
     >
       <div>
         <p class="mb-4">Напишите свой номер телефона, чтобы получить код по СМС для входа</p>
-        <InputMasked
-          mask="+{7} (000) 000-00-00"
+        <InputPhone
           class="mb-4"
           label="Номер телефона"
           name="phone"

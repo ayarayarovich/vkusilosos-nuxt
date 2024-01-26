@@ -13,7 +13,7 @@
     <div class="relative mx-8 mb-4 h-0 grow">
       <div class="scrollbar-hide h-full overflow-y-auto scroll-smooth py-4">
         <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-          <InputText
+          <InputPhone
             type="text"
             name="phone"
             label="Телефон"
@@ -60,7 +60,8 @@
           <h3 class="mb-5 block text-xl font-medium">Подписки</h3>
           <div class="flex items-center gap-2">
             <label class="flex items-center gap-2">
-              <InputCheckbox name="personal-recomendations" /> <span class="select-none cursor-pointer">Получать персональные предложения и акции</span>
+              <InputCheckbox name="personal-recomendations" />
+              <span class="cursor-pointer select-none">Получать персональные предложения и акции</span>
             </label>
             <Tooltip> Согласен на получение от ООО “Вкуси Лосось” рекламных предложений </Tooltip>
           </div>
@@ -93,16 +94,23 @@ const { data: user } = useUser((v) => {
 
 const { mutate: setUser } = useSetUser()
 
-const { values } = useForm<any>({
+const { values, setFieldError } = useForm<any>({
   validationSchema: yup.object({
     name: yup.string().label('Имя'),
     email: yup.string().label('Электронная почта'),
-    phone: yup.string().label('Телефон'),
+    phone: yup.string().required().label('Телефон'),
     birthday: yup.date().label('Дата'),
     last_password: yup.string().label('Старый пароль'),
     new_password: yup.string().label('Новый пароль'),
   }),
   initialValues: user,
+})
+
+watch([user], () => {
+  const data = user.value as any
+  if (data?.action === 'set data') {
+    setFieldError('phone', 'Укажите телефон')
+  }
 })
 
 onUnmounted(() => {

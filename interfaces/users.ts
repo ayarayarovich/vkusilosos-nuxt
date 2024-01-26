@@ -41,6 +41,7 @@ export interface SetUser {
   email?: string
   last_password?: string
   new_password?: string
+  phone?: string
 }
 
 export interface Order {

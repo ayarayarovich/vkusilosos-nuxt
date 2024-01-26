@@ -2,7 +2,9 @@
   <div class="relative">
     <input
       :id="inputID"
-      ref="el"
+      inputmode="tel"
+      v-model="maskedValue"
+      v-maska:[options]="bindedObject"
       class="peer w-full select-none rounded-xl border-2 border-transparent bg-white px-4 pb-3 pt-7 text-base placeholder-transparent shadow-main outline-none transition-colors focus:border-orange-200"
       :class="{
         '!border-red': errorMessage,
@@ -12,8 +14,6 @@
       type="text"
       :name="name"
       placeholder="Введите"
-      @change="handleChange"
-      @blur="handleBlur"
     />
     <label
       :for="inputID"
@@ -37,33 +37,61 @@
 </template>
 
 <script setup lang="ts">
-import { useIMask } from 'vue-imask'
+import { v4 as uuidv4 } from 'uuid'
 
 const props = defineProps<{
   label?: string
   name: string
   locked?: boolean
-  mask: any
   textCenter?: boolean
 }>()
 
+const inputID = uuidv4()
+
 const { label, name, locked } = toRefs(props)
 
-const { el, unmasked } = useIMask({
-  mask: props.mask,
-  lazy: false,
-  normalizeZeros: true,
+// watch([unmasked], () => {
+//   resetField({
+//     value: unmasked.value || undefined,
+//   })
+// })
+
+const maskedValue = ref('')
+const bindedObject = reactive<any>({})
+
+const options = reactive({
+  mask: '+7 (###) ###-##-##',
+  eager: false,
+  tokensReplace: true,
 })
 
-watch([unmasked], () => {
-  resetField({
-    value: unmasked.value || undefined
-  })
+watch([maskedValue], () => {
+  if (maskedValue.value) {
+    const phoneSanitazied = maskedValue.value.replace(/\D/g, '')
+    value.value = phoneSanitazied
+  }
 })
 
-const { errorMessage, value, resetField } = useField<string | undefined>(name)
+const {
+  errorMessage,
+  value,
+  meta: { initialValue },
+} = useField<string | undefined>(name)
 
-watch([value], () => {
-  unmasked.value = value.value || ''
-})
+watch(
+  [initialValue],
+  () => {
+    if (initialValue) {
+      const phoneSanitazied = initialValue.replace(/\D/g, '')
+      if (phoneSanitazied.length === 11) {
+        maskedValue.value = phoneSanitazied.slice(1)
+      } else {
+        maskedValue.value = phoneSanitazied
+      }
+    }
+  },
+  {
+    immediate: true,
+  }
+)
 </script>

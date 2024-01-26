@@ -31,7 +31,6 @@
 <script setup lang="ts">
 import { useMutation } from '@tanstack/vue-query'
 import * as yup from 'yup'
-import { useAuthDialogStore } from '~/store/authDialog'
 
 const props = defineProps<{
   phone: string
@@ -56,14 +55,13 @@ const { mutateAsync } = useMutation({
     }>('auth/verify', {
       login: vals.phone,
       code: vals.code,
-      fb_token: fbToken.value
+      fb_token: fbToken.value,
     })
     return response.data
   },
 })
 
 const { userCredentials } = useUserCredentials()
-const authDialogStore = useAuthDialogStore()
 
 watchEffect(() => {
   if (code.value?.length === 4) {
@@ -76,7 +74,6 @@ watchEffect(() => {
         refreshToken: r.refreshToken,
         isAuthenticated: true,
       }
-      authDialogStore.close()
     })
   }
 })
@@ -105,7 +102,7 @@ const { mutate: _sendOtpAgain } = useSendOtp({
   onCheckCode: () => {
     secondsLeft.value = timeout
     resume()
-  }
+  },
 })
 const sendOtpAgain = () => {
   _sendOtpAgain({

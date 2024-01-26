@@ -68,8 +68,6 @@
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
 import { useImage } from '@vueuse/core'
-import { useAuthDialogStore } from '~/store/authDialog';
-import { useProfileDialogStore } from '~/store/profileDialog';
 
 const props = defineProps<{
   show?: boolean
@@ -83,18 +81,14 @@ const { data, isSuccess } = useQRCode(show)
 const token = computed(() => data.value?.data || '')
 const { data: checkData } = useCheckQRData(token, isSuccess)
 const { userCredentials } = useUserCredentials()
-const authDialogStore = useAuthDialogStore()
-const profileDialogStore = useProfileDialogStore()
 
 watchEffect(() => {
   if (checkData.value?.token && checkData.value.refreshToken) {
     userCredentials.value = {
       accessToken: checkData.value.token,
       refreshToken: checkData.value.refreshToken,
-      isAuthenticated: true
+      isAuthenticated: true,
     }
-    authDialogStore.close()
-    profileDialogStore.open()
   }
 })
 

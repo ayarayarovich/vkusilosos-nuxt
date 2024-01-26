@@ -2,6 +2,7 @@
   <div class="flex min-h-screen flex-col text-black">
     <AuthDialog />
     <Profile />
+    <SetUserDataDialog />
 
     <header
       id="header"
@@ -237,10 +238,30 @@
 <script setup lang="ts">
 import { useProfileDialogStore } from '~/store/profileDialog'
 import { formatPhone } from '~/utils'
+import { useSetDataDialog } from '~/store/setDataDialog'
+import { useAuthDialogStore } from '~/store/authDialog'
 
 const profileDialogStore = useProfileDialogStore()
 
 const { userCredentials } = useUserCredentials()
+const setDataDialogStore = useSetDataDialog()
+const authDialogStore = useAuthDialogStore()
+
+const { data: user } = useUser((v) => v as any)
+watch(
+  [user, userCredentials],
+  () => {
+    if (userCredentials.value.isAuthenticated) {
+      authDialogStore.close()
+      if (user.value?.action === 'set data') {
+        setDataDialogStore.open()
+      }
+    }
+  },
+  {
+    immediate: true,
+  }
+)
 
 const { data: siteInfo, suspense } = useSiteInfo((v) => v)
 
