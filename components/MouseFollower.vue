@@ -11,7 +11,7 @@
 import { ref, watch } from 'vue'
 
 const props = defineProps<{
-  hideWhenOverEl: HTMLElement
+  hideWhenOverEl?: HTMLElement
 }>()
 
 const { hideWhenOverEl } = toRefs(props)
