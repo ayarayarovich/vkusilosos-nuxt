@@ -121,7 +121,15 @@ import { useProfileDialogStore } from '~/store/profileDialog'
 
 const emit = defineEmits(['go-back'])
 
-const { data: orders } = useOrders((v) => v)
+const { data: orders } = useOrders(
+  (v) => v,
+  (query) => {
+    if (query.state.data?.active_orders.length) {
+      return 60 * 1000
+    }
+    return false
+  }
+)
 
 const profileDialogStore = useProfileDialogStore()
 

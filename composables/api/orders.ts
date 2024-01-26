@@ -1,5 +1,5 @@
 import { computed, unref } from 'vue'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { Query, useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { Order } from '~/interfaces/users'
 
 interface GetResponse {
@@ -8,7 +8,15 @@ interface GetResponse {
   total: number
 }
 
-export const useOrders = <SData>(select: (response: GetResponse) => SData) => {
+export const useOrders = <SData>(
+  select: (response: GetResponse) => SData,
+  refetchInterval?: MaybeRef<
+    | number
+    | false
+    | ((query: Query<GetResponse, Error, GetResponse, string[]>) => number | false | undefined)
+    | undefined
+  >
+) => {
   const privateAxios = usePrivateAxiosInstance()
   const { userCredentials } = useUserCredentials()
 
@@ -25,6 +33,7 @@ export const useOrders = <SData>(select: (response: GetResponse) => SData) => {
     },
     select,
     enabled: userCredentials.value.isAuthenticated,
+    refetchInterval,
   })
 }
 
