@@ -97,6 +97,17 @@ export const useSendRecovery = () => {
   })
 }
 
+export const useSendReview = () => {
+  const privateAxios = usePrivateAxiosInstance()
+
+  return useMutation({
+    mutationFn: async (vals: any) => {
+      const response = await privateAxios.post('api/review', vals)
+      return response.data
+    },
+  })
+}
+
 interface UseSendOtpVals {
   phone: string
 }

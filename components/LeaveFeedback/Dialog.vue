@@ -35,39 +35,41 @@
             leave-to="opacity-0 scale-95"
           >
             <HeadlessDialogPanel class="w-full max-w-sm rounded-2xl shadow-xl transition-all">
-              <div
+              <form
                 ref="dialogPanelEl"
                 class="flex w-full transform flex-col items-stretch justify-between gap-4 overflow-hidden rounded-2xl bg-whitegray p-8"
+                @submit.prevent="onSubmit"
               >
                 <h1 class="mb-2 w-full text-center text-lg font-medium">Оставить отзыв</h1>
 
                 <InputText
-                  v-model="name"
                   label="Имя"
                   name="name"
                   type="text"
                 />
                 <InputText
-                  v-model="email"
                   label="Электронная почта"
                   name="email"
                   type="text"
                 />
-                <InputText
-                  v-model="phone"
+                <InputPhone
                   label="Телефон"
                   name="phone"
-                  type="text"
                 />
-                <InputText
-                  v-model="comment"
+                <InputTextarea
                   label="Коментарий"
-                  name="comment"
-                  type="text"
+                  name="message"
+                  :rows="3"
                 />
 
-                <SimpleButton class="w-full px-4 py-4"> Отправить </SimpleButton>
-              </div>
+                <SimpleButton
+                  class="w-full px-4 py-4"
+                  type="submit"
+                  :disabled="isPending"
+                >
+                  Отправить
+                </SimpleButton>
+              </form>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
         </div>
@@ -78,6 +80,7 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
+import * as yup from 'yup'
 
 const props = defineProps<{
   show?: boolean
@@ -87,8 +90,40 @@ const emit = defineEmits(['close'])
 
 const dialogPanelEl = ref<HTMLElement>()
 
-const name = ref('')
-const email = ref('')
-const phone = ref('')
-const comment = ref('')
+const { userCredentials } = useUserCredentials()
+const { data: user } = useUser((v) => ({
+  name: v.name,
+  phone: v.phone,
+  email: v.email,
+}))
+
+const validationSchema = yup.object({
+  name: yup.string().label('Имя'),
+  phone: yup.string().label('Телефон'),
+  email: yup.string().email().label('Электронная почта'),
+  message: yup.string().label('Комментарий'),
+})
+
+const initialValues = computed(() => {
+  if (userCredentials.value.isAuthenticated && user.value) {
+    return user.value
+  }
+  return {
+    email: '',
+    message: '',
+    name: '',
+    phone: '',
+  }
+})
+
+const { handleSubmit } = useForm({
+  validationSchema,
+  initialValues,
+})
+
+const { mutateAsync, isPending } = useSendReview()
+
+const onSubmit = handleSubmit((vals) => {
+  mutateAsync(vals).then(() => emit('close'))
+})
 </script>
