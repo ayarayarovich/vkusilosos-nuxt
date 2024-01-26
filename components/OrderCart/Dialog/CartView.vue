@@ -83,9 +83,22 @@
           </ul>
         </div>
 
+        <div class="my-3 w-full px-4">
+          <div class="flex w-full items-center justify-between rounded-lg p-4 shadow-elevated">
+            <span>Укажите количество персон</span>
+            <div class="h-8 w-28 md:w-32">
+              <InputNumberAdder
+                name="guests_count"
+                :min="1"
+                :max="99"
+              />
+            </div>
+          </div>
+        </div>
+
         <div
           v-if="filteredAdditions && filteredAdditions.length > 0"
-          class="my-3 w-full"
+          class="mb-3 w-full"
         >
           <p class="my-2 px-4 text-lg">Добавить к заказу?</p>
 

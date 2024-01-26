@@ -94,6 +94,7 @@ const validationSchema = computed(() => {
       cart_id: yup.number().required(),
       promo: yup.string().label('Промокод'),
       use_coins: yup.boolean().label('Вкусоины'),
+      guests_count: yup.number().label('Количество гостей'),
     })
   } else if (stage.value === 'payment') {
     return yup.object({
@@ -118,6 +119,7 @@ const { handleSubmit, resetForm } = useForm<any>({
     no_cashback: true,
     time_deliver: 'soon',
     use_coins: false,
+    guests_count: 1,
   })),
   keepValuesOnUnmount: true,
 })
