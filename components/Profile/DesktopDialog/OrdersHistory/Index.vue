@@ -135,16 +135,14 @@ const profileDialogStore = useProfileDialogStore()
 
 const displayStatus = (s: string) => {
   const map = {
-    'accepted': 'Выполнен',
+    'success': 'Сдан',
     'delivered': 'Доставлен',
-    'waitAdmin': 'Ожидает подтверждения',
-    'rejectedByUser': 'Отменён клиентом',
-    'rejectedByAdmin': 'Отменён админом',
+    'adopted': 'Принят',
     'rejected': 'Отменён',
     'wait pay': 'Ожидает оплаты',
     'cooking': 'Готовится',
-    'process': 'В процессе',
-    'deliver': 'В пути',
+    'build': 'Сборка',
+    'in_way': 'В пути',
   } as any
 
   return map[s]
