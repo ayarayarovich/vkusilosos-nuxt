@@ -83,7 +83,7 @@
           </ul>
         </div>
 
-        <div class="my-3 w-full px-4">
+        <div class="my-8 w-full px-4">
           <div class="flex w-full items-center justify-between rounded-lg p-4 shadow-elevated">
             <span>Укажите количество персон</span>
             <div class="h-8 w-28 md:w-32">
@@ -98,7 +98,7 @@
 
         <div
           v-if="filteredAdditions && filteredAdditions.length > 0"
-          class="mb-3 w-full"
+          class="mb-8 w-full"
         >
           <p class="my-2 px-4 text-lg">Добавить к заказу?</p>
 
@@ -115,7 +115,7 @@
           </div>
         </div>
 
-        <div class="w-full px-4 pt-4 font-medium shadow-elevated">
+        <div class="w-full px-4 pt-4 font-medium shadow-main">
           <OrderCartDialogInputPromocode
             name="promo"
             class="mb-4"
