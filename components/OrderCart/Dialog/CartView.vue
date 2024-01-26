@@ -58,6 +58,28 @@
                 </div>
               </div>
             </li>
+
+            <li
+              v-if="matchedPromo"
+              class="my-2 flex w-full gap-2 rounded-xl bg-white p-4 shadow-main"
+            >
+              <img
+                class="h-full w-24 self-center object-contain object-center lg:h-24 lg:w-36"
+                :src="matchedPromo.gift.img"
+                alt=""
+              />
+              <div class="flex grow flex-col items-stretch justify-between self-stretch">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <p class="text-black">{{ matchedPromo.gift.name }}</p>
+                    <p class="text-sm text-black opacity-50">{{ matchedPromo.gift.weight }} гр</p>
+                  </div>
+                </div>
+                <div class="flex items-end justify-end">
+                  <span class="font-medium text-orange-200">Подарок к заказу</span>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
 
@@ -172,6 +194,23 @@ const bonusesToGet = computed(() => {
     return Math.floor((basket.value.total_price * main.value.percent_order) / 100)
   }
   return 0
+})
+
+const matchedPromo = computed(() => {
+  if (main.value?.promo) {
+    const promo = main.value.promo
+
+    if (promo.promo === 'sum' && basket.value?.total_price && basket.value?.total_price >= promo.sum) {
+      return promo
+    }
+    if (
+      promo.promo === 'dish' &&
+      basket.value?.list.find((v) => v.dish_id === promo.dish.id && v.count >= promo.count)
+    ) {
+      return promo
+    }
+  }
+  return undefined
 })
 
 const filteredAdditions = computed(() => {
