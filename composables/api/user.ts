@@ -48,6 +48,7 @@ export const useSignOut = () => {
       queryClient.removeQueries({
         queryKey: ['user'],
       })
+      location.reload()
     },
   })
 
