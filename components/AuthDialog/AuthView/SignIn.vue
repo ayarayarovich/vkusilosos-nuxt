@@ -61,7 +61,6 @@
 
     <div>
       <AuthDialogYandex />
-      <AuthDialogVk />
     </div>
   </div>
 </template>
