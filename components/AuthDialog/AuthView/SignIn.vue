@@ -66,6 +66,7 @@
 </template>
 
 <script setup lang="ts">
+import { md5 } from 'js-md5'
 import * as yup from 'yup'
 import { useUserCredentials } from '~/composables/api/user'
 
@@ -89,6 +90,7 @@ const signIn = handleSubmit((vals) => {
   publicAxios
     .post('auth/login', {
       ...vals,
+      password: md5(vals.password),
       fb_token: fbToken.value,
     })
     .then((res) => {

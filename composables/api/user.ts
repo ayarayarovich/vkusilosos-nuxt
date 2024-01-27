@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { AxiosInstance } from 'axios'
 import type { SetUser, User } from '~/interfaces/users'
+import { md5 } from 'js-md5'
 
 type GetResponse = User
 
@@ -78,6 +79,12 @@ export const useSetUser = () => {
 
   return useMutation({
     mutationFn: async (data: SetUser) => {
+      if (data.last_password) {
+        data.last_password = md5(data.last_password)
+      }
+      if (data.new_password) {
+        data.new_password = md5(data.new_password)
+      }
       const response = await privateAxios.post('user/me', data)
       return response.data
     },
