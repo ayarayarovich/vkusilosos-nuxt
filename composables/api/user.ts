@@ -46,9 +46,8 @@ export const useSignOut = () => {
     },
     onSuccess: () => {
       resetUserCredentials()
-      queryClient.removeQueries({
-        queryKey: ['user'],
-      })
+      queryClient.clear()
+      queryClient.removeQueries()
       location.reload()
     },
   })
