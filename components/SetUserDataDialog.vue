@@ -43,10 +43,12 @@
                 <h1 class="mb-2 w-full text-center text-lg font-medium">Введите недостающие данные</h1>
 
                 <InputPhone
+                  v-if="!user?.phone"
                   name="phone"
                   label="Телефон"
                 />
                 <InputText
+                  v-if="!user?.email"
                   name="email"
                   label="Электронная почта"
                 />
@@ -81,9 +83,14 @@ const { handleSubmit, resetForm } = useForm({
     phone: yup.string().required('Введите телефон').length(11, 'Некорректный номер телефона').label('Телефон'),
     email: yup.string().email('Некорректный адрес').required('Введите почту').label('Электронная почта'),
   }),
+  keepValuesOnUnmount: true,
 })
 
-const { data: user } = useUser((v) => v)
+const { data: user } = useUser((v) => ({
+  phone: v.phone,
+  email: v.email,
+}))
+
 watch(
   [user],
   () => {
