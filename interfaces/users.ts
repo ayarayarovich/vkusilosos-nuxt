@@ -14,7 +14,7 @@ export interface Cart {
 
 export interface User {
   adres_id: number
-  birthday: string
+  birthday?: string
   bonuses: number
   carts: Cart[]
   count_in_basket: number

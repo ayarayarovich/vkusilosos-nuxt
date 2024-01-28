@@ -83,12 +83,11 @@ import { formatPhone } from '~/utils'
 const emit = defineEmits(['go-back'])
 
 const { data: user } = useUser((v) => {
-  const birthday = v.birthday.split(' ')[0] // 2005-09-04 04:00:00 +0400 MSD
   return {
     name: v.name,
     phone: formatPhone(v.phone),
     email: v.email,
-    birthday: DateTime.fromFormat(birthday, 'yyyy-mm-dd').toJSDate(),
+    birthday: v.birthday ? DateTime.fromFormat(v.birthday.split(' ')[0], 'yyyy-mm-dd').toJSDate() : undefined,
   }
 })
 
