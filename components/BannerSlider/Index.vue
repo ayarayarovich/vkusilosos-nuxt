@@ -1,7 +1,7 @@
 <template>
   <div
     ref="container"
-    class="sm relative isolate aspect-[30/9] overflow-hidden rounded-3xl shadow-lg"
+    class="sm relative isolate aspect-[5/2] overflow-hidden rounded-3xl shadow-lg"
   >
     <!-- eslint-disable vue/require-toggle-inside-transition -->
     <Transition
@@ -27,7 +27,7 @@
     </Transition>
     <!-- eslint-enable -->
 
-    <div class="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+    <div class="absolute bottom-2 md:bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
       <BannerSliderButton
         v-for="(slide, index) in slides"
         :key="index"
