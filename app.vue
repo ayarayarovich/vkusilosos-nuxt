@@ -39,3 +39,12 @@ useHead({
   ],
 })
 </script>
+
+<style>
+
+.Vue-Toastification__toast {
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+
+</style>

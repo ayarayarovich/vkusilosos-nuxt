@@ -42,6 +42,10 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
           params,
         })
 
+        for (const d of response.data.dishes) {
+          d.can_deliver = response.data.can_deliver
+        }
+
         return response.data
       }
 
@@ -54,6 +58,10 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
       const response = await publicAxios.get<Response>('api/dishes', {
         params,
       })
+
+      for (const d of response.data.dishes) {
+        d.can_deliver = response.data.can_deliver
+      }
 
       return response.data
     },

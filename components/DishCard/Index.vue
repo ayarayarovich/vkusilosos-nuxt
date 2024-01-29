@@ -49,6 +49,7 @@
         <DishAdder
           :dish-id="dish.id"
           :dish-name="dish.name"
+          :can-deliver="dish.can_deliver"
           class="h-full w-full"
         />
       </div>

@@ -1,10 +1,6 @@
 <template>
-  <div class="bg-white p-4">
+  <div class="bg-[#fb7185] p-4 text-black">
     <p class="flex items-center gap-2 font-bold">
-      <img
-        src="~/assets/check-mark.png"
-        class="h-4 w-auto"
-      />
       {{ props.title }}
     </p>
     <p>{{ props.detail }}</p>

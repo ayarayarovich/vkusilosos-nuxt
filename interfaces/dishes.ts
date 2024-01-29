@@ -23,6 +23,7 @@ export interface Dish {
   color: number
   size: number
   tags: number[] | null
+  can_deliver: boolean
 }
 
 export interface ExpandedDish {

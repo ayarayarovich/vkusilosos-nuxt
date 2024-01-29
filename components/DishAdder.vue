@@ -49,15 +49,20 @@
 </template>
 
 <script setup lang="ts">
+import { useToast } from 'vue-toastification'
+import MyToastError from './MyToastError.vue'
 import { useAuthDialogStore } from '~/store/authDialog'
 import { useUserCredentials } from '~/composables/api/user'
 
 const props = defineProps<{
   dishId: number
   dishName: string
+  canDeliver?: boolean
   hideButton?: boolean
   alwaysButton?: boolean
 }>()
+
+const toast = useToast()
 
 const { userCredentials } = useUserCredentials()
 const { data: receptionWay } = useCurrentReceptionWay()
@@ -85,6 +90,17 @@ const addLocalCount = () => {
     return
   }
 
+  if (!props.canDeliver) {
+    toast({
+      component: MyToastError,
+      props: {
+        title: 'Ошибка',
+        detail: 'Доставка на этот адресс не осуществляется',
+      },
+    })
+    return
+  }
+
   count.value += 1
   if (count.value === 1) {
     addNewPosition()
@@ -100,6 +116,17 @@ const removeLocalCount = () => {
 
   if (!receptionWay.value) {
     openLocationDialog()
+    return
+  }
+
+  if (!props.canDeliver) {
+    toast({
+      component: MyToastError,
+      props: {
+        title: 'Ошибка',
+        detail: 'Доставка на этот адресс не осуществляется',
+      },
+    })
     return
   }
 
@@ -126,6 +153,17 @@ const addNewPosition = () => {
 
   if (!receptionWay.value) {
     openLocationDialog()
+    return
+  }
+
+  if (!props.canDeliver) {
+    toast({
+      component: MyToastError,
+      props: {
+        title: 'Ошибка',
+        detail: 'Доставка на этот адресс не осуществляется',
+      },
+    })
     return
   }
 

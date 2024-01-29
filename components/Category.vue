@@ -60,6 +60,7 @@
                 v-if="currentTag == -1 || dish.tags?.includes(currentTag)"
                 :dish="dish"
                 :big_card="dish.size === 2"
+                :can-deliver="dish.can_deliver"
                 :class="{
                   'orange-bg': dish.color === 1,
                   'blue-bg': dish.color === 2,

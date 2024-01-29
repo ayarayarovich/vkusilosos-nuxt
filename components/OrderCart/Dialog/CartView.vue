@@ -53,6 +53,7 @@
                       hide-button
                       :dish-id="position.dish_id"
                       :dish-name="position.name"
+                      :can-deliver="true"
                     />
                   </div>
                 </div>

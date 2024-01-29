@@ -97,12 +97,14 @@
                       hide-button
                       :dish-id="dish.id"
                       :dish-name="dish.name"
+                      :can-deliver="dish.can_deliver"
                     />
                     <DishAdder
                       class="h-9 grow text-black lg:h-10"
                       always-button
                       :dish-id="dish.id"
                       :dish-name="dish.name"
+                      :can-deliver="dish.can_deliver"
                     >
                       В корзину за {{ dish.price }} &#8381;
                     </DishAdder>
