@@ -1,7 +1,7 @@
 <template>
   <div
     ref="container"
-    class="sm relative isolate aspect-[5/2] overflow-hidden rounded-3xl shadow-lg"
+    class="sm relative isolate aspect-[12/5] overflow-hidden rounded-3xl shadow-lg md:aspect-[11/3]"
   >
     <!-- eslint-disable vue/require-toggle-inside-transition -->
     <Transition
@@ -18,8 +18,13 @@
           :to="slides[activeSlideIndex].link"
         >
           <img
-            class="h-full w-full object-cover"
+            class="hidden h-full w-full object-cover md:block"
             :src="slides[activeSlideIndex].img"
+            alt=""
+          />
+          <img
+            class="h-full w-full object-cover md:hidden"
+            :src="slides[activeSlideIndex].phone_img"
             alt=""
           />
         </RouterLink>
@@ -27,7 +32,7 @@
     </Transition>
     <!-- eslint-enable -->
 
-    <div class="absolute bottom-2 md:bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+    <div class="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
       <BannerSliderButton
         v-for="(slide, index) in slides"
         :key="index"
@@ -51,16 +56,6 @@ const { autoplay, autoplayDelay } = toRefs(props)
 
 const container = ref(null)
 const { data: slides } = useMain((v) => v.banners)
-// const slides = ref([
-//   {
-//     imgSrc: '/banner-1.png',
-//     link: '/promo/banner1',
-//   },
-//   {
-//     imgSrc: '/banner-2.png',
-//     link: '/promo/banner2',
-//   },
-// ])
 const slidesCount = computed(() => slides.value?.length || 0)
 const activeSlideIndex = ref(0)
 

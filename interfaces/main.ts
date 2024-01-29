@@ -2,6 +2,7 @@ export interface Banner {
   id: number
   link: string
   img: string
+  phone_img: string
 }
 
 export interface StoryItem {
