@@ -27,19 +27,21 @@ export default defineNuxtPlugin(() => {
   //   console.log('Message received. ', payload);
   // });
 
-  Notification.requestPermission().then((result) => {
-    if (result === 'granted') {
-      getToken(messaging)
-        .then((currentToken) => {
-          if (currentToken) {
-            token.value = currentToken
-          } else {
-            console.log('No registration token available. Request permission to generate one.')
-          }
-        })
-        .catch((err) => {
-          console.log('An error occurred while retrieving token. ', err)
-        })
-    }
-  })
+  if (Notification) {
+    Notification.requestPermission().then((result) => {
+      if (result === 'granted') {
+        getToken(messaging)
+          .then((currentToken) => {
+            if (currentToken) {
+              token.value = currentToken
+            } else {
+              console.log('No registration token available. Request permission to generate one.')
+            }
+          })
+          .catch((err) => {
+            console.log('An error occurred while retrieving token. ', err)
+          })
+      }
+    })
+  }
 })
