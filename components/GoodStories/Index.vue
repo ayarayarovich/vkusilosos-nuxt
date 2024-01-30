@@ -3,7 +3,9 @@
     <div class="absolute bottom-0 left-0 top-0 w-4 bg-gradient-to-r from-whitegray to-transparent"></div>
     <div class="absolute bottom-0 right-0 top-0 w-4 bg-gradient-to-l from-whitegray to-transparent"></div>
 
-    <div class="flex gap-4 overflow-x-auto px-4 py-2 scrollbar-thin scrollbar-track-black/5 scrollbar-thumb-black/10">
+    <div
+      class="flex gap-4 overflow-x-auto px-4 py-2 scrollbar-thin scrollbar-track-black/5 scrollbar-thumb-black/10 hover:scrollbar-thumb-black/15"
+    >
       <GoodStoriesNarrative
         v-for="(narrative, index) in narratives"
         :key="narrative.id"
