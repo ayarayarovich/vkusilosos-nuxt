@@ -24,7 +24,7 @@
       mode="out-in"
     >
       <div
-        v-if="!orders?.total || !orders?.active_orders.length"
+        v-if="orders?.total || !orders?.active_orders.length"
         class="flex h-0 grow items-center justify-center p-8"
       >
         <div>
