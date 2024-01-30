@@ -5,7 +5,7 @@
         class="flex items-center gap-2"
         @click="emit('go-back')"
       >
-        <IconArrowRight class="h-8 rotate-180 invert md:hidden" />
+        <IconArrowRight class="size-8 rotate-180 md:hidden" />
         <h2 class="block text-2xl font-medium leading-none">Уведомления</h2>
       </button>
     </div>
@@ -81,9 +81,8 @@ const { values } = useForm({
     sms_pushes: yup.boolean().label('СМС'),
     status_pushes: yup.boolean().label('Пуши о статусе заказа'),
   }),
-  initialValues: usersSettings
+  initialValues: usersSettings,
 })
-
 
 onBeforeUnmount(() => {
   setUser({

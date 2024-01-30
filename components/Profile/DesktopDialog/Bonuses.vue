@@ -5,7 +5,7 @@
         class="flex items-center gap-2"
         @click="emit('go-back')"
       >
-        <IconArrowRight class="h-8 rotate-180 invert md:hidden" />
+        <IconArrowRight class="size-8 rotate-180 md:hidden" />
         <h2 class="block text-xl font-medium leading-none">Бонусная система</h2>
       </button>
       <BonusCoins />

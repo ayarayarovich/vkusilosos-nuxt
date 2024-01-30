@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import 'vue-toastification/dist/index.css'
+import 'tippy.js/animations/scale.css'
 
 useHead({
   title: 'ВкусиЛосось',
@@ -41,10 +42,8 @@ useHead({
 </script>
 
 <style>
-
 .Vue-Toastification__toast {
   padding: 0 !important;
   min-height: 0 !important;
 }
-
 </style>

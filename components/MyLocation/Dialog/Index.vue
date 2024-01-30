@@ -44,7 +44,7 @@
                   type="button"
                   @click="close()"
                 >
-                  <IconArrowRight class="h-6 rotate-180 invert" />
+                  <IconArrowRight class="size-6 rotate-180 md:hidden" />
                   Выберите адрес
                 </button>
 

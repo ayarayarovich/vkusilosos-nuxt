@@ -37,7 +37,7 @@
             <HeadlessDialogPanel class="w-full max-w-4xl rounded-2xl shadow-xl transition-all">
               <div
                 ref="dialogPanelEl"
-                class="flex w-full transform flex-col gap-8 overflow-hidden rounded-2xl bg-white px-8 py-12 md:flex-row"
+                class="flex w-full transform flex-col gap-8 rounded-2xl bg-white px-8 py-12 md:flex-row"
               >
                 <img
                   class="h-48 w-64 self-center object-contain"
@@ -52,11 +52,11 @@
                       class="mb-2 flex items-center gap-2 text-2xl font-medium"
                     >
                       {{ dish.name }}
-                      <Hint>
+                      <Tooltip>
                         <div class="mb-4 text-center">Пищевая ценность на 100 г</div>
                         <div class="flex justify-between gap-8">
-                          <span> Энерг. ценность </span>
-                          <span> {{ dishDetails?.energ_cen }} ккал </span>
+                          <span class="text-nowrap"> Энерг. ценность </span>
+                          <span class="text-nowrap"> {{ dishDetails?.energ_cen }} ккал </span>
                         </div>
                         <div class="flex justify-between gap-8">
                           <span>Белки</span>
@@ -70,7 +70,7 @@
                           <span>Углеводы</span>
                           <span> {{ dishDetails?.uglevodi }} г </span>
                         </div>
-                      </Hint>
+                      </Tooltip>
                     </HeadlessDialogTitle>
                     <div class="mb-2 text-sm">
                       <Skeleton

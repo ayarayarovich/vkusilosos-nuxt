@@ -4,7 +4,7 @@
       class="mx-8 mb-4 mt-10 flex items-center gap-2"
       @click="emit('go-back')"
     >
-      <IconArrowRight class="h-8 rotate-180 invert md:hidden" />
+      <IconArrowRight class="size-8 rotate-180 md:hidden" />
       <h2 class="block text-xl font-medium leading-none">Данные</h2>
     </button>
 
@@ -63,7 +63,10 @@
               <InputCheckbox name="personal-recomendations" />
               <span class="cursor-pointer select-none">Получать персональные предложения и акции</span>
             </label>
-            <Tooltip> Согласен на получение от ООО “Вкуси Лосось” рекламных предложений </Tooltip>
+            <Tooltip>
+              Согласен на получение от <span class="text-nowrap">ООО “Вкуси Лосось”</span> <br />
+              рекламных предложений
+            </Tooltip>
           </div>
         </div>
       </div>

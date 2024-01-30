@@ -5,11 +5,11 @@
   >
     <div class="flex shrink flex-col items-stretch gap-4">
       <button
-        class="lg:mb-4 flex items-center gap-4 text-start text-base lg:text-xl font-medium text-black"
+        class="flex items-center gap-4 text-start text-base font-medium text-black lg:mb-4 lg:text-xl"
         type="button"
         @click="emit('goBack')"
       >
-        <IconArrowRight class="h-4 lg:h-6 rotate-180 invert" /> Изменить адрес
+        <IconArrowRight class="size-4 rotate-180 md:hidden lg:size-6" /> Изменить адрес
       </button>
       <div>
         <InputAutocomplete

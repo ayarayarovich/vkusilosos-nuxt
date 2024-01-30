@@ -45,7 +45,8 @@
                   type="button"
                   @click="emit('close')"
                 >
-                  <IconArrowRight class="h-6 rotate-180 invert md:hidden" /> Добавить адрес
+                  <IconArrowRight class="size-6 rotate-180 md:hidden" />
+                  Добавить адрес
                 </button>
 
                 <div class="aspect-[15/8]">

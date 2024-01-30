@@ -9,7 +9,7 @@
         type="button"
         @click="emit('goBack')"
       >
-        <IconArrowRight class="h-4 rotate-180 invert lg:h-6" /> Добавить адрес
+        <IconArrowRight class="size-4 rotate-180 md:hidden lg:size-6" /> Добавить адрес
       </button>
       <div>
         <InputAutocomplete

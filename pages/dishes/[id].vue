@@ -15,11 +15,11 @@
           <div class="text-left">
             <h1 class="mb-2 flex items-center gap-2 text-2xl font-medium">
               {{ dish?.name }}
-              <Hint>
+              <Tooltip>
                 <div class="mb-4 text-center">Пищевая ценность на 100 г</div>
                 <div class="flex justify-between gap-8">
-                  <span> Энерг. ценность </span>
-                  <span> {{ dish?.energ_cen }} ккал </span>
+                  <span class="text-nowrap"> Энерг. ценность </span>
+                  <span class="text-nowrap"> {{ dish?.energ_cen }} ккал </span>
                 </div>
                 <div class="flex justify-between gap-8">
                   <span>Белки</span>
@@ -33,7 +33,7 @@
                   <span>Углеводы</span>
                   <span> {{ dish?.uglevodi }} г </span>
                 </div>
-              </Hint>
+              </Tooltip>
             </h1>
             <div class="mb-2 text-sm">
               <Skeleton
