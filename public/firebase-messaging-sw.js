@@ -27,7 +27,7 @@ messaging.onBackgroundMessage(({data}) => {
   const notificationTitle = data['gcm.notification.x'];
   const notificationOptions = {
     body: data['gcm.notification.y'],
-    icon: '/map-marker.png'
+    icon: '/favicon.svg'
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
