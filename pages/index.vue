@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { MyCoords } from '~/interfaces/common'
 
-const { data: recomendations, suspense: suspenseMain } = useMain((v) => v.recomendation)
+const { data: main, suspense: suspenseMain } = useMain((v) => v)
 const { data: categories, suspense: suspenseCategories } = useCategories()
 const { data: restCoordinates } = useRestaurants((v) => {
   return v.map<MyCoords>((r) => ({
@@ -23,7 +23,10 @@ onServerPrefetch(async () => {
       <NuxtPage />
     </div>
 
-    <div class="container mx-auto my-4 px-4 lg:my-8">
+    <div
+      v-if="main?.banners.length"
+      class="container mx-auto my-4 px-4 lg:my-8"
+    >
       <BannerSlider
         autoplay
         :autoplay-delay="3000"
@@ -45,11 +48,17 @@ onServerPrefetch(async () => {
       </div>
     </div>
 
-    <div class="relative my-4 md:container md:mx-auto md:my-8">
+    <div
+      v-if="main?.stories.length"
+      class="relative my-4 md:container md:mx-auto md:my-8"
+    >
       <GoodStories />
     </div>
 
-    <section class="my-8 lg:my-16">
+    <section
+      v-if="main?.recomendation.length"
+      class="my-8 lg:my-16"
+    >
       <div
         ref="containerEl"
         class="container mx-auto min-h-[10rem] px-4"
@@ -58,7 +67,7 @@ onServerPrefetch(async () => {
 
         <div class="grid grid-flow-row-dense grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
           <template
-            v-for="dish in recomendations"
+            v-for="dish in main?.recomendation"
             :key="dish.id"
           >
             <DishCard
