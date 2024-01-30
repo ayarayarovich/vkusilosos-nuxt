@@ -153,7 +153,7 @@ const timeSteps = computed(() => {
   ) {
     if (DateTime.now().plus({ hours: 2 }) <= t)
       steps.push({
-        value: t.toFormat('yyyy-dd-LL HH:mm:ss ZZZ ZZZZ'),
+        value: t.toISO() || '',
         displayValue: t.toFormat('HH:mm'),
       })
   }

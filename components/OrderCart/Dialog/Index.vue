@@ -152,7 +152,7 @@ const showNotDeliveringMessage = ref(false)
 
 const onSubmit = handleSubmit((v: any) => {
   if (v.time_deliver === 'soon') {
-    v.time_deliver = DateTime.now().plus({ minutes: 30 }).toFormat('yyyy-dd-LL HH:mm:ss ZZZ ZZZZ')
+    v.time_deliver = DateTime.now().plus({ minutes: 30 }).toISO()
   }
 
   if (v.no_cashback) {
