@@ -20,7 +20,13 @@
               :src="article?.img"
               draggable="false"
               alt=""
-              class="sticky top-32 aspect-[6/3] w-full rounded-xl object-cover object-center lg:aspect-[3/4]"
+              class="sticky top-32 hidden aspect-[3/4] w-full rounded-xl object-cover object-center lg:block"
+            />
+            <img
+              :src="article?.phone_img"
+              draggable="false"
+              alt=""
+              class="sticky top-32 hidden aspect-[2/1] w-full rounded-xl object-cover object-center lg:hidden"
             />
           </div>
         </Skeleton>

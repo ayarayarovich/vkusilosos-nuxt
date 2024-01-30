@@ -7,6 +7,7 @@ interface Promo {
   deleted_at: string | null
   name: string
   img: string
+  phone_img: string
   text: string
 }
 
@@ -47,6 +48,7 @@ interface UsePromoResponse {
   end: string
   id: number
   img: string
+  phone_img: string
   name: string
   text: string
 }
