@@ -62,10 +62,10 @@
                 :big_card="dish.size === 2"
                 :can-deliver="dish.can_deliver"
                 :class="{
-                  'orange-bg': dish.color === 1,
-                  'blue-bg': dish.color === 2,
-                  'yellowgreen-bg': dish.color === 3,
-                  'yellow-bg': dish.color === 4,
+                  'orange-bg': dish.color === 2,
+                  'blue-bg': dish.color === 3,
+                  'yellowgreen-bg': dish.color === 4,
+                  'yellow-bg': dish.color === 5,
                 }"
                 :should-include-tag="currentTag"
                 :category-tags="dishesData?.tags"
