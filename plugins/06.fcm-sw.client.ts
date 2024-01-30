@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-      .register('firebase-messaging-sw.js')
+      .register('/firebase-messaging-sw.js')
       .then((reg) => {
         console.log(`Service Worker Registration (Scope: ${reg.scope})`)
       })
@@ -27,8 +27,8 @@ export default defineNuxtPlugin(() => {
   //   console.log('Message received. ', payload);
   // });
 
-  if (Notification) {
-    Notification.requestPermission().then((result) => {
+  if (window.Notification) {
+    window.Notification.requestPermission().then((result) => {
       if (result === 'granted') {
         getToken(messaging)
           .then((currentToken) => {
