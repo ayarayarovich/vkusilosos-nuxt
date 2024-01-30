@@ -40,7 +40,10 @@
               </p>
             </div>
 
-            <div v-html="article?.text"></div>
+            <div
+              class="article"
+              v-html="article?.text"
+            ></div>
           </div>
         </Skeleton>
       </div>
@@ -75,3 +78,12 @@ onServerPrefetch(async () => {
   await suspense()
 })
 </script>
+
+<style>
+.article p {
+  @apply mb-2;
+}
+.article ul li {
+  @apply mb-2 ml-8 list-disc marker:text-orange-400;
+}
+</style>

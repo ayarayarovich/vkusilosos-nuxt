@@ -35,12 +35,13 @@
               <h1 class="font-bold uppercase text-orange-200">
                 {{ article?.name }}
               </h1>
-              <p class="text-sm text-black opacity-50">
-                {{ displayDateStart }} - {{ displayDateEnd }}
-              </p>
+              <p class="text-sm text-black opacity-50">{{ displayDateStart }} - {{ displayDateEnd }}</p>
             </div>
 
-            <div v-html="article?.text"></div>
+            <div
+              class="promo"
+              v-html="article?.text"
+            ></div>
           </div>
         </Skeleton>
       </div>
@@ -82,3 +83,12 @@ onServerPrefetch(async () => {
   await suspense()
 })
 </script>
+
+<style>
+.promo p {
+  @apply mb-2;
+}
+.promo ul li {
+  @apply mb-2 ml-8 list-disc marker:text-orange-400;
+}
+</style>
