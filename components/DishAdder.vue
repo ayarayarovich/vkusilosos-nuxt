@@ -90,7 +90,7 @@ const addLocalCount = () => {
     return
   }
 
-  if (!props.canDeliver) {
+  if (!props.canDeliver && receptionWay.value.type === 'delivery') {
     toast({
       component: MyToastError,
       props: {
@@ -119,7 +119,7 @@ const removeLocalCount = () => {
     return
   }
 
-  if (!props.canDeliver) {
+  if (!props.canDeliver && receptionWay.value.type === 'delivery') {
     toast({
       component: MyToastError,
       props: {
@@ -156,7 +156,7 @@ const addNewPosition = () => {
     return
   }
 
-  if (!props.canDeliver) {
+  if (!props.canDeliver && receptionWay.value.type === 'delivery') {
     toast({
       component: MyToastError,
       props: {
