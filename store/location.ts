@@ -4,9 +4,9 @@ import { defineStore } from 'pinia'
 export const useLocationStore = defineStore(
   'location',
   () => {
-    const receptionWay = ref<'delivery' | 'restaurant'>('delivery')
+    const canDeliver = ref<boolean | null>(null)
 
-    return { receptionWay }
+    return { canDeliver }
   },
   { persist: true }
 )

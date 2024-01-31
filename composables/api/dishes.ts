@@ -2,10 +2,13 @@ import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from 'vue'
 import { useCurrentReceptionWay } from './addresses'
 import type { Dish, Tag, DishDetails } from '~/interfaces/dishes'
+import { useLocationStore } from '~/store/location'
 
 export const useInvalidateDishes = () => {
   const queryClient = useQueryClient()
+  const locationStore = useLocationStore()
   return () => {
+    locationStore.canDeliver = true
     queryClient.invalidateQueries({
       queryKey: ['dishes'],
     })
@@ -23,6 +26,7 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
   const publicAxios = usePublicAxiosInstance()
   const privateAxios = usePrivateAxiosInstance()
   const { data: currentReceptionWay, isSuccess } = useCurrentReceptionWay()
+  const locationStore = useLocationStore()
 
   return useQuery({
     queryKey: ['dishes', { categoryID, currentReceptionWay }],
@@ -44,6 +48,10 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
 
         for (const d of response.data.dishes) {
           d.can_deliver = response.data.can_deliver
+          if (locationStore.canDeliver == null) {
+            locationStore.canDeliver = d.can_deliver
+          }
+          locationStore.canDeliver = d.can_deliver && locationStore.canDeliver
         }
 
         return response.data
@@ -62,6 +70,7 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
       for (const d of response.data.dishes) {
         d.can_deliver = response.data.can_deliver
       }
+      locationStore.canDeliver = true
 
       return response.data
     },
