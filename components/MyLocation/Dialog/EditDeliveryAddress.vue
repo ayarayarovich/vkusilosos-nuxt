@@ -71,15 +71,19 @@
 
 <script setup lang="ts">
 import * as yup from 'yup'
+import type { LngLat } from '@yandex/ymaps3-types'
 import type { Address } from '~/interfaces/main'
 
 const props = defineProps<{
   address: Address
+  mapCoords: LngLat
 }>()
 
 const emit = defineEmits(['updateCoords', 'goBack'])
 
-const { handleSubmit } = useForm({
+const axiosPrivate = usePrivateAxiosInstance()
+
+const { handleSubmit, setFieldValue } = useForm<any>({
   validationSchema: yup.object({
     adres: yup
       .object({
@@ -119,6 +123,19 @@ const coordinates = computed(() => {
 })
 
 watchEffect(() => emit('updateCoords', coordinates.value))
+
+watch([() => props.mapCoords], () => {
+  axiosPrivate
+    .get('user/adres/search/geo', {
+      params: {
+        latitude: props.mapCoords[1],
+        longitude: props.mapCoords[0],
+      },
+    })
+    .then((res) => {
+      setFieldValue('adres', res.data)
+    })
+})
 
 const query = ref('')
 const throttledQuery = refThrottled(query, 500, undefined, false)

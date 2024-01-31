@@ -6,8 +6,9 @@
       :settings="mapSettings"
     >
       <yandex-map-default-features-layer />
-      <yandex-map-controls :settings="{ position: 'right' }">
+      <yandex-map-controls :settings="{ position: 'bottom right', orientation: 'vertical' }">
         <yandex-map-zoom-control />
+        <yandex-map-geolocation-control />
       </yandex-map-controls>
       <yandex-map-default-scheme-layer />
       <yandex-map-listener :settings="{ onActionStart, onActionEnd }" />
@@ -52,6 +53,7 @@ import {
   YandexMapDefaultFeaturesLayer,
   YandexMapDefaultSchemeLayer,
   YandexMapZoomControl,
+  YandexMapGeolocationControl,
   YandexMapMarker,
   YandexMapListener,
 } from 'vue-yandex-maps'

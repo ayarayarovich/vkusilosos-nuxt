@@ -52,6 +52,7 @@
                   <MyYandexMap
                     :coordinates="coordinates"
                     show-center-marker
+                    @update-coords-drag="setMapCoords"
                   />
                 </div>
 
@@ -115,12 +116,14 @@
                     v-else-if="currentView === 'edit'"
                     class="flex-grow lg:shrink"
                     :address="editingAddress"
+                    :map-coords="mapCoords"
                     @update-coords="coordinates = $event"
                     @go-back="currentView = 'default'"
                   />
                   <MyLocationDialogAddDeliveryAddress
                     v-else-if="currentView === 'new'"
                     class="flex-grow lg:shrink"
+                    :map-coords="mapCoords"
                     @update-coords="coordinates = $event"
                     @go-back="currentView = 'default'"
                   />
@@ -138,6 +141,7 @@
 import { ref } from 'vue'
 import type { LngLat } from '@yandex/ymaps3-types'
 import type { Address } from '~/interfaces/main'
+import type { MyCoords } from '~/interfaces/common'
 
 const props = defineProps<{
   show?: boolean
@@ -154,6 +158,11 @@ const editAddress = (address: Address) => {
 }
 
 const coordinates = ref<LngLat>([37.617698, 55.755864])
+
+const mapCoords = ref<LngLat>([37.617698, 55.755864])
+const setMapCoords = (c: MyCoords) => {
+  mapCoords.value = [c.Lng, c.Lat]
+}
 
 const close = () => {
   emit('close')
