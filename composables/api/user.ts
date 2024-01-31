@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import type { AxiosInstance } from 'axios'
-import type { SetUser, User } from '~/interfaces/users'
+import type { AxiosError, AxiosInstance } from 'axios'
 import { md5 } from 'js-md5'
+import { useToast } from 'vue-toastification'
+import type { SetUser, User } from '~/interfaces/users'
+import MyToast from '~/components/MyToast.vue'
 
 type GetResponse = User
 
@@ -120,15 +122,28 @@ interface UseSendOtpVals {
 }
 export const useSendOtp = (config: { onCheckCode?: (v: UseSendOtpVals) => void }) => {
   const privateAxios = usePrivateAxiosInstance()
+  const toast = useToast()
+
   return useMutation({
-    mutationFn: async (vals: UseSendOtpVals) => {
-      const response = await privateAxios.post<{ action: string }>('auth/registr', vals)
-      return response.data
+    mutationFn: (vals: UseSendOtpVals) => {
+      return privateAxios.post<{ action: string }>('auth/registr', vals).then((r) => r.data)
     },
 
     onSuccess(data, vals) {
       if (data.action === 'check code') {
         if (config.onCheckCode) config.onCheckCode(vals)
+      }
+    },
+
+    onError(error: AxiosError) {
+      if (error.response?.status === 408) {
+        toast({
+          component: MyToast,
+          props: {
+            title: 'Вы уже есть в системе',
+            detail: 'Пожалуйста, авторизуйтесь',
+          },
+        })
       }
     },
   })

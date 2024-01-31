@@ -31,7 +31,6 @@ export default defineNuxtPlugin(() => {
   axiosPrivate.interceptors.response.use(
     (res) => res,
     async (err) => {
-
       const originalConfig = err.config
       if (err.response) {
         if (
@@ -59,23 +58,15 @@ export default defineNuxtPlugin(() => {
             return axiosPrivate(originalConfig)
           } catch (_error: any) {
             if (_error.response && _error.response.data) {
-              // resetUserCredentials()
-              // queryClient.removeQueries({
-              //   queryKey: ['user'],
-              // })
-              // navigateTo('/login')
               signOut()
-              return Promise.reject(_error.response.data)
+              return Promise.reject(_error)
             }
 
-            // resetUserCredentials()
-            // queryClient.removeQueries({
-            //   queryKey: ['user'],
-            // })
-            // navigateTo('/login')
             signOut()
             return Promise.reject(_error)
           }
+        } else {
+          return Promise.reject(err)
         }
       }
     }
