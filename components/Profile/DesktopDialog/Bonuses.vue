@@ -31,51 +31,6 @@
             >
               <HeadlessDisclosureButton class="w-full px-6 py-4">
                 <div class="flex items-center justify-between gap-8">
-                  <span>Бонусная система</span>
-                  <IconArrowRight
-                    class="h-6 invert transition-transform"
-                    :class="{
-                      'rotate-90': !open,
-                      '-rotate-90': open,
-                    }"
-                  />
-                </div>
-              </HeadlessDisclosureButton>
-              <HeadlessDisclosurePanel static>
-                <div
-                  class="grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows]"
-                  :class="{
-                    '!grid-rows-[1fr]': open,
-                  }"
-                >
-                  <div class="min-h-0">
-                    <div class="p-6 pt-0">
-                      <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
-                      </p>
-                      <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
-                      </p>
-                      <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </HeadlessDisclosurePanel>
-            </HeadlessDisclosure>
-          </div>
-
-          <div class="rounded-xl bg-white shadow-main">
-            <HeadlessDisclosure
-              v-slot="{ open }"
-              as="div"
-            >
-              <HeadlessDisclosureButton class="w-full px-6 py-4">
-                <div class="flex items-center justify-between gap-8">
                   <span>Правила использования</span>
                   <IconArrowRight
                     class="h-6 invert transition-transform"
@@ -94,18 +49,54 @@
                   }"
                 >
                   <div class="min-h-0">
-                    <div class="p-6 pt-0">
+                    <div class="article p-6 pt-0">
                       <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
+                        Бонусы начисляются пользователю в качестве меры поощрения активности и/или в качестве меры
+                        компенсации в следующих случаях:
                       </p>
+                      <ul>
+                        <li>в качестве поощрения в случае проведения Исполнителем рекламных акций;</li>
+                        <li>
+                          в размере до 30% от стоимости Товаров, имеющих пометку в виде монеты при условии оплаты их без
+                          использования бонусов и скидок пользователя.
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </HeadlessDisclosurePanel>
+            </HeadlessDisclosure>
+          </div>
+
+          <div class="rounded-xl bg-white shadow-main">
+            <HeadlessDisclosure
+              v-slot="{ open }"
+              as="div"
+            >
+              <HeadlessDisclosureButton class="w-full px-6 py-4">
+                <div class="flex items-center justify-between gap-8">
+                  <span>Бонусная система</span>
+                  <IconArrowRight
+                    class="h-6 invert transition-transform"
+                    :class="{
+                      'rotate-90': !open,
+                      '-rotate-90': open,
+                    }"
+                  />
+                </div>
+              </HeadlessDisclosureButton>
+              <HeadlessDisclosurePanel static>
+                <div
+                  class="grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows]"
+                  :class="{
+                    '!grid-rows-[1fr]': open,
+                  }"
+                >
+                  <div class="min-h-0">
+                    <div class="article p-6 pt-0">
                       <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
-                      </p>
-                      <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
+                        Бонусная система — функциональность Приложения, предоставляющая пользователю возможность
+                        получить Скидку на Товары и Услуги в размере и на условиях, указанных в приложении.
                       </p>
                     </div>
                   </div>
@@ -121,7 +112,7 @@
             >
               <HeadlessDisclosureButton class="w-full px-6 py-4">
                 <div class="flex items-center justify-between gap-8">
-                  <span>Сгорание бонусов</span>
+                  <span>Срок хранения бонусов</span>
                   <IconArrowRight
                     class="h-6 invert transition-transform"
                     :class="{
@@ -140,14 +131,6 @@
                 >
                   <div class="min-h-0">
                     <div class="p-6 pt-0">
-                      <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
-                      </p>
-                      <p>
-                        Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
-                        операции, пропадают все бонусы.
-                      </p>
                       <p>
                         Если в течение 6 месяцев со дня последней покупки по карте клиент больше не производил расходные
                         операции, пропадают все бонусы.
