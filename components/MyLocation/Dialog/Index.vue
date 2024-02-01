@@ -100,6 +100,7 @@
                           class="flex-grow lg:shrink"
                           @update-coords="coordinates = $event"
                           @close="emit('close')"
+                          @location-changed="emit('locationChanged')"
                         />
                         <MyLocationDialogDelivery
                           v-else-if="myReceptionWay === 'delivery'"
@@ -107,6 +108,7 @@
                           @edit="editAddress($event)"
                           @new="currentView = 'new'"
                           @update-coords="coordinates = $event"
+                          @location-changed="emit('locationChanged')"
                           @close="emit('close')"
                         />
                       </Transition>
@@ -147,7 +149,7 @@ const props = defineProps<{
   show?: boolean
 }>()
 const { show } = toRefs(props)
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'locationChanged'])
 
 const currentView = ref<'edit' | 'new' | 'default'>('default')
 const editingAddress = ref<Address>()

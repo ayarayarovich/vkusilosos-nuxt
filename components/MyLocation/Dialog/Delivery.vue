@@ -70,7 +70,7 @@
 import type { Address } from '~/interfaces/main'
 import { nthIndex } from '~/utils'
 
-const emit = defineEmits(['edit', 'new', 'updateCoords', 'close'])
+const emit = defineEmits(['edit', 'new', 'updateCoords', 'close', 'locationChanged'])
 
 const { data } = useAddresses((v) => v)
 
@@ -115,8 +115,9 @@ const selectDeliveryAddress = () => {
 
 const showConfirmDialog = ref(false)
 const onConfirmSelection = () => {
-  selectDeliveryAddress()
   showConfirmDialog.value = false
+  emit('locationChanged')
+  selectDeliveryAddress()
 }
 const onRejectedSelection = () => {
   showConfirmDialog.value = false

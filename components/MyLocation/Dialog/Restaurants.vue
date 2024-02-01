@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['updateCoords', 'close'])
+const emit = defineEmits(['updateCoords', 'close', 'locationChanged'])
 
 const { data: restaurants } = useRestaurants((v) => v)
 
@@ -101,8 +101,9 @@ const selectRestaurant = () => {
 
 const showConfirmDialog = ref(false)
 const onConfirmSelection = () => {
-  selectRestaurant()
   showConfirmDialog.value = false
+  emit('locationChanged')
+  selectRestaurant()
 }
 const onRejectedSelection = () => {
   showConfirmDialog.value = false

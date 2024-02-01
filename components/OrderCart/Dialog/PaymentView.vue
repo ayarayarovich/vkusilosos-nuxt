@@ -3,6 +3,7 @@
     <MyLocationDialog
       :show="showMyLocationDialog"
       @close="closeMyLocationDialog"
+      @location-changed="emit('backToCart')"
     />
     <div class="flex grow flex-col items-stretch px-4">
       <strong class="mb-4 text-2xl font-medium">Оформление заказа</strong>
@@ -42,8 +43,14 @@
               name="fade"
               mode="out-in"
             >
-              <OrderCartDialogDelivery v-if="receptionWay?.type === 'delivery'" />
-              <OrderCartDialogDelivery v-else-if="receptionWay?.type === 'restaurant'" />
+              <OrderCartDialogDelivery
+                v-if="receptionWay?.type === 'delivery'"
+                @location-changed="emit('backToCart')"
+              />
+              <OrderCartDialogRestaurant
+                v-else-if="receptionWay?.type === 'restaurant'"
+                @location-changed="emit('backToCart')"
+              />
             </Transition>
           </div>
         </div>
@@ -150,8 +157,6 @@
 </template>
 
 <script setup lang="ts">
-import { tr } from 'yup-locales'
-
 const emit = defineEmits(['backToCart'])
 
 const { data: receptionWay } = useCurrentReceptionWay()

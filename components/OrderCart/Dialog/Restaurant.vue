@@ -16,9 +16,14 @@
     <OrderCartDialogSelectedAddress
       name="reception_way"
       class="mb-8 mt-4"
+      @location-changed="emit('locationChanged')"
     />
 
     <p class="mb-4">Когда заберете заказ?</p>
     <OrderCartDialogSelectTime />
   </form>
 </template>
+
+<script setup lang="ts">
+const emit = defineEmits(['locationChanged'])
+</script>

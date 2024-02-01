@@ -3,6 +3,7 @@
     <MyLocationDialog
       :show="showChangeReceptionWayDialog"
       @close="showChangeReceptionWayDialog = false"
+      @location-changed="emit('locationChanged')"
     />
 
     <div
@@ -44,6 +45,8 @@ const props = defineProps<{
   locked?: boolean
 }>()
 
+const emit = defineEmits(['locationChanged'])
+
 const inputID = uuidv4()
 
 const { name, locked } = toRefs(props)
@@ -52,7 +55,7 @@ const { setValue } = useField(name)
 
 const showChangeReceptionWayDialog = ref(false)
 
-const {data: receptionWay} = useCurrentReceptionWay()
+const { data: receptionWay } = useCurrentReceptionWay()
 
 const displayValue = computed(() => {
   if (receptionWay.value?.type === 'delivery') {
