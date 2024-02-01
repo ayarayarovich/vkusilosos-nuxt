@@ -11,7 +11,7 @@
         <yandex-map-geolocation-control />
       </yandex-map-controls>
       <yandex-map-default-scheme-layer />
-      <yandex-map-listener :settings="{ onActionStart, onActionEnd }" />
+      <yandex-map-listener :settings="{ onActionStart, onActionEnd, onUpdate }" />
 
       <yandex-map-marker
         v-for="(marker, i) in markers"
@@ -95,6 +95,15 @@ const onActionEnd = (action: any) => {
       Lat: action.location.center[1],
     })
     isDragging.value = false
+  }
+}
+
+const onUpdate = (action: any) => {
+  if (action.type === 'update' && !action.mapInAction) {
+    emit('updateCoordsDrag', {
+      Lng: action.location.center[0],
+      Lat: action.location.center[1],
+    })
   }
 }
 
