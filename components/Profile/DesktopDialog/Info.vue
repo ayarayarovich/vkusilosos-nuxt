@@ -90,7 +90,7 @@ const { data: user } = useUser((v) => {
     name: v.name,
     phone: formatPhone(v.phone),
     email: v.email,
-    birthday: v.birthday ? DateTime.fromFormat(v.birthday.split(' ')[0], 'yyyy-mm-dd').toJSDate() : undefined,
+    birthday: v.birthday ? DateTime.fromFormat(v.birthday.split(' ')[0], 'yyyy-LL-dd').toJSDate() : undefined,
   }
 })
 
@@ -132,7 +132,7 @@ onUnmounted(() => {
   if (!deepEqual(before, after)) {
     updates.name = values.name
     updates.email = values.email
-    updates.birthday = DateTime.fromJSDate(values.birthday).toFormat('yyyy/mm/dd')
+    updates.birthday = DateTime.fromJSDate(values.birthday).toFormat('yyyy/LL/dd')
   }
 
   if (values.last_password || values.new_password) {
