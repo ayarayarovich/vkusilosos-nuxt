@@ -114,6 +114,7 @@
                     <MyYandexMap
                       :coordinates="coordinates"
                       show-center-marker
+                      @update-coords-drag="updateCoords"
                     />
                   </div>
                 </ClientOnly>
@@ -130,6 +131,8 @@
 import { ref, toRefs } from 'vue'
 import * as yup from 'yup'
 import type { Address } from '~/interfaces/main'
+import type { MyCoords } from '~/interfaces/common'
+
 
 const props = defineProps<{
   show?: boolean
@@ -140,7 +143,7 @@ const emit = defineEmits(['close'])
 
 const dialogPanelEl = ref<HTMLElement>()
 
-const { handleSubmit } = useForm({
+const { handleSubmit, setFieldValue } = useForm<any>({
   validationSchema: yup.object({
     adres: yup
       .object({
@@ -179,6 +182,21 @@ const coordinates = computed(() => {
   }
   return [37.617698, 55.755864]
 })
+
+const axiosPrivate = usePrivateAxiosInstance()
+
+const updateCoords = (c: MyCoords) => {
+  axiosPrivate
+    .get('user/adres/search/geo', {
+      params: {
+        latitude: c.Lat,
+        longitude: c.Lng,
+      },
+    })
+    .then((res) => {
+      setFieldValue('adres', res.data)
+    })
+}
 
 const query = ref('')
 const throttledQuery = refThrottled(query, 500, undefined, false)
