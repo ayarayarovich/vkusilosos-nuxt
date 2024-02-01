@@ -145,6 +145,7 @@ watch(
 
 const { mutateAsync } = useCreateOrder()
 const invalidateOrders = useInvalidateOrders()
+const invalidateBasket = useInvalidateBasket()
 
 const profileDialogStore = useProfileDialogStore()
 
@@ -173,6 +174,7 @@ const onSubmit = handleSubmit((v: any) => {
     }
     if (response.action === 'success') {
       invalidateOrders()
+      invalidateBasket()
       emit('close')
       profileDialogStore.open('orders_history')
     } else if (response.action === 'not found adres') {
