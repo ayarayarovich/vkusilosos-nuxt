@@ -1,5 +1,12 @@
 <template>
   <div class="flex h-full flex-col items-stretch gap-2 pt-2">
+    <ConfirmDialog
+      message="Если изменить адрес, то меню может измениться, хотите поменять?"
+      :show="showConfirmDialog"
+      @confirmed="onConfirmSelection()"
+      @rejected="onRejectedSelection()"
+      @close="showConfirmDialog = false"
+    />
     <div class="relative h-0 grow">
       <HeadlessRadioGroup
         v-model="selectedRestaurant"
@@ -43,7 +50,7 @@
       class="px-4 py-4 font-medium uppercase"
       type="button"
       :disabled="!selectedRestaurant"
-      @click="selectRestaurant"
+      @click="showConfirmDialog = true"
     >
       Выбрать
     </SimpleButton>
@@ -67,7 +74,7 @@ watchEffect(() => {
   }
 })
 
-const {data: currentReceptionWay} = useCurrentReceptionWay()
+const { data: currentReceptionWay } = useCurrentReceptionWay()
 watch(
   [currentReceptionWay],
   () => {
@@ -90,5 +97,14 @@ const selectRestaurant = () => {
     })
     emit('close')
   }
+}
+
+const showConfirmDialog = ref(false)
+const onConfirmSelection = () => {
+  selectRestaurant()
+  showConfirmDialog.value = false
+}
+const onRejectedSelection = () => {
+  showConfirmDialog.value = false
 }
 </script>
