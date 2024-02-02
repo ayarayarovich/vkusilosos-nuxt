@@ -22,11 +22,9 @@
         {{ tag.name }}
       </div>
     </div>
-    <img
-      class="mt-4 h-28 w-auto object-contain drop-shadow-lg transition-opacity duration-1000 sm:h-36 md:h-40 lg:h-32 lg:max-lg:mt-0 xl:h-48"
-      :src="dish.img"
-      alt=""
-    />
+    <div class="mt-4 h-28 w-auto overflow-hidden sm:h-36 md:h-40 lg:h-32 lg:max-lg:mt-0 xl:h-48">
+      <MyImage :src="dish.img" :alt="dish.name" />
+    </div>
     <NuxtLink
       :to="`dishes/${dish.id}`"
       class="mb-auto mt-4 text-center"
