@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full w-full flex-col items-stretch justify-between pb-8">
+  <div class="flex h-full w-full flex-col gap-8 items-stretch justify-between pb-8">
     <div>
       <form @submit="signIn">
         <InputText

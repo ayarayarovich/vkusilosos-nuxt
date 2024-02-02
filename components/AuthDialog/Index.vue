@@ -34,10 +34,12 @@
             leave-from="opacity-100 translate-x-0"
             leave-to="opacity-0 -translate-x-full"
           >
-            <HeadlessDialogPanel class="absolute left-0 h-full w-full max-w-md bg-white shadow-xl transition-all">
+            <HeadlessDialogPanel
+              class="absolute left-0 flex min-h-full w-full max-w-md items-stretch bg-white shadow-xl transition-all"
+            >
               <div
                 ref="dialogPanelEl"
-                class="relative h-full w-full"
+                class="w-full"
               >
                 <Transition
                   name="fade"
