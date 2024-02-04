@@ -100,6 +100,7 @@ const validationSchema = computed(() => {
     return yup.object({
       name: yup.string().label('Имя'),
       phone: yup.string().label('Телефон'),
+      comment: yup.string().label('Комментарий к заказу'),
       cashback: yup
         .number()
         .label('Сдача')

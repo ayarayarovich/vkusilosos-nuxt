@@ -1,6 +1,6 @@
 <template>
   <form>
-    <div class="flex flex-col gap-4 lg:flex-row">
+    <div class="flex flex-col gap-4 lg:flex-row mb-4">
       <InputText
         class="flex-1"
         label="Имя"
@@ -15,9 +15,16 @@
     </div>
     <OrderCartDialogSelectedAddress
       name="reception_way"
-      class="mb-8 mt-4"
+      class="mb-4"
       @location-changed="emit('locationChanged')"
     />
+    <InputTextarea
+      class="mb-8"
+      name="comment"
+      label="Комментарий к заказу"
+      :rows="2"
+    />
+
 
     <p class="mb-4">Когда заберете заказ?</p>
     <OrderCartDialogSelectTime />
