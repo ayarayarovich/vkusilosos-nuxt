@@ -57,6 +57,7 @@
                     v-else-if="stage == 'payment'"
                     @back-to-cart="stage = 'cart'"
                   />
+                  <OrderCartDialogThanksForOrder v-else-if="stage == 'thanks'" />
                 </Transition>
               </form>
             </HeadlessDialogPanel>
@@ -71,7 +72,6 @@
 import { DateTime } from 'luxon'
 import { ref, toRefs } from 'vue'
 import * as yup from 'yup'
-import { useProfileDialogStore } from '~/store/profileDialog'
 import { formatPhone } from '~/utils'
 
 const props = defineProps<{
@@ -82,11 +82,7 @@ const emit = defineEmits(['close'])
 
 const dialogPanelEl = ref()
 
-const stage = ref<'cart' | 'payment'>('cart')
-
-const close = () => {
-  emit('close')
-}
+const stage = ref<'cart' | 'payment' | 'thanks'>('cart')
 
 const validationSchema = computed(() => {
   if (stage.value === 'cart') {
@@ -148,9 +144,12 @@ const { mutateAsync } = useCreateOrder()
 const invalidateOrders = useInvalidateOrders()
 const invalidateBasket = useInvalidateBasket()
 
-const profileDialogStore = useProfileDialogStore()
-
 const showNotDeliveringMessage = ref(false)
+
+const close = () => {
+  stage.value = 'cart'
+  emit('close')
+}
 
 const onSubmit = handleSubmit((v: any) => {
   if (v.time_deliver === 'soon') {
@@ -174,10 +173,9 @@ const onSubmit = handleSubmit((v: any) => {
       })
     }
     if (response.action === 'success') {
+      stage.value = 'thanks'
       invalidateOrders()
       invalidateBasket()
-      emit('close')
-      profileDialogStore.open('orders_history')
     } else if (response.action === 'not found adres') {
       showNotDeliveringMessage.value = true
     }
