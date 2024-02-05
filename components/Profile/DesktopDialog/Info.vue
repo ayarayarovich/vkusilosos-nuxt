@@ -31,7 +31,7 @@
           />
           <InputDatepicker
             name="birthday"
-            label="Дата рождаения"
+            label="Дата рождения"
             :locked="!!user?.birthday"
           />
         </div>

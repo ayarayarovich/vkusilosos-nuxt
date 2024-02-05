@@ -95,7 +95,7 @@ const addLocalCount = () => {
       component: MyToastError,
       props: {
         title: 'Ошибка',
-        detail: 'Доставка на этот адресс не осуществляется',
+        detail: 'Доставка на этот адрес не осуществляется',
       },
     })
     return
@@ -124,7 +124,7 @@ const removeLocalCount = () => {
       component: MyToastError,
       props: {
         title: 'Ошибка',
-        detail: 'Доставка на этот адресс не осуществляется',
+        detail: 'Доставка на этот адрес не осуществляется',
       },
     })
     return
@@ -161,7 +161,7 @@ const addNewPosition = () => {
       component: MyToastError,
       props: {
         title: 'Ошибка',
-        detail: 'Доставка на этот адресс не осуществляется',
+        detail: 'Доставка на этот адрес не осуществляется',
       },
     })
     return
