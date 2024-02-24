@@ -7,6 +7,7 @@
       <CategorySpyElement
         v-for="category in categories"
         :key="category.id"
+        :behavior="props.behavior"
         :category="category"
       />
     </div>
@@ -17,5 +18,9 @@
 </template>
 
 <script setup lang="ts">
-const { data: categories } = useCategories()
+const props = defineProps<{
+  behavior: 'redirect-and-scroll' | 'scroll'
+}>()
+
+const { data: categories } = useCategories((v) => v.list)
 </script>

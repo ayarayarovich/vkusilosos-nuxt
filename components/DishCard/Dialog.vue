@@ -130,7 +130,7 @@ const props = defineProps<{
 const { show, dish } = toRefs(props)
 const emit = defineEmits(['close'])
 
-const { data: dishDetails, isSuccess } = useDish(dish.value?.id, show)
+const { data: dishDetails, isSuccess } = useDish(dish.value.link?.split('/').at(-1) || '', show)
 
 const dialogPanelEl = ref<HTMLElement>()
 </script>

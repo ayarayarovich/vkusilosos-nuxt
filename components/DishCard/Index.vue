@@ -26,7 +26,7 @@
       <MyImage :src="dish.img" :alt="dish.name" />
     </div>
     <NuxtLink
-      :to="`dishes/${dish.id}`"
+      :to="dish.link"
       class="mb-auto mt-4 text-center"
     >
       {{ dish.name }}

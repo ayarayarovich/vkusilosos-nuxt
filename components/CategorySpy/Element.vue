@@ -28,9 +28,10 @@ import { useCategoryStore } from '~/store/category'
 
 const props = defineProps<{
   category: Category
+  behavior: 'redirect-and-scroll' | 'scroll'
 }>()
 
-const { data: dishesData, suspense } = useDishes(props.category.id)
+const { data: dishesData, suspense } = useDishes({ categorySlug: props.category.link })
 onServerPrefetch(async () => {
   await suspense()
 })
@@ -42,18 +43,40 @@ const parent = useParentElement()
 const element = ref<HTMLElement>()
 
 const onClick = () => {
-  const target = document.querySelector('#dish-category-' + props.category.id)!
-  const header = document.querySelector('#header')!
-  window.scrollTo({
-    top: Math.round(
-      target.getBoundingClientRect().top +
-        document.documentElement.scrollTop -
-        header.getBoundingClientRect().height -
-        parentBounding.height.value -
-        32
-    ),
-    behavior: 'smooth',
-  })
+  if (props.behavior === 'redirect-and-scroll') {
+    ;(navigateTo('/') as Promise<void>).then(() => {
+      const target = document.querySelector<HTMLDivElement>('#dish-category-' + props.category.id)!
+      const header = document.querySelector<HTMLDivElement>('#header')!
+
+      setTimeout(() => {
+        window.scrollTo({
+          top: Math.round(
+            target.getBoundingClientRect().top +
+              document.documentElement.scrollTop -
+              header.getBoundingClientRect().height -
+              parentBounding.height.value -
+              32
+          ),
+          behavior: 'smooth',
+        })
+      }, 500)
+    })
+  }
+  if (props.behavior === 'scroll') {
+    const target = document.querySelector<HTMLDivElement>('#dish-category-' + props.category.id)!
+    const header = document.querySelector<HTMLDivElement>('#header')!
+
+    window.scrollTo({
+      top: Math.round(
+        target.getBoundingClientRect().top +
+          document.documentElement.scrollTop -
+          header.getBoundingClientRect().height -
+          parentBounding.height.value -
+          32
+      ),
+      behavior: 'smooth',
+    })
+  }
 }
 
 const parentBounding = useElementBounding(parent)

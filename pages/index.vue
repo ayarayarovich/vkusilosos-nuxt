@@ -2,7 +2,7 @@
 import type { MyCoords } from '~/interfaces/common'
 
 const { data: main, suspense: suspenseMain } = useMain((v) => v)
-const { data: categories, suspense: suspenseCategories } = useCategories()
+const { data: categories, suspense: suspenseCategories } = useCategories((v) => v.list)
 const { data: restCoordinates } = useRestaurants((v) => {
   return v.map<MyCoords>((r) => ({
     Lat: r.lat,
@@ -87,7 +87,7 @@ onServerPrefetch(async () => {
 
     <div class="sticky top-[calc(4rem-0.5px)] z-30 bg-white bg-opacity-30 backdrop-blur-sm lg:top-[calc(5rem-0.5px)]">
       <div class="container mx-auto py-4">
-        <CategorySpy />
+        <CategorySpy behavior="scroll" />
       </div>
     </div>
 

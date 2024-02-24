@@ -15,7 +15,10 @@ export const useInvalidateDishes = () => {
   }
 }
 
-export const useDishes = (categoryID: MaybeRef<number>) => {
+interface UseDishesParams {
+  categorySlug?: MaybeRef<string>
+}
+export const useDishes = ({ categorySlug }: UseDishesParams) => {
   interface Response {
     dishes: Dish[]
     tags: Tag[]
@@ -29,15 +32,15 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
   const locationStore = useLocationStore()
 
   return useQuery({
-    queryKey: ['dishes', { categoryID, currentReceptionWay }],
+    queryKey: ['dishes', { currentReceptionWay, categorySlug }],
     queryFn: async ({ queryKey }) => {
-      const _categoryID = (queryKey[1] as any).categoryID
+      const _categorySlug = (queryKey[1] as any).categorySlug
 
       if (currentReceptionWay.value) {
         const params = {
           offset: 0,
           limit: 99999999,
-          category: _categoryID,
+          category_link: _categorySlug,
           adres_id: currentReceptionWay.value.type === 'delivery' ? currentReceptionWay.value.id : undefined,
           rest_id: currentReceptionWay.value.type === 'restaurant' ? currentReceptionWay.value.id : undefined,
         }
@@ -60,7 +63,7 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
       const params = {
         offset: 0,
         limit: 99999999,
-        category: _categoryID,
+        category_link: _categorySlug,
       }
 
       const response = await publicAxios.get<Response>('api/dishes', {
@@ -78,19 +81,19 @@ export const useDishes = (categoryID: MaybeRef<number>) => {
   })
 }
 
-export const useDish = (dishID: MaybeRefOrGetter<number>, enabled: MaybeRefOrGetter<boolean>) => {
+export const useDish = (dishLink: MaybeRefOrGetter<string>, enabled: MaybeRefOrGetter<boolean>) => {
   type Response = DishDetails
 
   const publicAxios = usePublicAxiosInstance()
 
   return useQuery({
-    queryKey: ['dishes', { dishID }],
+    queryKey: ['dishes', { dishLink }],
     queryFn: async ({ queryKey }) => {
-      const _dishID = (queryKey[1] as any).dishID
+      const _dishLink = (queryKey[1] as any).dishLink
 
       const response = await publicAxios.get<Response>('api/dish', {
         params: {
-          id: _dishID,
+          dish_link: _dishLink,
         },
       })
 

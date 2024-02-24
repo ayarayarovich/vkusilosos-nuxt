@@ -76,20 +76,22 @@
         </div>
       </div>
     </div>
+    {{ dish }}
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 
-const { params } = useRoute()
-const dishId = Number(params.id)
+const route = useRoute()
 
-const { data: dish, isSuccess, suspense } = useDish(dishId, true)
+definePageMeta({
+  middleware: ['check-category-dish-route'],
+})
+
+const { data: dish, isSuccess, suspense } = useDish(route.params.dish_slug as string, true)
 
 onServerPrefetch(async () => {
   await suspense()
 })
 </script>
-
-<style scoped></style>

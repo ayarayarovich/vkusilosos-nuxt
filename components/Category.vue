@@ -10,7 +10,17 @@
       ref="containerEl"
       class="container mx-auto min-h-[10rem] px-4"
     >
-      <h1 class="mb-8 text-2xl font-medium uppercase text-black">
+      <NuxtLink
+        v-if="category.link"
+        :to="category.link"
+        class="mb-8 inline-block text-2xl font-medium uppercase text-black"
+      >
+        {{ props.category.name }}
+      </NuxtLink>
+      <h1
+        v-else
+        class="mb-8 inline-block text-2xl font-medium uppercase text-black"
+      >
         {{ props.category.name }}
       </h1>
       <Transition
@@ -93,7 +103,7 @@ const currentTag = ref<number>(-1)
 const containerEl = ref()
 const categoryStore = useCategoryStore()
 
-const { data: dishesData, status: dishesStatus, suspense } = useDishes(props.category.id)
+const { data: dishesData, status: dishesStatus, suspense } = useDishes({ categorySlug: props.category.link })
 onServerPrefetch(async () => {
   await suspense()
 })

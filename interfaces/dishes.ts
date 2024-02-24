@@ -24,6 +24,7 @@ export interface Dish {
   size: number
   tags: number[] | null
   can_deliver: boolean
+  link?: string
 }
 
 export interface ExpandedDish {
@@ -80,6 +81,7 @@ export interface Category {
   id: number
   name: string
   img: string
+  link?: string
 }
 
 // Интерфейс для вариаций блюд
