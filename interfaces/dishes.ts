@@ -74,6 +74,9 @@ export interface DishDetails {
   can_deliver: boolean
   have: boolean
   active: boolean
+  description_seo?: string
+  keywords?: string
+  title?: string
 }
 
 // Интерфейс для категорий
@@ -82,6 +85,9 @@ export interface Category {
   name: string
   img: string
   link?: string
+  description_seo?: string
+  keywords?: string
+  title?: string
 }
 
 // Интерфейс для вариаций блюд

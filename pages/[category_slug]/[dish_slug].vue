@@ -93,4 +93,12 @@ const { data: dish, isSuccess, suspense } = useDish(route.params.dish_slug as st
 onServerPrefetch(async () => {
   await suspense()
 })
+
+useHead({
+  title: dish.value?.title || undefined,
+  meta: [
+    { name: 'description', content: dish.value?.description_seo || '' },
+    { name: 'keywords', content: dish.value?.keywords || '' },
+  ],
+})
 </script>

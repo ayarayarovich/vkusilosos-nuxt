@@ -9,6 +9,8 @@
       v-if="category"
       :category="category"
     />
+
+    {{ category }}
   </main>
 </template>
 
@@ -23,5 +25,13 @@ definePageMeta({
 const { data: category, suspense: suspenseCategory } = useCategory(route.params.category_slug as string, (v) => v)
 onServerPrefetch(async () => {
   await suspenseCategory()
+})
+
+useHead({
+  title: category.value?.title || undefined,
+  meta: [
+    { name: 'description', content: category.value?.description_seo || '' },
+    { name: 'keywords', content: category.value?.keywords || '' },
+  ],
 })
 </script>
