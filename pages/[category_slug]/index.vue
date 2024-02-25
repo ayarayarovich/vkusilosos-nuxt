@@ -9,8 +9,6 @@
       v-if="category"
       :category="category"
     />
-
-    {{ category }}
   </main>
 </template>
 
