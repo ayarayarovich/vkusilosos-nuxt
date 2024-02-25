@@ -36,6 +36,15 @@ export const useDishes = ({ categorySlug }: UseDishesParams) => {
     queryFn: async ({ queryKey }) => {
       const _categorySlug = (queryKey[1] as any).categorySlug
 
+      if (!_categorySlug) {
+        return {
+          dishes: [],
+          tags: [],
+          can_deliver: false,
+          total: 0,
+        }
+      }
+
       if (currentReceptionWay.value) {
         const params = {
           offset: 0,
