@@ -66,6 +66,7 @@ export const useDishes = ({ categorySlug }: UseDishesParams) => {
           locationStore.canDeliver = d.can_deliver && locationStore.canDeliver
         }
 
+        response.data.total = response.data.dishes.length
         return response.data
       }
 
@@ -79,6 +80,7 @@ export const useDishes = ({ categorySlug }: UseDishesParams) => {
         params,
       })
 
+      response.data.total = response.data.dishes.length
       for (const d of response.data.dishes) {
         d.can_deliver = response.data.can_deliver
       }
