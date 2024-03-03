@@ -53,7 +53,7 @@
                     >
                       {{ dish.name }}
                       <Tooltip>
-                        <div class="mb-4 text-center">Пищевая ценность на 100 г</div>
+                        <div class="mb-4 text-center">Пищевая ценность на {{ dish.weight }} г</div>
                         <div class="flex justify-between gap-8">
                           <span class="text-nowrap"> Энерг. ценность </span>
                           <span class="text-nowrap"> {{ dishDetails?.energ_cen }} ккал </span>
