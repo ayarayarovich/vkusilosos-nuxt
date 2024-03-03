@@ -110,7 +110,10 @@
               <IconMail class="inline h-8" /> {{ siteInfo.email }}
             </a>
           </div>
-          <div class="flex flex-col gap-4 text-sm font-normal uppercase">
+          <div
+            v-if="[siteInfo?.youtube, siteInfo?.vk, siteInfo?.whatsapp, siteInfo?.viber].some((t) => !!t)"
+            class="flex flex-col gap-4 text-sm font-normal uppercase"
+          >
             <div>мы в соцсетях</div>
             <div class="flex items-center gap-4">
               <a
@@ -170,7 +173,10 @@
                 <IconMail class="inline h-4" /> {{ siteInfo.email }}
               </a>
             </div>
-            <div class="flex flex-col gap-2 text-sm font-normal uppercase">
+            <div
+              v-if="[siteInfo?.youtube, siteInfo?.vk, siteInfo?.whatsapp, siteInfo?.viber].some((t) => !!t)"
+              class="flex flex-col gap-2 text-sm font-normal uppercase"
+            >
               <div>мы в соцсетях</div>
               <div class="flex items-center gap-2">
                 <a
