@@ -20,6 +20,7 @@ interface UseMainResponse {
   deliver_price: number
   from_deliver: number
   percent_order: number
+  time_deliver: string
   recomendation: Dish[]
   stories: Story[]
   promo?: PromoByDish | PromoBySum
@@ -45,6 +46,7 @@ export const useMain = <SData>(select: (response: UseMainResponse) => SData) => 
       const response = await publicAxios.get<{
         banners: Banner[]
         deliver_price: number
+        time_deliver: string
         from_deliver: number
         percent_order: number
         recomendation: Dish[]
@@ -56,6 +58,7 @@ export const useMain = <SData>(select: (response: UseMainResponse) => SData) => 
         banners: response.data.banners,
         deliver_price: response.data.deliver_price,
         from_deliver: response.data.from_deliver,
+        time_deliver: response.data.time_deliver,
         percent_order: response.data.percent_order,
         stories: response.data.stories,
         recomendation: response.data.recomendation,

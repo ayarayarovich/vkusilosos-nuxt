@@ -21,7 +21,7 @@
         <span
           v-if="locationStore.canDeliver === true"
           class="text-[#999700]"
-          >~ {{ '30 минут' }}</span
+          >~ {{ timeDeliver || 'Нет данных' }}</span
         >
         <span v-else-if="locationStore.canDeliver === false">
           <IconDangerTriangle class="inline" />
@@ -30,7 +30,7 @@
       <span v-else-if="currentReceptionWay?.type === 'restaurant'">
         <span>{{ currentReceptionWay.name }}</span>
         <span class="mx-2">|</span>
-        <span class="text-[#999700]">~ {{ '30 минут' }}</span>
+        <span class="text-[#999700]">~ {{ timeDeliver || 'Нет данных' }}</span>
       </span>
       <span v-else>Выберите адрес</span>
     </Transition>
@@ -49,6 +49,7 @@ import { nthIndex } from '~/utils'
 const isModalOpen = ref(false)
 
 const { data: currentReceptionWay } = useCurrentReceptionWay()
+const { data: timeDeliver } = useMain(v => v.time_deliver)
 
 const locationStore = useLocationStore()
 
