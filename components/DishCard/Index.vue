@@ -28,6 +28,7 @@
     <NuxtLink
       :to="dish.link"
       class="mb-auto mt-4 text-center"
+      @click.stop=""
     >
       {{ dish.name }}
     </NuxtLink>
