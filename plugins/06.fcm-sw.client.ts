@@ -3,6 +3,7 @@ import { getMessaging, getToken } from 'firebase/messaging'
 
 export default defineNuxtPlugin(() => {
   const token = useState<string | undefined>('fbToken')
+  const { userCredentials } = useUserCredentials()
   const privateAxios = usePrivateAxiosInstance()
 
   if ('serviceWorker' in navigator) {
@@ -31,11 +32,13 @@ export default defineNuxtPlugin(() => {
           .then((currentToken) => {
             if (currentToken) {
               token.value = currentToken
-              privateAxios
-                .post('user/me', {
-                  fbid: currentToken,
-                })
-                .catch(() => {})
+              if (userCredentials.value.isAuthenticated) {
+                privateAxios
+                  .post('user/me', {
+                    fbid: currentToken,
+                  })
+                  .catch(() => {})
+              }
             } else {
               console.log('No registration token available. Request permission to generate one.')
             }

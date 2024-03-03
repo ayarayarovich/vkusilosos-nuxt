@@ -70,7 +70,7 @@ export const useUser = <SData>(select: (response: GetResponse) => SData) => {
     queryKey: ['user'],
     queryFn: () => useUserQueryFn(privateAxios),
     select,
-    enabled: !!userCredentials.value,
+    enabled: computed(() => userCredentials.value.isAuthenticated),
   })
 }
 
