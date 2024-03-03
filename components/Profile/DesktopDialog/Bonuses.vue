@@ -17,12 +17,6 @@
       <div class="absolute top-0 z-10 h-8 w-full bg-gradient-to-b from-whitegray to-transparent"></div>
       <div class="absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-whitegray to-transparent"></div>
       <div class="h-full overflow-y-scroll py-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray">
-        <div class="mx-8 mb-8 flex justify-end">
-          <div class="flex items-center gap-2 rounded-xl bg-white p-4 text-red shadow-main">
-            <IconDangerTriangle class="h-6" /> 23.10.23 сгорит 35 бонуса
-          </div>
-        </div>
-
         <div class="mx-8 flex flex-col items-stretch gap-4">
           <div class="rounded-xl bg-white shadow-main">
             <HeadlessDisclosure
