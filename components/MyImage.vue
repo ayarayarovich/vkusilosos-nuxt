@@ -35,10 +35,9 @@ useIntersectionObserver(
   ([{ isIntersecting }]) => {
     if (isIntersecting) {
       if (!timeoutId) {
-        console.log('setting timeout')
         timeoutId = setTimeout(() => {
           wasInView.value = true
-        }, 1000)
+        }, 500)
       }
     } else {
       clearTimeout(timeoutId)
