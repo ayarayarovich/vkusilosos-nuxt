@@ -49,15 +49,15 @@
                   name="fade"
                   mode="out-in"
                 >
-                  <OrderCartDialogCartView
+                  <OrderDialogCart
                     v-if="stage == 'cart'"
                     @procced-to-payment="stage = 'payment'"
                   />
-                  <OrderCartDialogPaymentView
+                  <OrderDialogPayment
                     v-else-if="stage == 'payment'"
                     @back-to-cart="stage = 'cart'"
                   />
-                  <OrderCartDialogThanksForOrder v-else-if="stage == 'thanks'" />
+                  <OrderDialogThanksForOrder v-else-if="stage == 'thanks'" />
                 </Transition>
               </form>
             </HeadlessDialogPanel>

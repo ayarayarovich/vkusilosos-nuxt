@@ -101,7 +101,7 @@
             <div class="absolute bottom-0 left-0 top-0 w-4 bg-gradient-to-r from-whitegray to-transparent"></div>
             <div class="absolute bottom-0 right-0 top-0 w-4 bg-gradient-to-l from-whitegray to-transparent"></div>
             <div class="flex items-stretch gap-4 overflow-y-auto px-4 py-4">
-              <OrderCartDialogAddition
+              <OrderDialogAddition
                 v-for="add in filteredAdditions"
                 :key="add.id"
                 v-bind="add"
@@ -111,7 +111,7 @@
         </div>
 
         <div class="w-full px-4 pt-4 font-medium shadow-main">
-          <OrderCartDialogInputPromocode
+          <OrderDialogInputPromocode
             name="promo"
             class="mb-4"
             placeholder="Промокод"

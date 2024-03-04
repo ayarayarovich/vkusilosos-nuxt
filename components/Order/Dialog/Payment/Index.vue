@@ -40,11 +40,11 @@
             name="fade"
             mode="out-in"
           >
-            <OrderCartDialogDelivery
+            <OrderDialogPaymentReceptionFormDelivery
               v-if="receptionWay?.type === 'delivery'"
               @location-changed="emit('backToCart')"
             />
-            <OrderCartDialogRestaurant
+            <OrderDialogPaymentReceptionFormRestaurant
               v-else-if="receptionWay?.type === 'restaurant'"
               @location-changed="emit('backToCart')"
             />
@@ -57,12 +57,12 @@
       <p class="mb-6 text-lg">Способ оплаты</p>
 
       <HeadlessRadioGroup v-model="selectedPayType">
-        <OrderCartDialogRadioButton
+        <OrderDialogInputRadio
           :value="-2"
           label="Наличными"
         >
           <IconBlackWallet />
-        </OrderCartDialogRadioButton>
+        </OrderDialogInputRadio>
         <div
           class="mb-2 grid grid-cols-1 grid-rows-[0fr] overflow-hidden transition-[grid-template-rows]"
           :class="{
@@ -100,21 +100,21 @@
             </div>
           </div>
         </div>
-        <OrderCartDialogRadioButton
+        <OrderDialogInputRadio
           class="mb-2"
           :value="-1"
           label="Картой при получении"
         >
           <IconCard />
-        </OrderCartDialogRadioButton>
-        <OrderCartDialogRadioButton
+        </OrderDialogInputRadio>
+        <OrderDialogInputRadio
           class="mb-2"
           :value="0"
           label="Картой на сайте"
         >
           <IconCard />
-        </OrderCartDialogRadioButton>
-        <OrderCartDialogRadioButton
+        </OrderDialogInputRadio>
+        <OrderDialogInputRadio
           v-for="card in cards"
           :key="card.id"
           class="mb-2"
@@ -125,7 +125,7 @@
             :card-number="card.cart"
             class="h-6"
           />
-        </OrderCartDialogRadioButton>
+        </OrderDialogInputRadio>
       </HeadlessRadioGroup>
 
       <div class="mt-8 flex w-full gap-4 font-medium">

@@ -6,7 +6,7 @@
     <IconCart class="inline h-8" /> <AnimatedNumber :number="data || 0" />
     <span class="font-medium">&#8381;</span>
   </button>
-  <OrderCartDialog
+  <OrderDialog
     :show="isOpen"
     @close="closeDialog"
   />

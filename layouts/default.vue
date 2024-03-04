@@ -34,7 +34,7 @@
 
         <div class="flex flex-1 items-center justify-end gap-2">
           <ClientOnly>
-            <OrderCart v-if="userCredentials.isAuthenticated" />
+            <Order v-if="userCredentials.isAuthenticated" />
           </ClientOnly>
           <BonusCoins v-if="userCredentials.isAuthenticated" />
         </div>
@@ -53,7 +53,7 @@
 
         <div class="flex items-center justify-end gap-2">
           <ClientOnly>
-            <OrderCart v-if="userCredentials.isAuthenticated" />
+            <Order v-if="userCredentials.isAuthenticated" />
           </ClientOnly>
           <BonusCoins v-if="userCredentials.isAuthenticated" />
           <button
