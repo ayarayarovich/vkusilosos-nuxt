@@ -5,6 +5,10 @@ import MyToast from '~/components/MyToast.vue'
 
 interface GetResponse {
   total: number
+  gifts: {
+    coins_can_use: number
+    discount_all: number
+  }
   list: DishInBasket[]
   total_price: number
 }

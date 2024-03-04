@@ -120,7 +120,15 @@
           <label class="mb-8 flex items-center justify-between gap-4">
             <div>
               <div>Вкусоины</div>
-              <div class="text-sm font-normal text-black/50">У вас {{ user?.bonuses || 0 }} бонусов - спишем всё</div>
+              <div class="text-sm font-normal text-black/50">
+                <span v-if="basket.gifts.coins_can_use === 0">У вас 0 бонусов</span>
+                <template v-else>
+                  <span v-if="basket.gifts.coins_can_use === user?.bonuses">
+                    У вас {{ user?.bonuses || 0 }} бонусов - спишем всё
+                  </span>
+                  <span v-else> У вас {{ user?.bonuses || 0 }} бонусов - спишем {{ basket.gifts.coins_can_use }} </span>
+                </template>
+              </div>
             </div>
             <InputSwitch name="use_coins" />
           </label>
