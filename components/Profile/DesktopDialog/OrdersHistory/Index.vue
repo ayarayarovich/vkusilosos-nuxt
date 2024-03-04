@@ -80,7 +80,7 @@
             </li>
           </ul>
 
-          <div class="grow px-4 pb-8 lg:px-8">
+          <div class="min-h-96 grow px-4 pb-8 lg:px-8">
             <div class="flex h-full flex-col items-stretch">
               <div class="mb-2 flex w-full rounded-xl bg-gray px-4 py-2">
                 <div class="shrink-0 grow-[1] basis-0">№</div>
