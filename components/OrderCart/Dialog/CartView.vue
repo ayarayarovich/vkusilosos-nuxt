@@ -14,14 +14,8 @@
         </strong>
 
         <p class="mt-2 px-4 opacity-50">{{ displayDeliveryCost }}</p>
-        <div class="relative my-4 flex min-h-96 w-full grow flex-col items-stretch py-4">
-          <div
-            class="absolute left-0 right-0 top-0 z-50 h-4 bg-gradient-to-t from-[rgba(253,253,253,0)] to-[rgba(253,253,253,1)]"
-          ></div>
-          <div
-            class="absolute bottom-[-1px] left-0 right-0 z-50 h-4 bg-gradient-to-b from-[rgba(253,253,253,0)] to-[rgba(253,253,253,1)]"
-          ></div>
-          <ul class="absolute inset-0 overflow-y-auto px-4">
+        <div class="relative my-4 flex w-full grow flex-col items-stretch py-4">
+          <ul class="px-4">
             <li
               v-for="position in basket?.list"
               :key="position.id"
