@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#fb7185] p-4 text-black">
+  <div class="bg-[#EB001B] p-4 text-white">
     <p class="flex items-center gap-2 font-bold">
       {{ props.title }}
     </p>

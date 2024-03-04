@@ -77,6 +77,10 @@ input[type='number'] {
   @apply min-w-max max-w-full rounded-2xl !important;
 }
 
+.Vue-Toastification__container {
+  @apply pt-18 !important;
+}
+
 @media only screen and (max-width: 600px) {
   .Vue-Toastification__container {
     @apply p-8 !important;
