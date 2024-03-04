@@ -21,59 +21,58 @@
               :key="position.id"
               class="my-2 flex w-full gap-2 rounded-xl bg-white p-4 shadow-main"
             >
-              <img
-                class="h-full w-24 self-center object-contain object-center lg:h-24 lg:w-36"
-                :src="position.img"
-                alt=""
-              />
-              <div class="flex grow flex-col items-stretch justify-between self-stretch">
-                <div class="flex items-start justify-between">
-                  <div>
-                    <p class="text-black">{{ position.name }}</p>
-                    <p class="text-sm text-black opacity-50">{{ position.weight }} гр</p>
+              <template v-if="position.gift_id">
+                <img
+                  class="h-full w-24 self-center object-contain object-center lg:h-24 lg:w-36"
+                  :src="position.img"
+                  alt=""
+                />
+                <div class="flex grow flex-col items-stretch justify-between self-stretch">
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <p class="text-black">{{ position.name }}</p>
+                      <p class="text-sm text-black opacity-50">{{ position.weight }} гр</p>
+                    </div>
                   </div>
-                  <button
-                    type="button"
-                    @click="removeAll(position)"
-                  >
-                    <IconClose class="h-6" />
-                  </button>
-                </div>
-                <div class="flex items-end justify-between">
-                  <p class="mt-auto text-lg text-black">{{ position.price }} &#8381;</p>
-                  <div>
-                    <DishAdder
-                      class="h-8 w-28 md:w-32"
-                      hide-button
-                      :dish-id="position.dish_id"
-                      :dish-name="position.name"
-                      :can-deliver="true"
-                    />
+                  <div class="flex items-end justify-end">
+                    <span class="font-medium text-orange-200">Подарок к заказу</span>
                   </div>
                 </div>
-              </div>
-            </li>
+              </template>
 
-            <li
-              v-if="matchedPromo"
-              class="my-2 flex w-full gap-2 rounded-xl bg-white p-4 shadow-main"
-            >
-              <img
-                class="h-full w-24 self-center object-contain object-center lg:h-24 lg:w-36"
-                :src="matchedPromo.gift.img"
-                alt=""
-              />
-              <div class="flex grow flex-col items-stretch justify-between self-stretch">
-                <div class="flex items-start justify-between">
-                  <div>
-                    <p class="text-black">{{ matchedPromo.gift.name }}</p>
-                    <p class="text-sm text-black opacity-50">{{ matchedPromo.gift.weight }} гр</p>
+              <template v-else>
+                <img
+                  class="h-full w-24 self-center object-contain object-center lg:h-24 lg:w-36"
+                  :src="position.img"
+                  alt=""
+                />
+                <div class="flex grow flex-col items-stretch justify-between self-stretch">
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <p class="text-black">{{ position.name }}</p>
+                      <p class="text-sm text-black opacity-50">{{ position.weight }} гр</p>
+                    </div>
+                    <button
+                      type="button"
+                      @click="removeAll(position)"
+                    >
+                      <IconClose class="h-6" />
+                    </button>
+                  </div>
+                  <div class="flex items-end justify-between">
+                    <p class="mt-auto text-lg text-black">{{ position.price }} &#8381;</p>
+                    <div>
+                      <DishAdder
+                        class="h-8 w-28 md:w-32"
+                        hide-button
+                        :dish-id="position.dish_id"
+                        :dish-name="position.name"
+                        :can-deliver="true"
+                      />
+                    </div>
                   </div>
                 </div>
-                <div class="flex items-end justify-end">
-                  <span class="font-medium text-orange-200">Подарок к заказу</span>
-                </div>
-              </div>
+              </template>
             </li>
           </ul>
         </div>
@@ -86,25 +85,6 @@
                 name="guests_count"
                 :min="1"
                 :max="99"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-if="filteredAdditions && filteredAdditions.length > 0"
-          class="mb-8 w-full"
-        >
-          <p class="my-2 px-4 text-lg">Добавить к заказу?</p>
-
-          <div class="relative w-full">
-            <div class="absolute bottom-0 left-0 top-0 w-4 bg-gradient-to-r from-whitegray to-transparent"></div>
-            <div class="absolute bottom-0 right-0 top-0 w-4 bg-gradient-to-l from-whitegray to-transparent"></div>
-            <div class="flex items-stretch gap-4 overflow-y-auto px-4 py-4">
-              <OrderDialogAddition
-                v-for="add in filteredAdditions"
-                :key="add.id"
-                v-bind="add"
               />
             </div>
           </div>
@@ -204,37 +184,11 @@ const emit = defineEmits(['proccedToPayment'])
 const { data: user } = useUser((v) => v)
 const { data: basket } = useBasket((v) => v)
 const { data: main } = useMain((v) => v)
-const { data: additions } = useAdditions((v) => v)
 const bonusesToGet = computed(() => {
   if (main.value?.percent_order && basket.value) {
     return Math.floor((basket.value.total_price * main.value.percent_order) / 100)
   }
   return 0
-})
-
-const matchedPromo = computed(() => {
-  if (main.value?.promo) {
-    const promo = main.value.promo
-
-    if (promo.promo === 'sum' && basket.value?.total_price && basket.value?.total_price >= promo.sum) {
-      return promo
-    }
-    if (
-      promo.promo === 'dish' &&
-      basket.value?.list.find((v) => v.dish_id === promo.dish.id && v.count >= promo.count)
-    ) {
-      return promo
-    }
-  }
-  return undefined
-})
-
-const filteredAdditions = computed(() => {
-  if (basket.value && additions.value) {
-    return additions.value.filter((a) => basket.value.list.find((b) => b.dish_id === a.id) === undefined)
-  }
-
-  return additions.value
 })
 
 const pluralizedItemsInCartCountWord = computed(() => {

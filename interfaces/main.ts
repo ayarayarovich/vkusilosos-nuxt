@@ -26,6 +26,7 @@ export interface DishInBasket {
   img: string
   weight: number
   count_in: number
+  gift_id: string
 }
 
 export interface Address {
