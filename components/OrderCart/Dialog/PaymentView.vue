@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex h-full w-full transform flex-col items-stretch overflow-hidden bg-whitegray pt-8">
+  <div class="relative flex h-full w-full transform flex-col items-stretch overflow-y-auto bg-whitegray pt-8">
     <MyLocationDialog
       :show="showMyLocationDialog"
       @close="closeMyLocationDialog"
@@ -35,24 +35,20 @@
           </div>
         </div>
 
-        <div class="relative h-0 grow">
-          <div class="absolute left-0 right-0 top-0 z-10 h-4 bg-gradient-to-b from-whitegray to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 z-10 h-4 bg-gradient-to-t from-whitegray to-transparent"></div>
-          <div class="h-full overflow-y-auto py-4">
-            <Transition
-              name="fade"
-              mode="out-in"
-            >
-              <OrderCartDialogDelivery
-                v-if="receptionWay?.type === 'delivery'"
-                @location-changed="emit('backToCart')"
-              />
-              <OrderCartDialogRestaurant
-                v-else-if="receptionWay?.type === 'restaurant'"
-                @location-changed="emit('backToCart')"
-              />
-            </Transition>
-          </div>
+        <div class="relative grow pt-4 pb-16">
+          <Transition
+            name="fade"
+            mode="out-in"
+          >
+            <OrderCartDialogDelivery
+              v-if="receptionWay?.type === 'delivery'"
+              @location-changed="emit('backToCart')"
+            />
+            <OrderCartDialogRestaurant
+              v-else-if="receptionWay?.type === 'restaurant'"
+              @location-changed="emit('backToCart')"
+            />
+          </Transition>
         </div>
       </div>
     </div>
