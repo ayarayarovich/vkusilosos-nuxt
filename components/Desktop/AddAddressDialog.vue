@@ -120,6 +120,7 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
+import { VueYandexMaps } from 'vue-yandex-maps'
 import * as yup from 'yup'
 import type { MyCoords } from '~/interfaces/common'
 
@@ -170,6 +171,17 @@ const updateCoords = (c: MyCoords) => {
       setFieldValue('adres', res.data)
     })
 }
+
+onMounted(() => {
+  VueYandexMaps.ymaps()
+    .geolocation.getPosition()
+    .then(({ coords }) => {
+      updateCoords({
+        Lng: coords[0],
+        Lat: coords[1],
+      })
+    })
+})
 
 const query = ref('')
 const throttledQuery = refThrottled(query, 500, undefined, false)

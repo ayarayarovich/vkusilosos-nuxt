@@ -72,6 +72,7 @@
 <script setup lang="ts">
 import * as yup from 'yup'
 import type { LngLat } from '@yandex/ymaps3-types'
+import { VueYandexMaps } from 'vue-yandex-maps'
 
 const props = defineProps<{
   mapCoords: LngLat
@@ -101,11 +102,20 @@ const { handleSubmit, setFieldValue } = useForm({
 })
 
 const adres = useFieldValue<{ lat: string; lon: string; display_name: string }>('adres')
+
 const coordinates = computed(() => {
   if (adres.value) {
     return [Number(adres.value.lon), Number(adres.value.lat)]
   }
   return [37.617698, 55.755864]
+})
+
+onMounted(() => {
+  VueYandexMaps.ymaps()
+    .geolocation.getPosition()
+    .then(({ coords }) => {
+      emit('updateCoords', [coords[0], coords[1]])
+    })
 })
 
 watchEffect(() => emit('updateCoords', coordinates.value))
