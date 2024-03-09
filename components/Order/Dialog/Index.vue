@@ -88,7 +88,7 @@ const validationSchema = computed(() => {
   if (stage.value === 'cart') {
     return yup.object({
       cart_id: yup.number().required(),
-      promo: yup.string().label('Промокод'),
+      coupon: yup.string().label('Промокод'),
       use_coins: yup.boolean().label('Вкусоины'),
       guests_count: yup.number().label('Количество гостей'),
     })

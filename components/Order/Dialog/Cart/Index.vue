@@ -21,7 +21,7 @@
               :key="position.id"
               class="my-2 flex w-full gap-2 rounded-xl bg-white p-4 shadow-main"
             >
-              <template v-if="position.gift_id">
+              <template v-if="!position.price">
                 <img
                   class="h-full w-24 self-center object-contain object-center lg:h-24 lg:w-36"
                   :src="position.img"
@@ -92,7 +92,7 @@
 
         <div class="w-full px-4 pt-4 font-medium shadow-main">
           <OrderDialogInputPromocode
-            name="promo"
+            name="coupon"
             class="mb-4"
             placeholder="Промокод"
           />
@@ -112,6 +112,14 @@
             </div>
             <InputSwitch name="use_coins" />
           </label>
+
+          <div
+            v-if="basket.gifts.discount_all"
+            class="flex items-center justify-between"
+          >
+            <span>Скидка</span>
+            <span><AnimatedNumber :number="basket.gifts.discount_all" /> &#8381;</span>
+          </div>
 
           <div class="flex items-center justify-between">
             <span>{{ basket?.total }} {{ pluralizedItemsInCartCountWord }}</span>
@@ -181,8 +189,10 @@ import type { DishInBasket } from '~/interfaces/main'
 
 const emit = defineEmits(['proccedToPayment'])
 
+const coupon = useFieldValue<string>('coupon')
+
 const { data: user } = useUser((v) => v)
-const { data: basket } = useBasket((v) => v)
+const { data: basket } = useBasketWithGifts((v) => v, { enabled: true, coupon })
 const { data: main } = useMain((v) => v)
 const bonusesToGet = computed(() => {
   if (main.value?.percent_order && basket.value) {

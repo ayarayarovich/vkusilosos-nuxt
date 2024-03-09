@@ -3,7 +3,7 @@ import { useToast } from 'vue-toastification'
 import type { DishInBasket } from '~/interfaces/main'
 import MyToast from '~/components/MyToast.vue'
 
-interface GetResponse {
+interface GetBasketResponse {
   total: number
   gifts: {
     coins_can_use: number
@@ -13,14 +13,14 @@ interface GetResponse {
   total_price: number
 }
 
-export const useBasket = <SData>(select: (response: GetResponse) => SData) => {
+export const useBasket = <SData>(select: (response: GetBasketResponse) => SData) => {
   const privateAxios = usePrivateAxiosInstance()
   const { userCredentials } = useUserCredentials()
 
   return useQuery({
     queryKey: ['user', 'basket'],
     queryFn: async () => {
-      const response = await privateAxios.get<GetResponse>('user/basket', {
+      const response = await privateAxios.get<GetBasketResponse>('user/basket', {
         params: {
           offset: 0,
           limit: 99999999,
@@ -28,10 +28,6 @@ export const useBasket = <SData>(select: (response: GetResponse) => SData) => {
       })
 
       response.data.list = response.data.list || []
-
-      if (!response.data.total_price) {
-        response.data.total_price = response.data.list.reduce((acc, b) => acc + b.price * b.count, 0)
-      }
 
       return response.data
     },
@@ -48,6 +44,41 @@ export const useInvalidateBasket = () => {
       queryKey: ['user', 'basket'],
     })
   }
+}
+
+interface UseBasketWithGiftsOptions {
+  enabled?: MaybeRef<boolean>
+  coupon?: MaybeRef<string>
+}
+
+export const useBasketWithGifts = <SData>(
+  select: (response: GetBasketResponse) => SData,
+  options: UseBasketWithGiftsOptions = {}
+) => {
+  const { coupon = '', enabled = false } = options
+  const privateAxios = usePrivateAxiosInstance()
+  const { userCredentials } = useUserCredentials()
+
+  return useQuery({
+    queryKey: ['user', 'basket', 'with-gifts', { coupon }] as [string, string, string, { coupon: string }],
+    queryFn: async ({ queryKey }) => {
+      const response = await privateAxios.get<GetBasketResponse>('user/basket', {
+        params: {
+          offset: 0,
+          limit: 99999999,
+          check_basket: true,
+          coupon: queryKey[3].coupon || undefined,
+        },
+      })
+
+      response.data.list = response.data.list || []
+
+      return response.data
+    },
+    select,
+    enabled: computed(() => userCredentials.value.isAuthenticated && unref(enabled)),
+    placeholderData: (v) => v,
+  })
 }
 
 export const useAddToBasket = () => {
