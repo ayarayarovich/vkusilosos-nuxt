@@ -1,24 +1,17 @@
 <template>
-  <PublicOffer :show="show" @close="close"/>
+  <div></div>
 </template>
 
 <script setup lang="ts">
-
-const show = ref(true)
-
-const close = (closed: Promise<void>) => {
-  show.value = false
-  closed.then(() => {
-    navigateTo('/')
-  })
-}
-
-onMounted(() => {
-  show.value = true
-})
-
-onBeforeUnmount(() => {
-  show.value = false
-})
-
+navigateTo(
+  {
+    path: '/',
+    query: {
+      public_offerta: 'show',
+    },
+  },
+  {
+    redirectCode: 301,
+  }
+)
 </script>

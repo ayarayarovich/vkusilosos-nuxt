@@ -18,11 +18,6 @@ onServerPrefetch(async () => {
 
 <template>
   <main id="home">
-    <!-- для модалок с документами типо офферты и ты -->
-    <div class="absolute">
-      <NuxtPage />
-    </div>
-
     <div
       v-if="main?.banners.length"
       class="container mx-auto my-4 px-4 lg:my-8"
