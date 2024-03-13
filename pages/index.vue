@@ -119,7 +119,7 @@ onServerPrefetch(async () => {
           <div class="h-12">
             <a
               class="mr-2 inline-block h-full"
-              href="https://google.com"
+              href="https://play.google.com/store/apps/details?id=com.mohnorilov.vkusilosos"
               target="_blank"
             >
               <img
@@ -130,7 +130,7 @@ onServerPrefetch(async () => {
             </a>
             <a
               class="inline-block h-full"
-              href="https://www.apple.com/app-store/"
+              href="https://apps.apple.com/ru/app/%D0%B2%D0%BA%D1%83%D1%81-%D0%B8-%D0%BB%D0%BE%D1%81%D0%BE%D1%81%D1%8C-%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D1%81%D1%83%D1%88%D0%B8/id6474122426"
               target="_blank"
             >
               <img
