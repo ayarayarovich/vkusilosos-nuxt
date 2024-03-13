@@ -37,10 +37,10 @@
             <HeadlessDialogPanel class="h-full w-full max-w-5xl shadow-xl transition-all lg:h-auto">
               <div
                 ref="dialogPanelEl"
-                class="flex h-full w-full transform flex-col items-stretch overflow-hidden bg-whitegray lg:h-auto lg:flex-row lg:rounded-2xl"
+                class="flex h-full w-full transform flex-col items-stretch overflow-auto bg-whitegray lg:h-auto lg:flex-row lg:rounded-2xl"
               >
                 <button
-                  class="flex items-center gap-2 p-4 text-lg font-medium lg:hidden"
+                  class="sticky top-0 z-50 flex items-center gap-2 bg-whitegray p-4 text-lg font-medium lg:hidden"
                   type="button"
                   @click="close()"
                 >
@@ -48,7 +48,7 @@
                   Выберите адрес
                 </button>
 
-                <div class="aspect-square h-[12rem] shrink-0 overflow-hidden rounded-xl lg:order-3 lg:h-[36rem]">
+                <div class="aspect-square h-[12rem] shrink-0 overflow-hidden lg:order-3 lg:h-[36rem] lg:rounded-xl">
                   <MyYandexMap
                     :coordinates="coordinates"
                     show-center-marker
