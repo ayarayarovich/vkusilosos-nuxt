@@ -8,6 +8,7 @@
     <Category
       v-if="category"
       :category="category"
+      :prefetch="true"
     />
   </main>
 </template>
