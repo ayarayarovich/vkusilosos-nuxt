@@ -25,12 +25,17 @@
       <div class="h-px bg-gray"></div>
       <div class="py-8 text-center">
         Авторизуясь на сайте, я соглашаюсь с
-        <NuxtLink
-          to="/user_agreement"
+        <button
+          type="button"
           class="text-orange-200"
+          @click="showUserAggreement = true"
         >
           условиями использования
-        </NuxtLink>
+        </button>
+        <UserAgreement
+          :show="showUserAggreement"
+          @close="showUserAggreement = false"
+        />
       </div>
     </div>
   </div>
@@ -46,6 +51,8 @@ const emit = defineEmits<{
 interface Vals {
   phone: string
 }
+
+const showUserAggreement = ref(false)
 
 const { handleSubmit } = useForm<Vals>({
   validationSchema: yup.object({
