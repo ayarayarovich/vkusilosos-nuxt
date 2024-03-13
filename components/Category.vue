@@ -95,7 +95,7 @@ import { useCategoryStore } from '~/store/category'
 
 const props = defineProps<{
   category: Category
-  immediate?: boolean
+  prefetch?: boolean
 }>()
 
 const currentTag = ref<number>(-1)
@@ -105,7 +105,9 @@ const categoryStore = useCategoryStore()
 
 const { data: dishesData, status: dishesStatus, suspense } = useDishes({ categorySlug: props.category.link })
 onServerPrefetch(async () => {
-  await suspense()
+  if (props.prefetch) {
+    await suspense()
+  }
 })
 
 useIntersectionObserver(

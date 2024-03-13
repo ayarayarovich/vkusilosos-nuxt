@@ -87,11 +87,27 @@ onServerPrefetch(async () => {
     </div>
 
     <div v-if="categories">
-      <Category
-        v-for="category in categories"
+      <template
+        v-for="(category, index) in categories"
         :key="category.id"
-        :category="category"
-      />
+      >
+        <div v-if="index < 2">
+          <Category
+            :key="category.id"
+            :prefetch="index < 2"
+            :category="category"
+          />
+        </div>
+        <div v-else>
+          <ClientOnly>
+            <Category
+              :key="category.id"
+              :prefetch="index < 2"
+              :category="category"
+            />
+          </ClientOnly>
+        </div>
+      </template>
     </div>
 
     <div

@@ -23,7 +23,10 @@
       </div>
     </div>
     <div class="mt-4 h-28 w-auto overflow-hidden sm:h-36 md:h-40 lg:h-32 lg:max-lg:mt-0 xl:h-48">
-      <MyImage :src="dish.img" :alt="dish.name" />
+      <MyImage
+        :src="dish.img"
+        :alt="dish.name"
+      />
     </div>
     <NuxtLink
       :to="dish.link"
@@ -45,12 +48,14 @@
         class="h-9 w-full lg:h-10"
         :class="dish.size === 2 ? 'max-w-[16rem]' : ''"
       >
-        <DishAdder
-          :dish-id="dish.id"
-          :dish-name="dish.name"
-          :can-deliver="dish.can_deliver"
-          class="h-full w-full"
-        />
+        <ClientOnly>
+          <DishAdder
+            :dish-id="dish.id"
+            :dish-name="dish.name"
+            :can-deliver="dish.can_deliver"
+            class="h-full w-full"
+          />
+        </ClientOnly>
       </div>
     </div>
     <DishCardDialog
