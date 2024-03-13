@@ -24,12 +24,12 @@
         </div>
 
         <div class="flex shrink grow-0 justify-center">
-          <RouterLink to="/">
+          <NuxtLink to="/">
             <img
               src="/main-logo.svg"
               class="h-10"
             />
-          </RouterLink>
+          </NuxtLink>
         </div>
 
         <div class="flex flex-1 items-center justify-end gap-2">
@@ -43,12 +43,12 @@
       <!-- mobile -->
       <div class="container mx-auto flex h-full items-center justify-between px-4 lg:hidden">
         <div class="flex shrink grow-0 justify-center">
-          <RouterLink to="/">
+          <NuxtLink to="/">
             <img
               src="/main-logo.svg"
               class="h-8"
             />
-          </RouterLink>
+          </NuxtLink>
         </div>
 
         <div class="flex items-center justify-end gap-2">
@@ -68,7 +68,7 @@
     </header>
 
     <div class="flex-1 basis-0">
-      <RouterView />
+      <NuxtPage />
     </div>
 
     <footer>
@@ -80,9 +80,9 @@
             class="h-14"
           />
           <div class="flex flex-col items-start gap-2 text-sm font-normal uppercase">
-            <RouterLink to="/promo">АКЦИИ</RouterLink>
-            <RouterLink to="/delivery">УСЛОВИЯ ДОСТАВКИ</RouterLink>
-            <RouterLink to="/blog">БЛОГ</RouterLink>
+            <NuxtLink to="/promo">АКЦИИ</NuxtLink>
+            <NuxtLink to="/delivery_conditions">УСЛОВИЯ ДОСТАВКИ</NuxtLink>
+            <NuxtLink to="/blog">БЛОГ</NuxtLink>
           </div>
           <div class="mr-auto flex flex-col items-start gap-2 text-sm font-normal uppercase">
             <LeaveFeedback />
@@ -213,8 +213,9 @@
 
           <div class="flex flex-col items-start justify-between gap-2 leading-none">
             <NuxtLink to="/promo">АКЦИИ</NuxtLink>
-            <NuxtLink to="/delivery">УСЛОВИЯ ДОСТАВКИ</NuxtLink>
+            <NuxtLink to="/delivery_conditions">УСЛОВИЯ ДОСТАВКИ</NuxtLink>
             <NuxtLink to="/blog">БЛОГ</NuxtLink>
+
             <LeaveFeedback />
             <WriteUs />
             <button
