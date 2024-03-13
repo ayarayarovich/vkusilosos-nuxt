@@ -146,7 +146,7 @@
       </div>
     </div>
 
-    <span class="absolute bottom-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden"
+    <span class="absolute top-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden"
       >Свайпай вправо, чтобы закрыть</span
     >
   </div>
