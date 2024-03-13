@@ -60,7 +60,7 @@
           <h3 class="mb-5 block text-xl font-medium">Подписки</h3>
           <div class="flex items-center gap-2">
             <label class="flex items-center gap-2">
-              <InputCheckbox name="personal_recomendations" />
+              <InputCheckbox name="personal_recomendations" class="shrink-0" />
               <span class="cursor-pointer select-none">Получать персональные предложения и акции</span>
             </label>
             <Tooltip>
