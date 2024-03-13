@@ -151,7 +151,7 @@ const timeSteps = computed(() => {
     t <= DateTime.fromObject({ ...DateTime.now().toObject(), hour: 22, minute: 30, second: 0, millisecond: 0 });
     t = t.plus(step)
   ) {
-    if (DateTime.now().plus({ hours: 2 }) <= t)
+    if (DateTime.now().plus({ hours: 1 }) <= t)
       steps.push({
         value: t.toISO() || '',
         displayValue: t.toFormat('HH:mm'),
