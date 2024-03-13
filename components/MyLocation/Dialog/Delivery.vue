@@ -8,6 +8,14 @@
       @close="showConfirmDialog = false"
     />
 
+    <ConfirmDialog
+      message="Вы уверены, что хотите удалить этот адрес?"
+      :show="showConfirmDeleteAddress"
+      @confirmed="onConfirmAddressDelete()"
+      @rejected="onRejectedAddressDelete()"
+      @close="showConfirmDeleteAddress = false"
+    />
+
     <div class="relative h-0 grow">
       <HeadlessRadioGroup
         v-model="selectedAddress"
@@ -31,11 +39,17 @@
             <IconMapPoint class="h-5 shrink-0" />
             <div class="text-left text-sm">{{ transformAddress(address.adres) }}</div>
             <button
-              class="ml-auto shrink-0 rounded-full p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
+              class="ml-auto shrink-0 rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
               type="button"
               @click="emit('edit', address)"
             >
               <IconEditPen class="h-4" />
+            </button>
+            <button
+              class="rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
+              @click="deleteAddress(address.id)"
+            >
+              <IconTrashbin class="h-4" />
             </button>
           </div>
         </HeadlessRadioGroupOption>
@@ -73,9 +87,31 @@ import { nthIndex } from '~/utils'
 const emit = defineEmits(['edit', 'new', 'updateCoords', 'close', 'locationChanged'])
 
 const { data } = useAddresses((v) => v)
+const { mutate } = useDeleteAddress()
 
 const transformAddress = (address: string) => {
   return address.slice(nthIndex(address, ',', 1) + 1).trim()
+}
+
+const showConfirmDeleteAddress = ref(false)
+const addressIDToBeDeleted = ref<number>()
+
+const deleteAddress = (addressID: number) => {
+  showConfirmDeleteAddress.value = true
+  addressIDToBeDeleted.value = addressID
+}
+
+const onConfirmAddressDelete = () => {
+  showConfirmDeleteAddress.value = false
+  if (addressIDToBeDeleted.value) {
+    mutate(addressIDToBeDeleted.value)
+    addressIDToBeDeleted.value = undefined
+  }
+}
+
+const onRejectedAddressDelete = () => {
+  showConfirmDeleteAddress.value = false
+  addressIDToBeDeleted.value = undefined
 }
 
 const compareAddresses = (a?: Address, b?: Address) => a?.id === b?.id
