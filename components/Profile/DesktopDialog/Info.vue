@@ -60,7 +60,7 @@
           <h3 class="mb-5 block text-xl font-medium">Подписки</h3>
           <div class="flex items-center gap-2">
             <label class="flex items-center gap-2">
-              <InputCheckbox name="personal-recomendations" />
+              <InputCheckbox name="personal_recomendations" />
               <span class="cursor-pointer select-none">Получать персональные предложения и акции</span>
             </label>
             <Tooltip>
@@ -91,6 +91,7 @@ const { data: user } = useUser((v) => {
     phone: formatPhone(v.phone),
     email: v.email,
     birthday: v.birthday ? DateTime.fromFormat(v.birthday.split(' ')[0], 'yyyy-LL-dd').toJSDate() : undefined,
+    personal_recomendations: v.email_pushes || v.get_pushes || v.sms_pushes,
   }
 })
 
@@ -104,6 +105,7 @@ const { values, setFieldError } = useForm<any>({
     birthday: yup.date().label('Дата'),
     last_password: yup.string().label('Старый пароль'),
     new_password: yup.string().label('Новый пароль'),
+    personal_recomendations: yup.boolean().label('Получать персональные предложения и акции'),
   }),
   initialValues: user,
 })
@@ -120,11 +122,13 @@ onUnmounted(() => {
     name: user.value?.name,
     email: user.value?.email,
     birthday: user.value?.birthday,
+    personal_recomendations: user.value?.personal_recomendations,
   }
   const after = {
     name: values.name,
     email: values.email,
     birthday: values.birthday,
+    personal_recomendations: values.personal_recomendations,
   }
 
   const updates: { [key: string]: any } = {}
@@ -138,6 +142,10 @@ onUnmounted(() => {
   if (values.last_password || values.new_password) {
     updates.last_password = values.last_password
     updates.new_password = values.new_password
+  }
+
+  if (before.personal_recomendations !== after.personal_recomendations) {
+    updates.get_pushes = after.personal_recomendations
   }
 
   if (Object.keys(updates).length > 0) {
