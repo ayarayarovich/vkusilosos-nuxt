@@ -58,6 +58,8 @@
                     @back-to-cart="stage = 'cart'"
                   />
                   <OrderDialogThanksForOrder v-else-if="stage == 'thanks'" />
+                  <OrderDialogRestClosed v-else-if="stage == 'rest_closed'" />
+                  <OrderDialogCantDeliver v-else-if="stage == 'cant_deliver'" />
                 </Transition>
               </form>
             </HeadlessDialogPanel>
@@ -82,7 +84,7 @@ const emit = defineEmits(['close'])
 
 const dialogPanelEl = ref()
 
-const stage = ref<'cart' | 'payment' | 'thanks'>('cart')
+const stage = ref<'cart' | 'payment' | 'thanks' | 'rest_closed' | 'cant_deliver'>('cart')
 
 const validationSchema = computed(() => {
   if (stage.value === 'cart') {
@@ -176,8 +178,16 @@ const onSubmit = handleSubmit((v: any) => {
       stage.value = 'thanks'
       invalidateOrders()
       invalidateBasket()
-    } else if (response.action === 'not found adres') {
-      showNotDeliveringMessage.value = true
+    } else {
+      if (response.action === 'not found adres') {
+        showNotDeliveringMessage.value = true
+      }
+      if (response.action === 'rest closed') {
+        stage.value = 'rest_closed'
+      }
+      if (response.action === 'cant deliver') {
+        stage.value = 'cant_deliver'
+      }
     }
   })
 })
