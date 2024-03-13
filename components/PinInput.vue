@@ -10,6 +10,7 @@
       v-for="(id, index) in length"
       :key="id"
       :index="index"
+      inputmode="numeric"
       class="w-full flex-1 shrink rounded-xl border-2 border-transparent p-4 text-center text-sm shadow-main outline-none transition-colors focus:border-orange-200"
     />
   </PinInputRoot>
