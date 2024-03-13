@@ -7,6 +7,7 @@
     <img
       class="h-full w-full rounded-[0.6rem] object-cover object-center"
       :src="props.preview"
+      alt="Прьевю сториса"
     />
   </button>
 </template>

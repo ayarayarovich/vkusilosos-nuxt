@@ -45,6 +45,7 @@
             <img
               src="/main-logo.svg"
               class="h-10"
+              alt="ВкусиЛосось"
             />
           </NuxtLink>
         </div>
@@ -64,6 +65,7 @@
             <img
               src="/main-logo.svg"
               class="h-8"
+              alt="ВкусиЛосось"
             />
           </NuxtLink>
         </div>
@@ -95,6 +97,7 @@
           <img
             src="/main-logo.svg"
             class="h-14"
+            alt="ВкусиЛосось"
           />
           <div class="flex flex-col items-start gap-2 text-sm font-normal uppercase">
             <NuxtLink to="/promo">АКЦИИ</NuxtLink>
@@ -178,6 +181,7 @@
             <img
               src="/main-logo.svg"
               class="h-8"
+              alt="ВкусиЛосось"
             />
             <div class="flex flex-col gap-2 text-sm font-normal">
               <a
