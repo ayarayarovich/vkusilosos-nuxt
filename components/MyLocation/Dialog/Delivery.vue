@@ -30,7 +30,7 @@
           :value="address"
         >
           <div
-            class="flex cursor-pointer items-center gap-2 rounded-xl border-2 border-transparent bg-white p-4 shadow-main outline-none transition-colors"
+            class="flex cursor-pointer items-center gap-1.5 rounded-xl border-2 border-transparent bg-white p-4 shadow-main outline-none transition-colors"
             :class="{
               '!border-orange-200': checked,
               'border-orange-100': active,
@@ -46,7 +46,7 @@
               <IconEditPen class="h-4" />
             </button>
             <button
-              class="rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
+              class="shrink-0 rounded-lg p-1 outline-none ring-orange-200 ring-offset-2 transition-shadow focus:ring-2"
               @click="deleteAddress(address.id)"
             >
               <IconTrashbin class="h-4" />
