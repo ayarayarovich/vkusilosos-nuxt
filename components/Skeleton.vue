@@ -2,11 +2,12 @@
   <Transition
     name="fade"
     mode="out-in"
+    appear
   >
     <slot v-if="props.showContent"></slot>
     <div
       v-else
-      class="max-w-full animate-pulse rounded-md bg-black bg-opacity-20"
+      class="max-w-full rounded-md bg-black bg-opacity-10"
       :style="`height: ${height}; width: ${width}`"
     ></div>
   </Transition>
