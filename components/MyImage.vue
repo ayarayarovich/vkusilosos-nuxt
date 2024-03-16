@@ -4,7 +4,7 @@
     class="h-full w-full"
   >
     <img
-      v-if="wasInView"
+      v-if="loaded || wasInView"
       class="h-full w-full object-contain object-center opacity-0 transition-opacity delay-100"
       :class="{
         '!opacity-100': loaded,
@@ -38,7 +38,7 @@ watch(
   [isScrolling],
   () => {
     if (window && el.value) {
-      if (!isScrolling.value && isElementInViewport(el.value)) {
+      if (!isScrolling.value && isElementInViewport(el.value, true)) {
         timeoutId = undefined
         wasInView.value = true
       }

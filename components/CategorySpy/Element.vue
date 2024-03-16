@@ -17,6 +17,16 @@
         {{ props.category.name }}
       </div>
     </button>
+
+    <div v-if="preloadImages && dishesData?.dishes">
+      <img
+        v-for="dish in dishesData.dishes"
+        :key="dish.id"
+        class="hidden"
+        :src="dish.img"
+        alt=""
+      />
+    </div>
   </div>
 </template>
 
@@ -31,6 +41,8 @@ const props = defineProps<{
   behavior: 'redirect-and-scroll' | 'scroll'
 }>()
 
+const preloadImages = ref(false)
+
 const { data: dishesData, suspense } = useDishes({ categorySlug: props.category.link })
 onServerPrefetch(async () => {
   await suspense()
@@ -43,6 +55,7 @@ const parent = useParentElement()
 const element = ref<HTMLElement>()
 
 const onClick = () => {
+  preloadImages.value = true
   if (props.behavior === 'redirect-and-scroll') {
     ;(navigateTo('/') as Promise<void>).then(() => {
       const target = document.querySelector<HTMLDivElement>('#dish-category-' + props.category.id)!
