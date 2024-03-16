@@ -18,6 +18,8 @@
 </template>
 
 <script setup lang="ts">
+import { isElementInViewport } from '~/utils'
+
 const props = defineProps<{
   src?: string
   srcset?: string
@@ -28,7 +30,24 @@ const el = ref()
 const wasInView = ref(false)
 const loaded = ref(false)
 
+const { isScrolling } = useScroll(document || null)
+
 let timeoutId: any
+
+watch(
+  [isScrolling],
+  () => {
+    if (window && el.value) {
+      if (!isScrolling.value && isElementInViewport(el.value)) {
+        timeoutId = undefined
+        wasInView.value = true
+      }
+    }
+  },
+  {
+    immediate: true,
+  }
+)
 
 useIntersectionObserver(
   el,
