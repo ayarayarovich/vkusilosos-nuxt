@@ -1,6 +1,6 @@
 <template>
   <div class="h-full w-full overflow-hidden rounded-xl">
-    <div class="relative h-full w-full">
+    <div class="relative h-full w-full bg-black">
       <div class="absolute h-px w-px opacity-0">
         <img
           v-for="item in props.story_items"
@@ -49,7 +49,6 @@ import type { Story } from '~/interfaces/main'
 const {
   goToNextNarrativeSlide,
   goToPreviousNarrativeSlide,
-  currentNarrativeIndex,
   currentNarrativeSlideIndex,
   closeDialog,
 } = inject(StateInjectionKey)!
