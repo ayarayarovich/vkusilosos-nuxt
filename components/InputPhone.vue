@@ -79,7 +79,7 @@ const {
 } = useField<string | undefined>(name)
 
 watch(
-  [initialValue],
+  [() => initialValue],
   () => {
     if (initialValue) {
       const phoneSanitazied = initialValue.replace(/\D/g, '')
