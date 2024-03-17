@@ -3,16 +3,31 @@ import { useQuery } from '@tanstack/vue-query'
 export const useQRCode = (enabled: MaybeRefOrGetter<boolean>) => {
   const publicAxios = usePublicAxiosInstance()
 
-  interface Response {
+  interface SuccessResponse {
+    type: 'success'
     img: string
     data: string
+  }
+
+  interface ErrorResponse {
+    type: 'action'
+    action: string
   }
 
   return useQuery({
     queryKey: ['auth-qr-code'],
     queryFn: async () => {
-      const response = await publicAxios.get<Response>('auth/get_qr')
-      return response.data
+      const response = await publicAxios.get('auth/get_qr')
+      if (response.data.action) {
+        return {
+          type: 'action',
+          ...response.data,
+        } as ErrorResponse
+      }
+      return {
+        type: 'success',
+        ...response.data,
+      } as SuccessResponse
     },
     staleTime: 0,
     gcTime: 0,

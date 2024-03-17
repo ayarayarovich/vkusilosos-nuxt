@@ -45,11 +45,14 @@
                     mode="out-in"
                   >
                     <img
-                      v-if="isQRReady"
+                      v-if="isQRReady && data?.type === 'success'"
                       class="aspect-square h-full"
                       :src="options.src"
                       alt=""
                     />
+                    <div v-else-if="isSuccess && data?.type === 'action' && data.action === 'try later'">
+                      Попробуйте позже
+                    </div>
                     <LoadingIndicator
                       v-else
                       class="h-8 text-black"
@@ -78,8 +81,16 @@ const emit = defineEmits(['close'])
 const dialogPanelEl = ref<HTMLElement>()
 
 const { data, isSuccess } = useQRCode(show)
-const token = computed(() => data.value?.data || '')
-const { data: checkData } = useCheckQRData(token, isSuccess)
+const token = computed(() => {
+  if (data.value?.type === 'success') {
+    return data.value.data
+  }
+  return ''
+})
+const { data: checkData } = useCheckQRData(
+  token,
+  computed(() => isSuccess && data.value?.type === 'success' && show.value)
+)
 const { userCredentials } = useUserCredentials()
 
 watchEffect(() => {
@@ -93,12 +104,14 @@ watchEffect(() => {
 })
 
 const options = computed(() => {
-  if (data.value?.img) {
-    const segments = data.value.img.split('/')
-    const lastSegment = segments.pop() || segments.pop()
+  if (data.value?.type === 'success') {
+    if (data.value.img) {
+      const segments = data.value.img.split('/')
+      const lastSegment = segments.pop() || segments.pop()
 
-    return {
-      src: 'https://api.losos.toolio.space/img/' + lastSegment,
+      return {
+        src: 'https://api.losos.toolio.space/img/' + lastSegment,
+      }
     }
   }
   return {

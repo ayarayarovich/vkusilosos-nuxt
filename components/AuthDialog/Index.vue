@@ -45,8 +45,15 @@
                   name="fade"
                   mode="out-in"
                 >
-                  <AuthDialogAuthView v-if="view === 'auth'" />
-                  <AuthDialogPasswordRecoveryView v-else-if="view === 'recovery'" />
+                  <AuthDialogAuthPhone
+                    v-if="view === 'auth'"
+                    @next-stage="nextStage"
+                  />
+                  <AuthDialogConfirmView
+                    v-else-if="view === 'confirm'"
+                    :phone="phoneNumber"
+                    @edit-phone="view = 'auth'"
+                  />
                 </Transition>
 
                 <div class="absolute top-2 w-full text-center text-sm text-black opacity-50 md:hidden">
@@ -62,23 +69,21 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref } from 'vue'
+import { ref } from 'vue'
 import { useAuthDialogStore } from '~/store/authDialog'
 
 const authDialogStore = useAuthDialogStore()
 
 const dialogPanelEl = ref()
 
-type AuthDialogViewType = 'auth' | 'recovery'
+type AuthDialogViewType = 'auth' | 'confirm'
 const view = ref<AuthDialogViewType>('auth')
-const changeView = (newView: AuthDialogViewType) => {
-  view.value = newView
-}
 
-provide('view', {
-  view,
-  changeView,
-})
+const phoneNumber = ref('')
+const nextStage = (phone: string) => {
+  phoneNumber.value = phone
+  view.value = 'confirm'
+}
 
 useSwipe(dialogPanelEl, {
   onSwipeEnd(_, direction) {

@@ -5,7 +5,7 @@
   >
     Вход по QR-коду
   </button>
-  <AuthDialogAuthViewQRCodeDialog
+  <AuthDialogQRCodeDialog
     :show="isModalOpen"
     @close="closeModal"
   />
