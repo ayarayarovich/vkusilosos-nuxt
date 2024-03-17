@@ -11,7 +11,10 @@
     <div class="mx-4 mb-4 h-px bg-black opacity-10"></div>
 
     <div class="relative mx-8 mb-4 h-0 grow">
-      <div class="scrollbar-hide h-full overflow-y-auto scroll-smooth py-4">
+      <form
+        class="scrollbar-hide flex h-full flex-col items-stretch overflow-y-auto scroll-smooth py-4"
+        @submit="onSubmit"
+      >
         <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
           <InputPhone
             type="text"
@@ -36,31 +39,21 @@
           />
         </div>
 
-        <div class="mb-8">
+        <div
+          class="mb-8"
+          @submit.stop=""
+        >
           <ProfileCreditCards />
-        </div>
-
-        <div class="mb-8">
-          <h3 class="mb-5 block text-xl font-medium">Изменить пароль</h3>
-          <div class="flex flex-col gap-4 lg:flex-row">
-            <InputPassword
-              class="flex-1"
-              name="last_password"
-              label="Старый пароль"
-            />
-            <InputPassword
-              class="flex-1"
-              name="new_password"
-              label="Новый пароль"
-            />
-          </div>
         </div>
 
         <div class="mb-8">
           <h3 class="mb-5 block text-xl font-medium">Подписки</h3>
           <div class="flex items-center gap-2">
             <label class="flex items-center gap-2">
-              <InputCheckbox name="personal_recomendations" class="shrink-0" />
+              <InputCheckbox
+                name="personal_recomendations"
+                class="shrink-0"
+              />
               <span class="cursor-pointer select-none">Получать персональные предложения и акции</span>
             </label>
             <Tooltip>
@@ -69,7 +62,10 @@
             </Tooltip>
           </div>
         </div>
-      </div>
+
+        <div class="flex-1"></div>
+        <SimpleButton class="px-8 py-5 text-sm font-medium uppercase">Сохранить</SimpleButton>
+      </form>
 
       <div class="absolute left-0 right-0 top-0 h-4 bg-gradient-to-b from-whitegray to-transparent"></div>
       <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-whitegray to-transparent"></div>
@@ -80,7 +76,6 @@
 <script setup lang="ts">
 import * as yup from 'yup'
 import { DateTime } from 'luxon'
-import deepEqual from 'deep-equal'
 import { formatPhone } from '~/utils'
 
 const emit = defineEmits(['go-back'])
@@ -97,59 +92,38 @@ const { data: user } = useUser((v) => {
 
 const { mutate: setUser } = useSetUser()
 
-const { values, setFieldError } = useForm<any>({
+const { setFieldError, handleSubmit } = useForm<any>({
   validationSchema: yup.object({
     name: yup.string().label('Имя'),
     email: yup.string().label('Электронная почта'),
     phone: yup.string().required().label('Телефон'),
     birthday: yup.date().label('Дата'),
-    last_password: yup.string().label('Старый пароль'),
-    new_password: yup.string().label('Новый пароль'),
     personal_recomendations: yup.boolean().label('Получать персональные предложения и акции'),
   }),
   initialValues: user,
+})
+
+const onSubmit = handleSubmit((vals) => {
+  const before = user.value
+
+  if (before?.personal_recomendations !== vals.personal_recomendations) {
+    if (vals.personal_recomendations === true) {
+      vals.get_pushes = true
+    } else if (vals.personal_recomendations === false) {
+      vals.email_pushes = false
+      vals.get_pushes = false
+      vals.sms_pushes = false
+    }
+  }
+  delete vals.personal_recomendations
+
+  setUser(vals)
 })
 
 watch([user], () => {
   const data = user.value as any
   if (data?.action === 'set data') {
     setFieldError('phone', 'Укажите телефон')
-  }
-})
-
-onUnmounted(() => {
-  const before = {
-    name: user.value?.name,
-    email: user.value?.email,
-    birthday: user.value?.birthday,
-    personal_recomendations: user.value?.personal_recomendations,
-  }
-  const after = {
-    name: values.name,
-    email: values.email,
-    birthday: values.birthday,
-    personal_recomendations: values.personal_recomendations,
-  }
-
-  const updates: { [key: string]: any } = {}
-
-  if (!deepEqual(before, after)) {
-    updates.name = values.name
-    updates.email = values.email
-    updates.birthday = DateTime.fromJSDate(values.birthday).toFormat('yyyy/LL/dd')
-  }
-
-  if (values.last_password || values.new_password) {
-    updates.last_password = values.last_password
-    updates.new_password = values.new_password
-  }
-
-  if (before.personal_recomendations !== after.personal_recomendations) {
-    updates.get_pushes = after.personal_recomendations
-  }
-
-  if (Object.keys(updates).length > 0) {
-    setUser(updates)
   }
 })
 </script>

@@ -58,12 +58,10 @@
 
     <div class="mt-16">
       <div class="mx-4 h-px bg-gray"></div>
-      <button
-        class="w-full px-6 py-6 text-start transition-colors hover:bg-white"
-        @click="signOut()"
-      >
-        Выйти <IconExit class="inline-block h-6" />
-      </button>
+      <div class="py-5">
+        <ProfileDesktopDialogExit class="w-full px-6 py-1" />
+        <ProfileDesktopDialogDeleteAccount class="w-full px-6 py-1" />
+      </div>
     </div>
   </div>
 </template>
@@ -74,15 +72,9 @@ import { formatPhone } from '~/utils'
 
 const emit = defineEmits(['close', 'change-view'])
 
-const {resetUserCredentials} = useUserCredentials()
 const profileDialogStore = useProfileDialogStore()
 
 const { data: user } = useUser((v) => v)
-
-const signOut = () => {
-  profileDialogStore.close()
-  resetUserCredentials()
-}
 
 const draggingArea = ref()
 

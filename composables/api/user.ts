@@ -57,6 +57,27 @@ export const useSignOut = () => {
   return mutate
 }
 
+export const useDeleteAccount = () => {
+  const { resetUserCredentials } = useUserCredentials()
+  const queryClient = useQueryClient()
+  const privateAxios = usePrivateAxiosInstance()
+
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      const response = await privateAxios.delete('user/me')
+      return response
+    },
+    onSuccess: () => {
+      resetUserCredentials()
+      queryClient.clear()
+      queryClient.removeQueries()
+      location.reload()
+    },
+  })
+
+  return mutate
+}
+
 export const useUserQueryFn = async (privateAxios: AxiosInstance) => {
   const response = await privateAxios.get<GetResponse>('user/me')
   return response.data

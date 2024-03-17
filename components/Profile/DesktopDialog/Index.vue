@@ -58,7 +58,10 @@
                         {{ tab.label }}
                       </ProfileDesktopDialogTab>
                       <div class="mx-4 mt-auto h-px bg-[#252321] opacity-10"></div>
-                      <ProfileDesktopDialogExit />
+                      <div class="mb-10 mt-6 flex flex-col">
+                        <ProfileDesktopDialogExit class="px-6 py-1" />
+                        <ProfileDesktopDialogDeleteAccount class="px-6 py-1" />
+                      </div>
                     </HeadlessTabList>
                     <HeadlessTabPanels class="grow bg-whitegray">
                       <HeadlessTabPanel
