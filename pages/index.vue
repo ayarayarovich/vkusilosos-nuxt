@@ -33,13 +33,19 @@ onServerPrefetch(async () => {
       class="container mx-auto my-4 flex flex-col gap-4 px-4 lg:my-8 lg:flex-row lg:gap-8"
     >
       <div class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main">
-        <IconWallet class="mr-4 inline h-10" />Оплата любым удобным способом
+        <div class="flex w-full max-w-sm items-center lg:justify-center">
+          <IconWallet class="mr-4 inline h-10" />Оплата любым удобным способом
+        </div>
       </div>
       <div class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main">
-        <IconBadge class="mr-4 inline h-10" />Ежедневные акции и подарки
+        <div class="flex w-full max-w-sm items-center lg:justify-center">
+          <IconBadge class="mr-4 inline h-10" />Ежедневные акции и подарки
+        </div>
       </div>
       <div class="flex flex-1 items-center justify-center rounded-3xl bg-white px-10 py-7 shadow-main">
-        <IconToc class="mr-4 inline h-10" />Профессиональные сушисты
+        <div class="flex w-full max-w-sm items-center lg:justify-center">
+          <IconToc class="mr-4 inline h-10" />Профессиональные сушисты
+        </div>
       </div>
     </div>
 
