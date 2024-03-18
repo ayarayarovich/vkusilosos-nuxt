@@ -9,6 +9,7 @@
       value="soon"
     >
       <button
+        v-if="show30minutes"
         type="button"
         class="select-none rounded-xl border-2 border-transparent bg-white px-4 py-2 shadow-main outline-none transition-colors hover:border-orange-100 focus-visible:border-orange-100"
         :class="{
@@ -98,8 +99,8 @@
                 class="w-fit max-w-full transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all"
               >
                 <div
-                  class="h-full w-full p-6"
                   ref="dialogPanelEl"
+                  class="h-full w-full p-6"
                 >
                   <div class="grid grid-cols-3 gap-4">
                     <HeadlessRadioGroupOption
@@ -132,11 +133,42 @@
 
 <script setup lang="ts">
 import { DateTime, Duration, Settings } from 'luxon'
+import { parseFromHour } from '~/composables/api/restaurants'
 import { getFirstNItems } from '~/utils'
 
 const dialogPanelEl = ref()
 
+const { data: currentReciptionWay } = useCurrentReceptionWay()
+
 Settings.defaultZone = 'Europe/Moscow'
+
+const workingHours = computed(() => {
+  let from: DateTime
+  let until: DateTime
+
+  if (currentReciptionWay.value?.type === 'restaurant') {
+    const workingHours = parseFromHour(currentReciptionWay.value.from_hour)
+    from = DateTime.fromObject({
+      ...DateTime.now().toObject(),
+      hour: workingHours.fromHours,
+      minute: workingHours.fromMinutes,
+      second: 0,
+      millisecond: 0,
+    })
+    until = DateTime.fromObject({
+      ...DateTime.now().toObject(),
+      hour: workingHours.toHours,
+      minute: workingHours.toMinutes,
+      second: 0,
+      millisecond: 0,
+    })
+  } else {
+    from = DateTime.fromObject({ ...DateTime.now().toObject(), hour: 11, minute: 0, second: 0, millisecond: 0 })
+    until = DateTime.fromObject({ ...DateTime.now().toObject(), hour: 22, minute: 30, second: 0, millisecond: 0 })
+  }
+
+  return { from, until }
+})
 
 const timeSteps = computed(() => {
   const step = Duration.fromObject({ minutes: 30 })
@@ -146,19 +178,26 @@ const timeSteps = computed(() => {
     displayValue: string
   }[] = []
 
-  for (
-    let t = DateTime.fromObject({ ...DateTime.now().toObject(), hour: 11, minute: 0, second: 0, millisecond: 0 });
-    t <= DateTime.fromObject({ ...DateTime.now().toObject(), hour: 22, minute: 30, second: 0, millisecond: 0 });
-    t = t.plus(step)
-  ) {
-    if (DateTime.now().plus({ hours: 1 }) <= t)
-      steps.push({
-        value: t.toISO() || '',
-        displayValue: t.toFormat('HH:mm'),
-      })
+  if (workingHours.value) {
+    for (let t = workingHours.value.from; t <= workingHours.value.until; t = t.plus(step)) {
+      if (DateTime.now().plus({ hours: 1 }) <= t)
+        steps.push({
+          value: t.toISO() || '',
+          displayValue: t.toFormat('HH:mm'),
+        })
+    }
+
+    return steps
   }
 
-  return steps
+  return []
+})
+
+const show30minutes = computed(() => {
+  if (workingHours.value) {
+    return DateTime.now() >= workingHours.value.from && DateTime.now().plus({ minutes: 30 }) <= workingHours.value.until
+  }
+  return false
 })
 
 const { value } = useField<string | undefined>('time_deliver')
