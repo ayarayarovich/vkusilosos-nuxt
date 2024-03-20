@@ -147,7 +147,7 @@ export const useSendOtp = (config: { onCheckCode?: (v: UseSendOtpVals) => void }
 
   return useMutation({
     mutationFn: (vals: UseSendOtpVals) => {
-      return privateAxios.post<{ action: string }>('auth/login', vals).then((r) => r.data)
+      return privateAxios.post<{ action: string }>('auth/login/new', vals).then((r) => r.data)
     },
 
     onSuccess(data, vals) {
