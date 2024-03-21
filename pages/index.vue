@@ -14,6 +14,12 @@ onServerPrefetch(async () => {
   await suspenseMain()
   await suspenseCategories()
 })
+
+useSeoMeta({
+  title: () => main.value?.title || '',
+  description: () => main.value?.description || '',
+  keywords: () => main.value?.keywords || '',
+})
 </script>
 
 <template>

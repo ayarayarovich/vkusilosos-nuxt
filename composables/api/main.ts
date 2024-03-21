@@ -17,6 +17,9 @@ interface PromoByDish {
 
 interface UseMainResponse {
   banners: Banner[]
+  title: string
+  description: string
+  keywords: string
   deliver_price: number
   from_deliver: number
   percent_order: number
@@ -45,6 +48,9 @@ export const useMain = <SData>(select: (response: UseMainResponse) => SData) => 
       }
       const response = await publicAxios.get<{
         banners: Banner[]
+        title: string
+        description: string
+        keywords: string
         deliver_price: number
         time_deliver: string
         from_deliver: number
@@ -55,6 +61,9 @@ export const useMain = <SData>(select: (response: UseMainResponse) => SData) => 
       }>('api/main')
 
       const data: UseMainResponse = {
+        title: response.data.title,
+        description: response.data.description,
+        keywords: response.data.keywords,
         banners: response.data.banners,
         deliver_price: response.data.deliver_price,
         from_deliver: response.data.from_deliver,
