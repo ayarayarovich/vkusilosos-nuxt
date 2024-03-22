@@ -1,12 +1,12 @@
 <template>
   <div class="flex h-full flex-col items-stretch pt-2">
-    <ConfirmDialog
+    <!-- <ConfirmDialog
       message="Если изменить адрес, то меню может измениться, хотите поменять?"
       :show="showConfirmDialog"
       @confirmed="onConfirmSelection()"
       @rejected="onRejectedSelection()"
       @close="showConfirmDialog = false"
-    />
+    /> -->
 
     <ConfirmDialog
       message="Вы уверены, что хотите удалить этот адрес?"
@@ -72,7 +72,7 @@
         class="flex-1 px-4 py-3 font-medium"
         type="button"
         :disabled="!selectedAddress"
-        @click="showConfirmDialog = true"
+        @click="onConfirmSelection"
       >
         Выбрать
       </SimpleButton>
