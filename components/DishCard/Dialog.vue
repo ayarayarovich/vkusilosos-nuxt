@@ -52,25 +52,27 @@
                       class="mb-2 flex items-center gap-2 text-2xl font-medium"
                     >
                       {{ dish.name }}
-                      <Tooltip>
-                        <div class="mb-4 text-center">Пищевая ценность на {{ dish.weight }} г</div>
-                        <div class="flex justify-between gap-8">
-                          <span class="text-nowrap"> Энерг. ценность </span>
-                          <span class="text-nowrap"> {{ dishDetails?.energ_cen }} ккал </span>
-                        </div>
-                        <div class="flex justify-between gap-8">
-                          <span>Белки</span>
-                          <span> {{ dishDetails?.belki }} г </span>
-                        </div>
-                        <div class="flex justify-between gap-8">
-                          <span>Жиры</span>
-                          <span> {{ dishDetails?.ziri }} г </span>
-                        </div>
-                        <div class="flex justify-between gap-8">
-                          <span>Углеводы</span>
-                          <span> {{ dishDetails?.uglevodi }} г </span>
-                        </div>
-                      </Tooltip>
+                      <span class="shrink-0">
+                        <Tooltip>
+                          <div class="mb-4 text-center">Пищевая ценность на {{ dish.weight }} г</div>
+                          <div class="flex justify-between gap-8">
+                            <span class="text-nowrap"> Энерг. ценность </span>
+                            <span class="text-nowrap"> {{ dishDetails?.energ_cen }} ккал </span>
+                          </div>
+                          <div class="flex justify-between gap-8">
+                            <span>Белки</span>
+                            <span> {{ dishDetails?.belki }} г </span>
+                          </div>
+                          <div class="flex justify-between gap-8">
+                            <span>Жиры</span>
+                            <span> {{ dishDetails?.ziri }} г </span>
+                          </div>
+                          <div class="flex justify-between gap-8">
+                            <span>Углеводы</span>
+                            <span> {{ dishDetails?.uglevodi }} г </span>
+                          </div>
+                        </Tooltip>
+                      </span>
                     </HeadlessDialogTitle>
                     <div class="mb-2 text-sm">
                       <Skeleton

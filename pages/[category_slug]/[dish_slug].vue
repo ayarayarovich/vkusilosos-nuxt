@@ -15,25 +15,27 @@
           <div class="text-left">
             <h1 class="mb-2 flex items-center gap-2 text-2xl font-medium">
               {{ dish?.name }}
-              <Tooltip>
-                <div class="mb-4 text-center">Пищевая ценность на 100 г</div>
-                <div class="flex justify-between gap-8">
-                  <span class="text-nowrap"> Энерг. ценность </span>
-                  <span class="text-nowrap"> {{ dish?.energ_cen }} ккал </span>
-                </div>
-                <div class="flex justify-between gap-8">
-                  <span>Белки</span>
-                  <span> {{ dish?.belki }} г </span>
-                </div>
-                <div class="flex justify-between gap-8">
-                  <span>Жиры</span>
-                  <span> {{ dish?.ziri }} г </span>
-                </div>
-                <div class="flex justify-between gap-8">
-                  <span>Углеводы</span>
-                  <span> {{ dish?.uglevodi }} г </span>
-                </div>
-              </Tooltip>
+              <span class="shrink-0">
+                <Tooltip>
+                  <div class="mb-4 text-center">Пищевая ценность на 100 г</div>
+                  <div class="flex justify-between gap-8">
+                    <span class="text-nowrap"> Энерг. ценность </span>
+                    <span class="text-nowrap"> {{ dish?.energ_cen }} ккал </span>
+                  </div>
+                  <div class="flex justify-between gap-8">
+                    <span>Белки</span>
+                    <span> {{ dish?.belki }} г </span>
+                  </div>
+                  <div class="flex justify-between gap-8">
+                    <span>Жиры</span>
+                    <span> {{ dish?.ziri }} г </span>
+                  </div>
+                  <div class="flex justify-between gap-8">
+                    <span>Углеводы</span>
+                    <span> {{ dish?.uglevodi }} г </span>
+                  </div>
+                </Tooltip>
+              </span>
             </h1>
             <div class="mb-2 text-sm">
               <Skeleton
