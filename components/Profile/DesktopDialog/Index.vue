@@ -87,7 +87,6 @@
 import type { Component } from 'vue'
 import { storeToRefs } from 'pinia'
 import ProfileDesktopDialogAddresses from './Addresses.vue'
-import ProfileDesktopDialogBonuses from './Bonuses.vue'
 import ProfileDesktopDialogInfo from './Info.vue'
 import ProfileDesktopDialogNotifications from './Notifications.vue'
 import ProfileDesktopDialogOrdersHistory from './OrdersHistory/Index.vue'
@@ -120,11 +119,11 @@ const tabs = shallowRef<
     label: 'Адреса',
     component: ProfileDesktopDialogAddresses,
   },
-  {
-    name: 'bonus_system',
-    label: 'Бонусная система',
-    component: ProfileDesktopDialogBonuses,
-  },
+  // {
+  //   name: 'bonus_system',
+  //   label: 'Бонусная система',
+  //   component: ProfileDesktopDialogBonuses,
+  // },
   {
     name: 'notifications',
     label: 'Уведомления',

@@ -47,10 +47,10 @@
               v-else-if="myCurrentView === 'addresses'"
               @go-back="myCurrentView = 'menu'"
             />
-            <ProfileMobileDialogBonuses
+            <!-- <ProfileMobileDialogBonuses
               v-else-if="myCurrentView === 'bonus_system'"
               @go-back="myCurrentView = 'menu'"
-            />
+            /> -->
             <ProfileMobileDialogOrdersHistory
               v-else-if="myCurrentView === 'orders_history'"
               @go-back="myCurrentView = 'menu'"

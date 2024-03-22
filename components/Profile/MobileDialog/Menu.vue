@@ -39,12 +39,12 @@
         Адреса
       </button>
 
-      <button
+      <!-- <button
         class="text-start text-lg font-medium text-black"
         @click="emit('change-view', 'bonus_system')"
       >
         Бонусная система
-      </button>
+      </button> -->
 
       <button
         class="text-start text-lg font-medium text-black"

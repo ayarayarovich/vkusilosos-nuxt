@@ -54,7 +54,7 @@
           <ClientOnly>
             <Order v-if="userCredentials.isAuthenticated" />
           </ClientOnly>
-          <BonusCoins v-if="userCredentials.isAuthenticated" />
+          <!-- <BonusCoins v-if="userCredentials.isAuthenticated" /> -->
         </div>
       </div>
 
@@ -74,7 +74,7 @@
           <ClientOnly>
             <Order v-if="userCredentials.isAuthenticated" />
           </ClientOnly>
-          <BonusCoins v-if="userCredentials.isAuthenticated" />
+          <!-- <BonusCoins v-if="userCredentials.isAuthenticated" /> -->
           <button
             class="group relative inline-block aspect-square h-8"
             @click="profileDialogStore.open()"
