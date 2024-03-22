@@ -97,21 +97,24 @@
             placeholder="Промокод"
           />
 
-          <label class="mb-8 flex items-center justify-between gap-4">
+          <!-- <label class="mb-8 flex items-center justify-between gap-4">
             <div>
               <div>Вкусоины</div>
               <div class="text-sm font-normal text-black/50">
-                <span v-if="basket.gifts.coins_can_use === 0">У вас 0 бонусов</span>
-                <template v-else>
+                <span v-if="user?.bonuses === 0">У вас 0 бонусов</span>
+                <template v-else-if="basket.gifts.coins_can_use > 0">
                   <span v-if="basket.gifts.coins_can_use === user?.bonuses">
                     У вас {{ user?.bonuses || 0 }} бонусов - спишем всё
                   </span>
-                  <span v-else> У вас {{ user?.bonuses || 0 }} бонусов - спишем {{ basket.gifts.coins_can_use }} </span>
+                  <span v-else-if="user?.bonuses">
+                    У вас {{ user.bonuses }} бонусов - спишем
+                    {{ Math.min(basket.gifts.coins_can_use, user.bonuses) }}
+                  </span>
                 </template>
               </div>
             </div>
             <InputSwitch name="use_coins" />
-          </label>
+          </label> -->
 
           <div
             v-if="basket.gifts.discount_all"
@@ -175,7 +178,7 @@
       </div>
     </Transition>
 
-    <span class="absolute top-2 left-0 right-0 text-center text-sm text-black opacity-50 md:hidden">
+    <span class="absolute left-0 right-0 top-2 text-center text-sm text-black opacity-50 md:hidden">
       Свайпай вправо, чтобы закрыть
     </span>
   </div>
@@ -191,7 +194,7 @@ const emit = defineEmits(['proccedToPayment'])
 
 const coupon = useFieldValue<string>('coupon')
 
-const { data: user } = useUser((v) => v)
+// const { data: user } = useUser((v) => v)
 const { data: basket } = useBasketWithGifts((v) => v, { enabled: true, coupon })
 const { data: main } = useMain((v) => v)
 const bonusesToGet = computed(() => {
