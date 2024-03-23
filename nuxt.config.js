@@ -64,7 +64,7 @@ export default defineNuxtConfig({
   },
   site: {
     name: 'Вкус И Лосось',
-    url: 'https://test.losos.toolio.space',
+    url: 'https://vkusilosos.ru',
     description: 'Доставка японской кухни',
     defaultLocale: 'ru',
     indexable: true,
@@ -81,6 +81,6 @@ export default defineNuxtConfig({
 
   sourcemap: {
     server: true,
-    client: true
-  }
+    client: true,
+  },
 })
