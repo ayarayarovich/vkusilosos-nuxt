@@ -59,6 +59,7 @@ export default defineNuxtConfig({
       ErrorMessage: 'VeeErrorMessage',
     },
   },
+  ssr: false,
   appConfig: {
     baseAPIURL: 'https://api.losos.toolio.space',
   },
