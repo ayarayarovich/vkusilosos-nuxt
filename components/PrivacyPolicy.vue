@@ -59,7 +59,6 @@
                   <div class="min-h-0">
                     <div
                       v-if="isSuccess"
-                      class="px-8"
                       v-html="data"
                     ></div>
                   </div>
