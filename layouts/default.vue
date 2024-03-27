@@ -263,7 +263,12 @@
         <div
           class="container mx-auto flex flex-col items-center gap-2 text-xs font-medium text-white lg:flex-row lg:gap-8"
         >
-          <span class="lg:mr-auto">&copy; 2023 «ВкусиЛосось». Все права защищены.</span>
+          <span>&copy; 2023 «ВкусиЛосось». Все права защищены.</span>
+          <a
+            class="lg:mr-auto"
+            href="https://впереди.рф/"
+            >Разработано агентством Впереди</a
+          >
           <button
             type="button"
             @click="openModal('public_offerta')"
