@@ -53,8 +53,11 @@
                 <div class="grid grid-rows-[1fr] overflow-hidden transition-all duration-1000">
                   <div class="min-h-0">
                     <div>
-                      <p>До 1500 рублей доставка по всей сети ресторанов платная. Стоимость доставки 200 рублей</p>
-                      <p>От 1500 рублей доставка по всей сети ресторанов бесплатная.</p>
+                      <p>
+                        До {{ main?.from_deliver }} рублей доставка по всей сети ресторанов платная. Стоимость доставки
+                        {{ main?.deliver_price }} рублей
+                      </p>
+                      <p>От {{ main?.from_deliver }} рублей доставка по всей сети ресторанов бесплатная.</p>
                     </div>
                   </div>
                 </div>
@@ -76,6 +79,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'close', closed: Promise<void>): void
 }>()
+
+const { data: main } = useMain((v) => v)
 
 const close = () => {
   emit('close', new Promise((resolve) => setTimeout(resolve, 200)))
