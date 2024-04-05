@@ -156,13 +156,23 @@ export const useSendOtp = (config: { onCheckCode?: (v: UseSendOtpVals) => void }
       }
     },
 
-    onError(error: AxiosError) {
+    onError(error: AxiosError<{ action: string }>) {
       if (error.response?.status === 408) {
         toast({
           component: MyToast,
           props: {
             title: 'Вы уже есть в системе',
             detail: 'Пожалуйста, авторизуйтесь',
+          },
+        })
+      }
+
+      if (error.response?.data.action === 'many times') {
+        toast({
+          component: MyToast,
+          props: {
+            title: 'Слишком много попыток',
+            detail: 'Попробуйте позже',
           },
         })
       }
