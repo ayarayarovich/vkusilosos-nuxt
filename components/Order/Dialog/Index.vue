@@ -114,7 +114,7 @@ const validationSchema = computed(() => {
 const { handleSubmit, resetForm } = useForm<any>({
   validationSchema,
   initialValues: computed(() => ({
-    cart_id: 0,
+    cart_id: -1,
     no_cashback: true,
     time_deliver: 'soon',
     use_coins: false,
