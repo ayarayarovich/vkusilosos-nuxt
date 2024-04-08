@@ -43,9 +43,9 @@
       </form>
     </div>
 
-    <div class="px-8 pb-4">
+    <!-- <div class="px-8 pb-4">
       <AuthDialogYandex />
-    </div>
+    </div> -->
   </div>
 </template>
 
