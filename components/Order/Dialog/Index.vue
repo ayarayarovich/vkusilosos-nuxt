@@ -145,6 +145,7 @@ watch(
 const { mutateAsync } = useCreateOrder()
 const invalidateOrders = useInvalidateOrders()
 const invalidateBasket = useInvalidateBasket()
+const basketTotalPrice = useBasket((v) => v.total_price)
 
 const showNotDeliveringMessage = ref(false)
 
@@ -169,6 +170,14 @@ const onSubmit = handleSubmit((v: any) => {
   delete v.reception_way
 
   mutateAsync(v).then((response) => {
+    if (response.link || response.action === 'success') {
+      try {
+        ym(94201196, 'reachGoal', 'zakazfinish', {
+          order_price: basketTotalPrice.data.value!.toFixed(2).toString(),
+          currency: 'RUB',
+        })
+      } catch {}
+    }
     if (response.link) {
       navigateTo(response.link, {
         external: true,
