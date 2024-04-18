@@ -129,10 +129,10 @@
             <span><AnimatedNumber :number="basket?.total_price || 0" /> &#8381;</span>
           </div>
 
-          <div class="flex items-center justify-between">
+          <!-- <div class="flex items-center justify-between">
             <span>Начислим вкусоины</span>
             <span>+ {{ bonusesToGet }}</span>
-          </div>
+          </div> -->
 
           <SimpleButton
             :disabled="basket?.total == 0"
