@@ -60,12 +60,12 @@ export default defineNuxtConfig({
     },
   },
   appConfig: {
-    baseAPIURL: 'https://api.losos.toolio.space',
+    baseAPIURL: 'https://api.demo1.a-head.ru',
   },
   site: {
-    name: 'Вкус И Лосось',
-    url: 'https://vkusilosos.ru',
-    description: 'Доставка японской кухни',
+    name: 'Доставка еды',
+    url: 'https://demo1.a-head.ru',
+    description: 'Доставка еды',
     defaultLocale: 'ru',
     indexable: true,
     trailingSlash: false,

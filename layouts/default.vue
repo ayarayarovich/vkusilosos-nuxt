@@ -43,9 +43,9 @@
         <div class="flex shrink grow-0 justify-center">
           <NuxtLink to="/">
             <img
-              src="/main-logo.svg"
+              src="/logo.png"
               class="h-10"
-              alt="ВкусиЛосось"
+              alt="НазваниеДоставки"
             />
           </NuxtLink>
         </div>
@@ -63,9 +63,9 @@
         <div class="flex shrink grow-0 justify-center">
           <NuxtLink to="/">
             <img
-              src="/main-logo.svg"
+              src="/logo.png"
               class="h-8"
-              alt="ВкусиЛосось"
+              alt="НазваниеДоставки"
             />
           </NuxtLink>
         </div>
@@ -95,9 +95,9 @@
       <div class="hidden bg-white py-9 shadow-[0_0_35px_0_rgba(0,0,0,0.05)] lg:block">
         <div class="container mx-auto flex items-center gap-8">
           <img
-            src="/main-logo.svg"
+            src="/logo.png"
             class="h-14"
-            alt="ВкусиЛосось"
+            alt="НазваниеДоставки"
           />
           <div class="flex flex-col items-start gap-2 text-sm font-normal uppercase">
             <NuxtLink to="/promo">АКЦИИ</NuxtLink>
@@ -181,7 +181,7 @@
             <img
               src="/main-logo.svg"
               class="h-8"
-              alt="ВкусиЛосось"
+              alt="НазваниеДоставки"
             />
             <div class="flex flex-col gap-2 text-sm font-normal">
               <a
@@ -263,7 +263,7 @@
         <div
           class="container mx-auto flex flex-col items-center gap-2 text-xs font-medium text-white lg:flex-row lg:gap-8"
         >
-          <span>&copy; 2023 «ВкусиЛосось». Все права защищены.</span>
+          <span>&copy; 2023 «НазваниеДоставки». Все права защищены.</span>
           <a
             class="lg:mr-auto"
             href="https://впереди.рф/"

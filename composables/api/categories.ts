@@ -17,6 +17,16 @@ export const useCategories = <SData>(select: (response: UseCategoriesResponse) =
           limit: 99999999,
         },
       })
+
+      console.log("BEFORE", response.data)
+
+      if (!response.data.list) {
+        response.data.list = []
+        response.data.total = 0
+      }
+      console.log("AFTER", response.data)
+
+
       return response.data
     },
     select,

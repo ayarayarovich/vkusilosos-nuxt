@@ -25,22 +25,22 @@ jobs:
           push: true
           tags: theayarayarovich/vkusilosos-nuxt:latest,theayarayarovich/vkusilosos-nuxt:${{ github.ref_name }}
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs:
-      - docker
-    steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: echo "VKUSILOSOS_NUXT_IMAGE_TAG=${{ github.ref_name }}" > .env && ./deploy.sh
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - docker
+  #   steps:
+  #     - name: executing remote ssh commands using password
+  #       uses: appleboy/ssh-action@v1.0.0
+  #       with:
+  #         host: ${{ secrets.DEPLOY_HOST }}
+  #         username: ${{ secrets.DEPLOY_USERNAME }}
+  #         key: ${{ secrets.DEPLOY_KEY }}
+  #         script: echo "VKUSILOSOS_NUXT_IMAGE_TAG=${{ github.ref_name }}" > .env && ./deploy.sh
 
   send-failure-notification:
     runs-on: ubuntu-latest
-    needs: [docker, deploy]
+    needs: [docker]
     if: ${{ failure() }}
     steps:
       - name: Send failure notification to Telegram

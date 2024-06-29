@@ -2,7 +2,10 @@
 import type { MyCoords } from '~/interfaces/common'
 
 const { data: main, suspense: suspenseMain } = useMain((v) => v)
-const { data: categories, suspense: suspenseCategories } = useCategories((v) => v.list)
+const { data: categories, suspense: suspenseCategories } = useCategories((v) => {
+  console.log("V IS", v)
+  return v.list
+})
 const { data: restCoordinates } = useRestaurants((v) => {
   return v.map<MyCoords>((r) => ({
     Lat: r.lat,
@@ -56,14 +59,14 @@ useSeoMeta({
     </div>
 
     <div
-      v-if="main?.stories.length"
+      v-if="main?.stories?.length"
       class="relative my-4 md:container md:mx-auto md:my-8"
     >
       <GoodStories />
     </div>
 
     <section
-      v-if="main?.recomendation.length"
+      v-if="main?.recomendation?.length"
       class="my-8 lg:my-16"
     >
       <div
@@ -98,7 +101,7 @@ useSeoMeta({
       </div>
     </div>
 
-    <div v-if="categories">
+    <div v-if="categories?.length">
       <template
         v-for="(category, index) in categories"
         :key="category.id"
@@ -122,7 +125,7 @@ useSeoMeta({
       </template>
     </div>
 
-    <div
+    <!-- <div
       v-once
       class="container mx-auto my-24 hidden px-4 lg:block"
     >
@@ -186,7 +189,7 @@ useSeoMeta({
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div
       v-once
